@@ -1,0 +1,7 @@
+[gd_resource type="Shortcut" load_steps=2 format=3 uid="uid://canf3frmvnvfd"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_6vnfp"]
+keycode = 4194305
+
+[resource]
+events = [SubResource("InputEventKey_6vnfp")]
