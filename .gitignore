@@ -24,6 +24,7 @@ node_2d.tscn
 project.godot
 test.gd
 test.tscn
+icon.svg.import
 
 # safeguard for auto-update
 safeguard/
