@@ -23,7 +23,7 @@ const TYPE_VECTOR4 = 6
 const TYPE_BOOL = 7
 const TYPE_MAX = 8
 
-const plugin_version = "1.1.0"
+var plugin_version = "1.1.0"
 
 signal toggle_plugin_on
 signal toggle_plugin_off
