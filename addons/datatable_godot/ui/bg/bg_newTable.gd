@@ -41,6 +41,8 @@ extends Panel
 @onready var vector2_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector2_schema
 @onready var vector3_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector3_schema
 @onready var vector4_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector4_schema
+@onready var bool_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/bool_schema
+
 
 @onready var schema_array: Dictionary = {}
 
@@ -79,6 +81,10 @@ func _ready():
 	common.toggle_newTable_response.connect(_signal_on_shown)
 	common.toggle_main_response.connect(_signal_on_hide)
 	
+	common.ask_reload_data.connect(check_data)
+	
+	common.presave_data.connect(_presave_data)
+	
 	schema_array[common.TYPE_STRING] = string_schema
 	schema_array[common.TYPE_INT] = int_schema
 	schema_array[common.TYPE_FLOAT] = float_schema
@@ -86,6 +92,7 @@ func _ready():
 	schema_array[common.TYPE_VECTOR2] = vector2_schema
 	schema_array[common.TYPE_VECTOR3] = vector3_schema
 	schema_array[common.TYPE_VECTOR4] = vector4_schema
+	schema_array[common.TYPE_BOOL] = bool_schema
 	
 	## custom signal
 	create_table.connect(_create_table)
@@ -99,6 +106,10 @@ func _ready():
 	
 	pass # Replace with function body.
 
+func check_data():
+	if shown:
+		common.get_data_ask.emit(script_key)
+		common.get_type_ask.emit(script_key)
 
 func reload_table_list():
 	
@@ -174,10 +185,14 @@ func _signal_on_shown():
 	common.save_in_ressource()
 	return
 
+func _presave_data():
+	param_list.save_data_of_struct()
+	common.save_in_ressource()
+
 func _signal_on_hide():
 	param_list.save_data_of_struct()
 	
-	set_meta('table_data', table_data)
+	shown = false
 	
 	common.save_in_ressource()
 	return

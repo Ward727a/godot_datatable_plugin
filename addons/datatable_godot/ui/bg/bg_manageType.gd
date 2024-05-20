@@ -26,7 +26,12 @@ extends Panel
 @onready var v2_icon = "res://addons/datatable_godot/icons/Vector2.svg"
 @onready var v3_icon = "res://addons/datatable_godot/icons/Vector3.svg"
 @onready var v4_icon = "res://addons/datatable_godot/icons/Vector4.svg"
+@onready var bool_icon = "res://addons/datatable_godot/icons/bool.png"
 
+@onready var arr_icon = "res://addons/datatable_godot/icons/array_value.png"
+@onready var single_icon = "res://addons/datatable_godot/icons/single_value.png"
+
+@onready var _shown = false
 
 signal select_type(object_node: HBoxContainer)
 signal remove_type(object_node: HBoxContainer)
@@ -37,7 +42,7 @@ signal recheck_type_name()
 signal edit_param_name_ask(param_name: String)
 signal edit_param_name_response(valid: bool)
 
-signal add_param_ask(param_name: String, param_type: int)
+signal add_param_ask(param_name: String, param_type: int, param_size: int)
 signal add_param_response(success: bool)
 
 signal remove_param_ask(param_name: String)
@@ -62,6 +67,8 @@ func _ready():
 	
 	common.script_key_ask.emit("bg_manageType")
 	
+	common.ask_reload_data.connect(check_data)
+	
 	## link this signal to get the types data once asked
 	common.get_type_response.connect(_signal_type_response)
 	
@@ -83,11 +90,18 @@ func _ready():
 	select_type.connect(_signal_select_type)
 	remove_type.connect(_signal_remove_type)
 
+func check_data():
+	
+	if _shown:
+		common.get_type_ask.emit(script_key)
+
 func _signal_onShown():
 	common.get_type_ask.emit(script_key)
+	_shown = true
 	pass
 
 func _signal_onHide():
+	_shown = false
 	pass
 
 func _signal_key_response(key: int, script_name: String):
@@ -150,13 +164,15 @@ func _signal_select_type(object_node: HBoxContainer):
 			var duplicate: HBoxContainer = schemaParam.duplicate()
 			paramList.add_child(duplicate)
 			
-			var node = duplicate.get_child(0)
+			var nSize = duplicate.get_child(0)
+			var node = duplicate.get_child(1)
 			
-			var b_delete = duplicate.get_child(1)
+			var b_delete = duplicate.get_child(2)
 			
 			b_delete.set_meta('param_name', param['name'])
 			
 			var node_icon: String
+			var node_size: String
 			node.bbcode_enabled = true
 			
 			match int(param['type']):
@@ -174,7 +190,19 @@ func _signal_select_type(object_node: HBoxContainer):
 					node_icon = v3_icon
 				common.TYPE_VECTOR4:
 					node_icon = v4_icon
+				common.TYPE_BOOL:
+					node_icon = bool_icon
 			
+			
+			if !param.has("size"):
+				param['size'] = 0
+			
+			if int(param['size']) == 0:
+				node_size = single_icon
+			else:
+				node_size = arr_icon
+			
+			nSize.icon = load(node_size)
 			node.text = str("[img]",node_icon,"[/img] ",param['name'])
 			node.fit_content = true
 			duplicate.visible = true
@@ -195,6 +223,7 @@ func _signal_remove_type(object_node: HBoxContainer):
 					paramList.remove_child(i)
 		recheck_param_name.emit()
 		recheck_type_name.emit()
+	common.save_in_ressource()
 	pass
 
 func _signal_edit_param_name(param_name: String):
@@ -218,7 +247,7 @@ func _signal_edit_param_name(param_name: String):
 		return
 	edit_param_name_response.emit(true)
 
-func _signal_add_param(param_name: String, param_type: int):
+func _signal_add_param(param_name: String, param_type: int, param_size: int):
 	
 	param_name = param_name.to_lower()
 	
@@ -230,10 +259,11 @@ func _signal_add_param(param_name: String, param_type: int):
 		add_param_response.emit(false)
 		return
 	
-	types_data[selected_object_key]['params'][param_name] = {"name": param_name, "type": param_type}
+	types_data[selected_object_key]['params'][param_name] = {"name": param_name, "type": param_type, "size": param_size}
 	
 	add_param_response.emit(true)
 	_signal_select_type(selected_object_node)
+	common.save_in_ressource()
 
 func _signal_remove_param(param_name: String):
 	
@@ -243,6 +273,7 @@ func _signal_remove_param(param_name: String):
 	if types_data[selected_object_key]['params'].has(param_name):
 		types_data[selected_object_key]['params'].erase(param_name)
 		_signal_select_type(selected_object_node)
+	common.save_in_ressource()
 
 func _signal_check_type_name(new_type: String):
 	
@@ -270,4 +301,5 @@ func _signal_add_type(new_type: String):
 	reload_list()
 	
 	add_type_response.emit(true)
+	common.save_in_ressource()
 

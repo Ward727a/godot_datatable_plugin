@@ -48,6 +48,8 @@ func _get_plugin_icon():
 func _make_visible(visible):
 	if is_instance_valid(datatableDock):
 		datatableDock.visible = visible
+		if visible:
+			datatableDock.check_for_datatable_change()
 
 func _add_data_table_dock():
 	get_editor_interface().get_editor_main_screen().add_child(datatableDock)

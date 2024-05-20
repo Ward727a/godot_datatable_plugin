@@ -56,12 +56,19 @@ func set_value(new_value: Variant = null):
 		new_value = Vector4(float(converter[0]),float(converter[1]),float(converter[2]),float(converter[3]))
 	
 	if typeof(new_value) == TYPE_VECTOR4 && new_value != null:
-		x_input.set_value(new_value.x)
-		y_input.set_value(new_value.y)
-		z_input.set_value(new_value.z)
-		w_input.set_value(new_value.w)
+		x_input.set_value( (round((new_value.x)*10000))/10000)
+		y_input.set_value( (round((new_value.y)*10000))/10000)
+		z_input.set_value( (round((new_value.z)*10000))/10000)
+		w_input.set_value( (round((new_value.w)*10000))/10000)
 		return
 	x_input.set_value(0)
 	y_input.set_value(0)
 	z_input.set_value(0)
 	w_input.set_value(0)
+
+func set_disabled(disable: bool):
+	
+	x_input.editable = !disable
+	y_input.editable = !disable
+	z_input.editable = !disable
+	w_input.editable = !disable

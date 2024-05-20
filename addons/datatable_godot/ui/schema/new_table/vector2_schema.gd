@@ -39,9 +39,23 @@ func get_value():
 
 func set_value(new_value: Variant = null):
 	
+	if typeof(new_value) == TYPE_STRING && new_value != null:
+		
+		new_value = new_value.replace("(", "").replace(")", "")
+		
+		var v2_string: PackedStringArray = new_value.split(",")
+		
+		if v2_string.size() == 2:
+			new_value = Vector2(float(v2_string[0]), float(v2_string[1]))
+	
 	if typeof(new_value) == TYPE_VECTOR2 && new_value != null:
-		x_input.set_value(new_value.x)
-		y_input.set_value(new_value.y)
+		x_input.set_value( (round((new_value.x)*10000))/10000)
+		y_input.set_value( (round((new_value.y)*10000))/10000)
 		return
 	x_input.set_value(0)
 	y_input.set_value(0)
+
+func set_disabled(disable: bool):
+	
+	x_input.editable = !disable
+	y_input.editable = !disable

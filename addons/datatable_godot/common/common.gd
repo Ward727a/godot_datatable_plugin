@@ -20,9 +20,10 @@ const TYPE_COLOR = 3
 const TYPE_VECTOR2 = 4
 const TYPE_VECTOR3 = 5
 const TYPE_VECTOR4 = 6
-const TYPE_MAX = 7
+const TYPE_BOOL = 7
+const TYPE_MAX = 8
 
-const plugin_version = "1.0.0"
+const plugin_version = "1.1.0"
 
 signal toggle_plugin_on
 signal toggle_plugin_off
@@ -56,6 +57,10 @@ signal get_data_response(data: Dictionary, key: int)
 
 signal popup_alert_ask(title: String, description: String)
 
+signal ask_reload_data
+
+signal presave_data
+
 func _ready():
 	script_key_ask.connect(_signal_generate_key)
 	toggle_plugin_off.connect(_signal_disconnect_all)
@@ -64,6 +69,7 @@ func _ready():
 	get_data_ask.connect(_signal_get_data)
 	
 	add_type_ask.connect(_signal_add_type)
+	
 	
 	load_from_ressource()
 
@@ -104,6 +110,8 @@ func _signal_disconnect_all():
 	
 	disconnect_signal(script_key_ask)
 	disconnect_signal(script_key_response)
+	
+	disconnect_signal(presave_data)
 	
 	disconnect_signal(popup_alert_ask)
 	
@@ -155,6 +163,8 @@ func save_in_ressource():
 	
 	var datas = {"table": table_datas, "type": table_types}
 	
+	print("[DataTable] Saving data...")
+	
 	packedData.pack(datas)
 	
 	ResourceSaver.save(packedData, "datatable.res")
@@ -188,7 +198,7 @@ func load_from_ressource():
 				
 				var column_data = row_data['columns'][column_key] # name, value, type
 				
-				table_datas[main_key]['rows'][row_key]['columns'][column_key] = {"name": column_data['name'], "value": column_data['value'], "type": column_data['type']}
+				table_datas[main_key]['rows'][row_key]['columns'][column_key] = {"name": column_data['name'], "value": column_data['value'], "type": column_data['type'], "size": column_data['size']}
 	
 	
 	
@@ -206,6 +216,11 @@ func load_from_ressource():
 			
 			var param = type["params"][param_key]
 			
-			table_types[main_key]["params"][param_key] = {"name":param['name'], "type": param['type']}
+			table_types[main_key]["params"][param_key] = {"name":param['name'], "type": param['type'], "size": 0}
+			
+			# As the "size" object has been created after first release, we do a check so if the size
+			# is not inside the data, we add it with the default value
+			if param.size() == 3:
+				table_types[main_key]["params"][param_key]['size'] = param['size']
 	
 	pass

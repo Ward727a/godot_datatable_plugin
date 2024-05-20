@@ -4,12 +4,15 @@ extends VBoxContainer
 @onready var common = %signals
 
 @onready var string_schema
+@onready var bool_schema
 @onready var int_schema
 @onready var float_schema
 @onready var color_schema
 @onready var vector2_schema
 @onready var vector3_schema
 @onready var vector4_schema
+
+@onready var array_schema
 
 @onready var data: Dictionary = {}
 
@@ -30,10 +33,12 @@ func _ready():
 	vector2_schema = get_child(4)
 	vector3_schema = get_child(5)
 	vector4_schema = get_child(6)
+	array_schema = get_child(7)
+	bool_schema = get_child(8)
 	pass # Replace with function body.
 
 func get_each():
-	var each = [string_schema, int_schema, float_schema, color_schema, vector2_schema, vector3_schema, vector4_schema]
+	var each = [string_schema, int_schema, float_schema, color_schema, vector2_schema, vector3_schema, vector4_schema, array_schema, bool_schema]
 	
 	return each
 
@@ -96,6 +101,7 @@ func reload_from_struct(struct: Dictionary):
 		
 		var type: int = param['type']
 		var title: String = param['name']
+		var paramSize: int = param['size']
 		
 		var schema
 		
@@ -114,6 +120,20 @@ func reload_from_struct(struct: Dictionary):
 				schema = vector3_schema
 			common.TYPE_VECTOR4:
 				schema = vector4_schema
+			common.TYPE_BOOL:
+				schema = bool_schema
+		
+		if paramSize != 0:
+			var parent = array_schema.duplicate()
+			add_child(parent)
+			
+			parent.set_type(type)
+			parent.set_title(title)
+			node_structure[key] = parent
+			
+			parent.visible = true
+			
+			continue
 		
 		var duplicate: Node = schema.duplicate()
 		
@@ -141,9 +161,11 @@ func save_data_of_struct():
 		if !data['columns'].has(i):
 			data['columns'][i] = {}
 		
+		
 		data['columns'][i]['name'] = struct_data['name']
 		data['columns'][i]['type'] = struct_data['type']
 		data['columns'][i]['value'] = node.get_value()
+		data['columns'][i]['size'] = struct_data['size']
 		
 
 func set_data_on_struct(key: String, data: Variant):
@@ -157,4 +179,5 @@ func reset_data_on_struct():
 	
 	for i:String in node_structure:
 		var node: Node = node_structure[i]
+		
 		node.set_value()

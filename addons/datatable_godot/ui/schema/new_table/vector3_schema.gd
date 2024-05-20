@@ -40,11 +40,26 @@ func get_value():
 
 func set_value(new_value: Variant = null):
 	
+	if typeof(new_value) == TYPE_STRING && new_value != null:
+		
+		new_value = new_value.replace("(", "").replace(")", "")
+		
+		var v3_string: PackedStringArray = new_value.split(",")
+		
+		if v3_string.size() == 3:
+			new_value = Vector3(float(v3_string[0]), float(v3_string[1]), float(v3_string[2]))
+	
 	if typeof(new_value) == TYPE_VECTOR3 && new_value != null:
-		x_input.set_value(new_value.x)
-		y_input.set_value(new_value.y)
-		z_input.set_value(new_value.z)
+		x_input.set_value( (round((new_value.x)*10000))/10000)
+		y_input.set_value( (round((new_value.y)*10000))/10000)
+		z_input.set_value( (round((new_value.z)*10000))/10000)
 		return
 	x_input.set_value(0)
 	y_input.set_value(0)
 	z_input.set_value(0)
+
+func set_disabled(disable: bool):
+	
+	x_input.editable = !disable
+	y_input.editable = !disable
+	z_input.editable = !disable

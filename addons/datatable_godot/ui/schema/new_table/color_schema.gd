@@ -56,3 +56,7 @@ func set_value(new_value: Variant = null):
 		input.set_pick_color(new_value)
 		return
 	input.set_pick_color(Color.BLACK)
+
+func set_disabled(disable: bool):
+	
+	input.disabled = disable

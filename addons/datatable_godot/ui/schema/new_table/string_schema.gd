@@ -37,3 +37,7 @@ func set_value(new_value: Variant = null):
 		input.set_text(new_value)
 		return
 	input.set_text("")
+
+func set_disabled(disable: bool):
+	
+	input.editable = !disable

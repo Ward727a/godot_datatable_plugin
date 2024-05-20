@@ -1,10 +1,11 @@
 @tool
 extends HBoxContainer
 
-var input: SpinBox
+var input: CheckBox
 var text: RichTextLabel
 @onready var paramName: String = ""
-@onready var icon: String = "[img]res://addons/datatable_godot/icons/Int.svg[/img] "
+
+@onready var icon: String = "[img]res://addons/datatable_godot/icons/bool.png[/img] "
 
 @onready var type: int = -1
 func get_type():
@@ -29,20 +30,21 @@ func _ready():
 
 
 func get_value():
-	return input.get_value()
-
+	return input.is_pressed()
 
 func set_value(new_value: Variant = null):
-	
-	if (typeof(new_value) == TYPE_INT || typeof(new_value) == TYPE_FLOAT) && new_value != null:
-		input.set_value(new_value)
+	if typeof(new_value) == TYPE_BOOL && new_value != null: 
+		input.set_pressed(new_value)
 		return
 	if typeof(new_value) == TYPE_STRING && new_value != null:
-		input.set_value(float(new_value))
+		if new_value == "true":
+			input.set_pressed(true)
+			return
+		input.set_pressed(false)
 		return
 	
-	input.set_value(0)
+	input.set_pressed(false)
 
 func set_disabled(disable: bool):
 	
-	input.editable = !disable
+	input.disabled = disable

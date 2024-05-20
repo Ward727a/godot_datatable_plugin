@@ -13,7 +13,12 @@ const TYPE_COLOR = 3
 const TYPE_VECTOR2 = 4
 const TYPE_VECTOR3 = 5
 const TYPE_VECTOR4 = 6
-const TYPE_MAX = 7
+const TYPE_BOOL = 7
+const TYPE_MAX = 8
+
+const SIZE_SINGLE = 0
+const SIZE_ARRAY = 1
+const SIZE_MAX = 2
 
 # Private variables
 
@@ -30,6 +35,67 @@ var _is_struct_init: bool = false
 var _saved_struct: Dictionary = {}
 
 # Private Functions
+
+func _round_vector_string(value: String) -> float:
+	return (round((float(value))*10000))/10000
+
+func _convert_string_to_color(value: String) -> Color:
+	var convert: String = value
+	
+	if convert.begins_with("C/"):
+		convert = convert.replace("C/", "")
+	
+	var converter = convert.split(",")
+	
+	return Color(converter[0].to_float(),converter[1].to_float(),converter[2].to_float(),converter[3].to_float())
+
+func _convert_string_to_v4(value: String) -> Vector4:
+	var convert: String = value
+	
+	if convert.begins_with("V4/"):
+		convert = convert.replace("V4/", "")
+	
+	var converter = convert.split(",")
+	return Vector4(converter[0].to_float(),converter[1].to_float(),converter[2].to_float(),converter[3].to_float())
+
+func _convert_string_to_v2(value: String) -> Vector2:
+	
+	var vec3 = Vector2()
+	
+	value = value.replace("(","").replace(")", "")
+	
+	var vec3_str = value.split(",")
+	
+	vec3.x = _round_vector_string(vec3_str[0])
+	vec3.y = _round_vector_string(vec3_str[1])
+	
+	return vec3
+
+func _convert_string_to_v3(value: String) -> Vector3:
+	
+	var vec3 = Vector3()
+	
+	value = value.replace("(","").replace(")", "")
+	
+	var vec3_str = value.split(",")
+	
+	vec3.x = _round_vector_string(vec3_str[0])
+	vec3.y = _round_vector_string(vec3_str[1])
+	vec3.z = _round_vector_string(vec3_str[2])
+	
+	return vec3
+
+func _convert_string_to_bool(value: String) -> bool:
+	
+	if value == "true":
+		return true
+	return false
+
+func _convert_color_to_string(value: Color) -> String:
+	return str("C/",value[0],",",value[1],",",value[2],",",value[3])
+
+func _convert_v4_to_string(value: Vector4) -> String:
+	return str("V4/",value[0],",",value[1],",",value[2],",",value[3])
 
 func _get_table_datas()->Dictionary:
 	
@@ -59,33 +125,61 @@ func _get_table_datas()->Dictionary:
 			
 			table_datas[main_key]['rows'][row_key] = {}
 			
+			
 			for column_key in row_data['columns']:
 				
 				var column_data = row_data['columns'][column_key] # name, value, type
 				
 				
-				table_datas[main_key]['rows'][row_key][column_key] = column_data['value']
-				if column_data['type'] == 3:
-					# if is a color, convert it back to color
-					var convert: String = column_data['value']
-					
-					if convert.begins_with("C/"):
-						convert = convert.replace("C/", "")
-					
-					var converter = convert.split(",")
-					
-					table_datas[main_key]['rows'][row_key][column_key] = Color(converter[0].to_float(),converter[1].to_float(),converter[2].to_float(),converter[3].to_float())
+				# As the "size" object has been created after first release, we do a check so if the size
+				# is not inside the data, we add it with the default value
+				if column_data.size() == 3:
+					column_data['size'] = self.SIZE_SINGLE
 				
-				if column_data['type'] == 6:
+				if column_data['size'] == self.SIZE_ARRAY:
+					var arr_raw: String = column_data['value']
+					
+					if arr_raw.begins_with(" ARR/ "):
+						arr_raw = arr_raw.replace(" ARR/ ", "")
+					
+					var arr: PackedStringArray = arr_raw.split(";")
+					
+					var arr_value = []
+					
+					if arr.size() == 1:
+						if arr[0].is_empty():
+							table_datas[main_key]['rows'][row_key][column_key] = arr_value
+							continue
+					
+					for item in arr:
+						
+						var arr_item = item
+						
+						match(column_data["type"]):
+							self.TYPE_COLOR:
+								arr_item = _convert_string_to_color(item)
+							self.TYPE_VECTOR2:
+								arr_item = _convert_string_to_v2(item)
+							self.TYPE_VECTOR3:
+								arr_item = _convert_string_to_v3(item)
+							self.TYPE_VECTOR4:
+								arr_item = _convert_string_to_v4(item)
+							self.TYPE_BOOL:
+								arr_item = _convert_string_to_bool(item)
+							
+						arr_value.append(arr_item)
+					
+					table_datas[main_key]['rows'][row_key][column_key] = arr_value
+					continue
+				
+				table_datas[main_key]['rows'][row_key][column_key] = column_data['value']
+				if column_data['type'] == self.TYPE_COLOR:
+					# if is a color, convert it back to color
+					table_datas[main_key]['rows'][row_key][column_key] = _convert_string_to_color(column_data['value'])
+				
+				if column_data['type'] == self.TYPE_VECTOR4:
 					# if is a vec4, convert it back to vec4
-					var convert: String = column_data['value']
-					
-					if convert.begins_with("V4/"):
-						convert = convert.replace("V4/", "")
-					
-					var converter = convert.split(",")
-					
-					table_datas[main_key]['rows'][row_key][column_key] = Vector4(converter[0].to_float(),converter[1].to_float(),converter[2].to_float(),converter[3].to_float())
+					table_datas[main_key]['rows'][row_key][column_key] = _convert_string_to_v4(column_data['value'])
 				
 	
 	return table_datas
@@ -116,7 +210,7 @@ func _get_table_structs()->Dictionary:
 			var param = type["params"][param_key]
 			
 			
-			table_types[main_key]["params"][param_key] = {"name":param['name'], "type": param['type']}
+			table_types[main_key]["params"][param_key] = {"name":param['name'], "type": param['type'], "size": param['size']}
 	
 	return table_types
 
@@ -131,6 +225,84 @@ func _get_table_rows(table_name: String)->Dictionary:
 		return table['rows']
 	
 	return {"error":str("The table ",table_name," doesn't contains the 'rows' key!")}
+
+## Convert the data that the user get (with less information to be more compact) to the data that the plugin need
+func _convert_comfort_data_to_complex_data(table_data: Dictionary, structure_data: Dictionary)->Dictionary:
+	
+	table_data = table_data.duplicate(true)
+	
+	for table_key in table_data:
+		
+		var struct_name = table_data[table_key]['structure']
+		
+		table_data[table_key]['name'] = table_key
+		
+		for i in table_data[table_key]['rows']:
+			
+			var columns = table_data[table_key]['rows'][i].duplicate(true)
+			
+			table_data[table_key]['rows'][i] = {}
+			table_data[table_key]['rows'][i]['name'] = i
+			table_data[table_key]['rows'][i]['columns'] = columns
+			
+			var new_columns = {}
+			
+			for item_key in columns:
+				
+				var type = structure_data[struct_name]['params'][item_key]['type']
+				var value = columns[item_key]
+				var size = structure_data[struct_name]['params'][item_key]['size']
+				
+				# We need to do this for color and v4 because the packedDataContainer doesn't support these type
+				# IDK if it's a Godot bug or me that don't know how, but I found this solution
+				
+				match(size):
+					self.SIZE_SINGLE:
+						match(type):
+							self.TYPE_COLOR:
+								value = _convert_color_to_string(value)
+							self.TYPE_VECTOR4:
+								value = _convert_v4_to_string(value)
+					self.SIZE_ARRAY:
+						var arr_value = " ARR/ "
+						match(type):
+							self.TYPE_COLOR:
+								for item in value:
+									arr_value += _convert_color_to_string(item)
+									if value[value.size()-1] != item:
+										arr_value += ";"
+							self.TYPE_VECTOR4:
+								for item in value:
+									arr_value += _convert_v4_to_string(item)
+									if value[value.size()-1] != item:
+										arr_value += ";"
+							_:
+								for item in value:
+									arr_value += value
+									if value[value.size()-1] != item:
+										arr_value += ";"
+						value = arr_value
+				
+				new_columns[item_key] = {"name": item_key, "value": value, "type": type, "size": size}
+			
+			table_data[table_key]['rows'][i]['columns'] = new_columns
+	
+	return table_data
+
+func _save_table():
+	
+	var packedData: PackedDataContainer = PackedDataContainer.new()
+	
+	var table_datas = _get_table_datas()
+	var table_types = _get_table_structs()
+	table_datas = _convert_comfort_data_to_complex_data(table_datas, table_types)
+	
+	var datas = {"table": table_datas, "type": table_types}
+	
+	
+	packedData.pack(datas)
+	
+	ResourceSaver.save(packedData, "datatable.res")
 
 # Public Functions
 
@@ -219,6 +391,28 @@ func get_tables_list()->Array:
 	
 	return table.keys()
 
+func get_table_struct(table_name: String)->Dictionary:
+	
+	var table = get_table(table_name)
+	
+	if is_error(table):
+		return table
+	
+	if !table.has('structure'):
+		var err = {"error": str("The table ",table_name," doesn't contain the 'structure' key - this error should not occur, please inform the developper!")}
+		
+		is_error(err)
+		
+		return err
+	
+	var structure_name = table['structure']
+	
+	var structure_data = get_struct(structure_name)
+	
+	is_error(structure_data)
+	
+	return structure_data
+
 ## Return the structure data.
 ## [br]
 ## You can use that to manually check the data that you can get from a table
@@ -229,7 +423,7 @@ func get_struct(structure_name: String)->Dictionary:
 	if structs.has(structure_name):
 		return structs[structure_name]
 	
-	return {}
+	return {"error": str("The structure ",structure_name," doesn't exist!")}
 
 ## Check if an item is in the table.
 func has_item(table_name: String, key: String)->bool:
@@ -260,7 +454,147 @@ func get_item(table_name: String, key: String)->Dictionary:
 		return rows
 	
 	return rows[key]
+
+## Add an item inside the datatable[br]
+## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+func add_item(table_name: String, item_key: String, item_data: Dictionary, save_data: bool = true)->bool:
 	
+	var rows = _get_table_rows(table_name)
+	
+	if is_error(rows):
+		return false
+	
+	if has_item(table_name, item_key):
+		var err = {"error":str("The item ",item_key," already exist in ",table_name)}
+		
+		is_error(err)
+		
+		return false
+	
+	if !is_item_compatible(item_data, table_name):
+		
+		var err = {"error":str("The item (",item_key,") data is not compatible with the table ",table_name)}
+		
+		is_error(err)
+		
+		return false
+	
+	rows[item_key] = item_data
+	
+	if save_data:
+		_save_table()
+	
+	return true
+
+## Remove an item inside the datatable[br]
+## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+func remove_item(table_name: String, item_key: String, save_data: bool = true)->bool:
+	
+	var rows = _get_table_rows(table_name)
+	
+	if is_error(rows):
+		return false
+	
+	if !has_item(table_name, item_key):
+		var err = {"error":str("The item ",item_key," doesn't exist in ",table_name)}
+		
+		is_error(err)
+		
+		return false
+	
+	rows.erase(item_key)
+	
+	if save_data:
+		_save_table()
+	
+	return true
+
+## Set an item inside the datatable[br]
+## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+func set_item(table_name: String, item_key: String, item_data: Dictionary, save_data: bool = true)->bool:
+	var rows = _get_table_rows(table_name)
+	
+	if is_error(rows):
+		return false
+	
+	if !is_item_compatible(item_data, table_name):
+		
+		var err = {"error":str("The item (",item_key,") data is not compatible with the table ",table_name)}
+		
+		is_error(err)
+		
+		return false
+	
+	rows[item_key] = item_data
+	
+	if save_data:
+		_save_table()
+	
+	return true
+
+## This function return you a dictionary that is pre-filled with the needed key for this table
+func get_void_item(table_name: String)->Dictionary:
+	
+	var table = get_table(table_name)
+	
+	if is_error(table):
+		return table
+	
+	var struct = get_struct(table['structure'])
+	
+	var data = {}
+	
+	for i in struct['params']:
+		
+		if struct['params'][i]['size'] == SIZE_ARRAY:
+			data[i] = []
+			continue
+		
+		match(struct['params'][i]['type']):
+			self.TYPE_STRING:
+				data[i] = ""
+			self.TYPE_INT:
+				data[i] = 0
+			self.TYPE_FLOAT:
+				data[i] = .0
+			self.TYPE_COLOR:
+				data[i] = Color.WHITE
+			self.TYPE_VECTOR2:
+				data[i] = Vector2(0,0)
+			self.TYPE_VECTOR3:
+				data[i] = Vector3(0,0,0)
+			self.TYPE_VECTOR4:
+				data[i] = Vector4(0,0,0,0)
+			self.TYPE_BOOL:
+				data[i] = false
+			_:
+				data[i] = ""
+	
+	return data
+
+## Function to check if the given item is of the same structure as the table_name[br]
+## [br]
+## Return:[br]
+## - True: The item can be added to the table
+## - False: The item can't be added to the table
+func is_item_compatible(item: Dictionary, table_name: String)->bool:
+	
+	var structure = get_table_struct(table_name)
+	
+	if is_error(structure):
+		return false
+	
+	if !structure.has('params'):
+		
+		var err = {"error": str("The structure of the table ", table_name, " doesn't has the 'params' key - This error should not occur, please inform the developper!")}
+		
+		is_error(err)
+		
+		return false
+	
+	var params = structure['params']
+	
+	return params.keys() == item.keys()
 
 ## return all the KEY of items found in the table
 func get_items_list(table_name: String)->Array:

@@ -38,4 +38,11 @@ func set_value(new_value: Variant = null):
 	if typeof(new_value) == TYPE_FLOAT && new_value != null: 
 		input.set_value(new_value)
 		return
+	if typeof(new_value) == TYPE_STRING && new_value != null:
+		input.set_value(float(new_value))
+		return
 	input.set_value(0)
+
+func set_disabled(disable: bool):
+	
+	input.editable = !disable
