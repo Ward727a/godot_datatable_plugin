@@ -29,3 +29,7 @@ icon.svg.import
 # safeguard for auto-update
 safeguard/
 safeguard.gd
+
+# addons that i'm using
+explore-editor-theme/
+nv.file_system/
