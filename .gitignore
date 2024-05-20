@@ -13,3 +13,18 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# datatable resource file
+datatable.res
+
+# project file
+icon.svg
+*.tmp
+node_2d.tscn
+project.godot
+test.gd
+test.tscn
+
+# safeguard for auto-update
+safeguard/
+safeguard.gd
