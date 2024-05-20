@@ -17,11 +17,12 @@ Yes, for now the type that you can use in your structure is limited, you can use
 - Vec2
 - Vec3
 - Vec4
+- Bool
 
 Other type will come with futur update, but please say what you want as type, it could really help me know what is needed!
 
 ### I want to create a array of item in my structure, how can I do that?
-You can't for now, I will work on it because I found it really usefull, but for now you need to wait.
+You can now! (1.1.0) :)
 
 ### Where are saved my table / structure?
 Your "data" (table and/or structure) are saved in a file located at the root folder of your project, the file is named "datatable.res" and it's a PackedDataContainer.
