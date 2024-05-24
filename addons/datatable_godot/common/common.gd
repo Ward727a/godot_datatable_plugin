@@ -227,14 +227,8 @@ func load_from_ressource():
 			
 			table_types[main_key]["params"][param_key] = {"name":param['name'], "type": param['type'], "size": 0, "comment": ""}
 			
-			# As the "size" object has been created after first release, we do a check so if the size
-			# is not inside the data, we add it with the default value
-			if param.size() == 3:
-				table_types[main_key]["params"][param_key]['size'] = param['size']
-			
-			# As the "comment" object has been created after first release, we do a check so if the size
-			# is not inside the data, we add it with the default value
 			if param.size() == 4:
 				table_types[main_key]["params"][param_key]['comment'] = param['comment']
+				table_types[main_key]["params"][param_key]['size'] = param['size']
 	
 	pass
