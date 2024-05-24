@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://doa4a6glaf5xx"]
+[gd_scene load_steps=92 format=3 uid="uid://doa4a6glaf5xx"]
 
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/datatable_ui.gd" id="1_u3r8m"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/b_newTable.gd" id="2_4grge"]
@@ -41,25 +41,44 @@
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/bool_schema.gd" id="26_4dcoq"]
 [ext_resource type="Texture2D" uid="uid://d4af0scr4f3ea" path="res://addons/datatable_godot/icons/Add.svg" id="26_aoqmn"]
 [ext_resource type="Texture2D" uid="uid://blh822uvyrgg1" path="res://addons/datatable_godot/icons/Remove.svg" id="27_p6oml"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/t2_schema.gd" id="31_01e71"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/array_schema.gd" id="32_7b5r7"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/box/arr_item_box.gd" id="32_olfsa"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/t3_schema.gd" id="32_qc5jy"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/ress_schema.gd" id="36_wke7h"]
+[ext_resource type="Script" path="res://addons/datatable_godot/Button.gd" id="37_ikjq8"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/help/title.gd" id="38_8v420"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/quaternionSchema.gd" id="38_47e3s"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/b_closeWindow.gd" id="39_7ex4j"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/bg/bg_manageType.gd" id="39_mg6or"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/plane_schema.gd" id="39_qbw7h"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/help/about.gd" id="39_unu0t"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/rect_schema.gd" id="40_i7lsn"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/type_title.gd" id="41_acyeb"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/help/changelog.gd" id="41_ahyjt"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/b_addType.gd" id="42_ppf6e"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/manage_type/in_newTypeName.gd" id="42_slt2x"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/aabb_schema.gd" id="43_1qtkx"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/b_deleteType.gd" id="43_cggt8"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/basis_schema.gd" id="44_s0byb"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/manage_type/in_new_param_name.gd" id="45_3s3h2"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/proj_schema.gd" id="45_wyglv"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/b_add_param.gd" id="46_uwt2p"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/b_delete_param.gd" id="47_8n2ia"]
 [ext_resource type="Texture2D" uid="uid://cw3yfy2wnj7sr" path="res://addons/datatable_godot/icons/single_value.png" id="47_hdmps"]
 [ext_resource type="Texture2D" uid="uid://b2tja7u6nyfd8" path="res://addons/datatable_godot/icons/array_value.png" id="48_bc88q"]
 [ext_resource type="Texture2D" uid="uid://boigovej7l3ld" path="res://addons/datatable_godot/icons/bool.png" id="49_afkii"]
+[ext_resource type="Texture2D" uid="uid://cudqdqhvvyvvd" path="res://addons/datatable_godot/icons/Ressource.png" id="52_kwb32"]
+[ext_resource type="Texture2D" uid="uid://dwa4hgxufiht2" path="res://addons/datatable_godot/icons/Quaternion.png" id="53_1yv65"]
+[ext_resource type="Texture2D" uid="uid://deeletsgtujsc" path="res://addons/datatable_godot/icons/Rect2.png" id="58_hcrso"]
 [ext_resource type="Texture2D" uid="uid://xg222ueyxka0" path="res://addons/datatable_godot/icons/HTTPRequest.png" id="59_6l3uk"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/bg/bg_autoupdate.gd" id="59_vq5t2"]
+[ext_resource type="Texture2D" uid="uid://b1sf25ugxyjr2" path="res://addons/datatable_godot/icons/Plane.png" id="59_xn7mm"]
+[ext_resource type="Texture2D" uid="uid://b78syqljkqgw0" path="res://addons/datatable_godot/icons/Transform2D.png" id="62_6ccc5"]
+[ext_resource type="Texture2D" uid="uid://l42684mvyre3" path="res://addons/datatable_godot/icons/Transform3D.png" id="63_8vkpt"]
+[ext_resource type="Texture2D" uid="uid://dhrostg6qnf3u" path="res://addons/datatable_godot/icons/AABB.png" id="64_6d6m2"]
+[ext_resource type="Texture2D" uid="uid://cw7yrghswx3pg" path="res://addons/datatable_godot/icons/Basis.png" id="67_yujfd"]
+[ext_resource type="Texture2D" uid="uid://7810wjrwyh4k" path="res://addons/datatable_godot/icons/Projection.png" id="69_j3xui"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_olab4"]
 bg_color = Color(0.2, 0.0823529, 0.0627451, 1)
@@ -126,6 +145,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [node name="Control" type="Control"]
+clip_contents = true
 custom_minimum_size = Vector2(0, 300)
 layout_mode = 3
 anchors_preset = 15
@@ -136,6 +156,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_u3r8m")
+metadata/Proj = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
 
 [node name="alert" type="Popup" parent="."]
 transparent_bg = true
@@ -549,7 +570,7 @@ script = ExtResource("13_yo7v8")
 metadata/force_disabled = true
 
 [node name="Panel" type="Panel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/VBoxContainer"]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -637,6 +658,7 @@ script = ExtResource("16_s2dxu")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
+tooltip_text = "String type"
 bbcode_enabled = true
 text = "[img]res://addons/datatable_godot/icons/String.svg[/img] String Name"
 fit_content = true
@@ -654,6 +676,7 @@ script = ExtResource("17_rbj10")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
+tooltip_text = "Int type"
 bbcode_enabled = true
 text = "[img]res://addons/datatable_godot/icons/Int.svg[/img] Int Name"
 fit_content = true
@@ -675,6 +698,7 @@ script = ExtResource("18_0j6q2")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
+tooltip_text = "Float type"
 bbcode_enabled = true
 text = "[img]res://addons/datatable_godot/icons/Float.svg[/img] Float Name"
 fit_content = true
@@ -696,6 +720,7 @@ script = ExtResource("19_7fgjh")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
+tooltip_text = "Color type"
 bbcode_enabled = true
 text = "[img]res://addons/datatable_godot/icons/Color.svg[/img] Color Name"
 fit_content = true
@@ -713,6 +738,7 @@ script = ExtResource("20_n8d7r")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
+tooltip_text = "Vector2 type"
 bbcode_enabled = true
 text = "[img]res://addons/datatable_godot/icons/Vector2.svg[/img] Vec2 Name"
 fit_content = true
@@ -729,7 +755,7 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.2
 bbcode_enabled = true
-text = "[color=red]X: [/color]"
+text = "[color=fab293]X: [/color]"
 fit_content = true
 
 [node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector2_schema/paramValue/x_box"]
@@ -749,10 +775,439 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.2
 bbcode_enabled = true
-text = "[color=green]Y: [/color]"
+text = "[color=93fab2]Y: [/color]"
 fit_content = true
 
 [node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector2_schema/paramValue/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="t2_schema" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList"]
+visible = false
+layout_mode = 2
+script = ExtResource("31_01e71")
+
+[node name="paramName" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+tooltip_text = "Vector2 type"
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/Transform2D.png[/img] Transform2D Name"
+fit_content = true
+
+[node name="paramValue" type="VBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="v0" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v0/x_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]xX: [/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v0/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v0/y_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]xY: [/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v0/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="o_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v0/o_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93dbfa]xO: [/color]"
+fit_content = true
+
+[node name="o_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v0/o_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="v1" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v1/x_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]yX: [/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v1/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v1/y_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]yY: [/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v1/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="o_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v1/o_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93dbfa]yO: [/color]"
+fit_content = true
+
+[node name="o_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t2_schema/paramValue/v1/o_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="t3_schema" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList"]
+visible = false
+layout_mode = 2
+script = ExtResource("32_qc5jy")
+
+[node name="paramName" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+tooltip_text = "Vector2 type"
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/Transform3D.png[/img] Transform3D Name"
+fit_content = true
+
+[node name="paramValue" type="VBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="v0" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0/x_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]xX:[/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0/y_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]xY:[/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0/z_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]xZ:[/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="o_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0/o_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93dbfa]xO: [/color]"
+
+[node name="o_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v0/o_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="v1" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1/x_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]yX:[/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1/y_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]yY:[/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1/z_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]yZ:[/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="o_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1/o_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93dbfa]yO:[/color]"
+fit_content = true
+
+[node name="o_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v1/o_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="v2" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2/x_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]zX:[/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2/y_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]zY:[/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2/z_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]zZ:[/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="o_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2/o_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93dbfa]zO:[/color]"
+fit_content = true
+
+[node name="o_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/t3_schema/paramValue/v2/o_box"]
 layout_mode = 2
 size_flags_horizontal = 3
 step = 0.0
@@ -770,6 +1225,7 @@ script = ExtResource("21_4n3yv")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
+tooltip_text = "Vector3 type"
 bbcode_enabled = true
 text = "[img]res://addons/datatable_godot/icons/Vector3.svg[/img] Vec3 Name"
 fit_content = true
@@ -786,7 +1242,7 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.2
 bbcode_enabled = true
-text = "[color=red]X: [/color]"
+text = "[color=fab293]X: [/color]"
 fit_content = true
 
 [node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector3_schema/paramValue/x_box"]
@@ -806,7 +1262,7 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.2
 bbcode_enabled = true
-text = "[color=green]Y: [/color]"
+text = "[color=93fab2]Y: [/color]"
 fit_content = true
 
 [node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector3_schema/paramValue/y_box"]
@@ -826,7 +1282,7 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.2
 bbcode_enabled = true
-text = "[color=blue]Z: [/color]"
+text = "[color=b293fa]Z: [/color]"
 fit_content = true
 
 [node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector3_schema/paramValue/z_box"]
@@ -847,6 +1303,7 @@ script = ExtResource("22_obp24")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
+tooltip_text = "Vector4 type"
 bbcode_enabled = true
 text = "[img]res://addons/datatable_godot/icons/Vector4.svg[/img] Vec4 Name"
 fit_content = true
@@ -863,7 +1320,7 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.2
 bbcode_enabled = true
-text = "[color=red]X: [/color]"
+text = "[color=fab293]X: [/color]"
 fit_content = true
 
 [node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector4_schema/paramValue/x_box"]
@@ -883,7 +1340,7 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.2
 bbcode_enabled = true
-text = "[color=green]Y: [/color]"
+text = "[color=93fab2]Y: [/color]"
 fit_content = true
 
 [node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector4_schema/paramValue/y_box"]
@@ -903,7 +1360,7 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.2
 bbcode_enabled = true
-text = "[color=blue]Z: [/color]"
+text = "[color=b293fa]Z: [/color]"
 fit_content = true
 
 [node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector4_schema/paramValue/z_box"]
@@ -923,7 +1380,7 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.2
 bbcode_enabled = true
-text = "[color=purple]W: [/color]"
+text = "[color=93dbfa]W: [/color]"
 fit_content = true
 
 [node name="w_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector4_schema/paramValue/w_box"]
@@ -954,11 +1411,15 @@ text = "[img]res://addons/datatable_godot/icons/array_value.png[/img]Array"
 fit_content = true
 scroll_active = false
 
-[node name="paramValue" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/array_schema/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/array_schema/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="b_add_arr_item" type="Button" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/array_schema/HBoxContainer"]
+[node name="paramValue" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/array_schema/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="b_add_arr_item" type="Button" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/array_schema/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
@@ -1019,12 +1480,1086 @@ script = ExtResource("26_4dcoq")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
+tooltip_text = "Bool type"
 bbcode_enabled = true
 text = "[img]res://addons/datatable_godot/icons/bool.png[/img] String Name"
 fit_content = true
 
 [node name="paramValue" type="CheckBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/bool_schema"]
 layout_mode = 2
+
+[node name="ress_schema" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList"]
+visible = false
+layout_mode = 2
+script = ExtResource("36_wke7h")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/ress_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+tooltip_text = "Ressource type"
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/Ressource.png[/img] test"
+fit_content = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/ress_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/ress_schema/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/ress_schema/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/ress_schema/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Import..."
+script = ExtResource("37_ikjq8")
+
+[node name="FileDialog" type="FileDialog" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/ress_schema/VBoxContainer/HBoxContainer/Button"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(500, 400)
+ok_button_text = "Ouvrir"
+file_mode = 0
+
+[node name="quat_schema" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList"]
+visible = false
+layout_mode = 2
+script = ExtResource("38_47e3s")
+
+[node name="paramName" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/Quaternion.png[/img] Quaternion Name"
+fit_content = true
+
+[node name="paramValue" type="VBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue/x_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]X: [/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue/y_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]Y: [/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue/z_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]Z: [/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="d_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue/d_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93dbfa]D: [/color]"
+fit_content = true
+
+[node name="d_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/quat_schema/paramValue/d_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="plane_schema" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList"]
+visible = false
+layout_mode = 2
+script = ExtResource("39_qbw7h")
+
+[node name="paramName" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/Plane.png[/img] Plane Name"
+fit_content = true
+
+[node name="paramValue" type="VBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue/x_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]X: [/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue/y_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]Y: [/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue/z_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]Z: [/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="d_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue/d_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93dbfa]D: [/color]"
+fit_content = true
+
+[node name="d_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/plane_schema/paramValue/d_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="rect_schema" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList"]
+visible = false
+layout_mode = 2
+script = ExtResource("40_i7lsn")
+
+[node name="paramName" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+tooltip_text = "Vector2 type"
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/Rect2.png[/img] Rect Name"
+fit_content = true
+
+[node name="paramValue" type="VBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer/x_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]X: [/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer/y_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]Y: [/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue"]
+layout_mode = 2
+
+[node name="w_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer2/w_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]W: [/color]"
+fit_content = true
+
+[node name="w_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer2/w_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="h_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer2/h_box"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]H: [/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/rect_schema/paramValue/HBoxContainer2/h_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="aabb_schema" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList"]
+visible = false
+layout_mode = 2
+script = ExtResource("43_1qtkx")
+
+[node name="paramName" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+tooltip_text = "Vector2 type"
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/AABB.png[/img] AABB Name"
+fit_content = true
+
+[node name="paramValue" type="VBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="v0" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v0/x_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]X: [/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v0/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v0/y_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]Y: [/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v0/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v0/z_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]Z: [/color]"
+fit_content = true
+
+[node name="o_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v0/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="v1" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue"]
+layout_mode = 2
+
+[node name="w_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v1/w_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]W: [/color]"
+fit_content = true
+
+[node name="w_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v1/w_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="h_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v1/h_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]H: [/color]"
+fit_content = true
+
+[node name="h_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v1/h_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="d_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v1/d_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]D: [/color]"
+fit_content = true
+
+[node name="d_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/aabb_schema/paramValue/v1/d_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="basis_schema" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList"]
+visible = false
+layout_mode = 2
+script = ExtResource("44_s0byb")
+
+[node name="paramName" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+tooltip_text = "Vector2 type"
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/Basis.png[/img] Basis Name"
+fit_content = true
+
+[node name="paramValue" type="VBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="v0" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v0/x_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]xX:[/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v0/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v0/y_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]xY:[/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v0/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v0/z_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]xZ:[/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v0/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="v1" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v1/x_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]yX:[/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v1/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v1/y_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]yY:[/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v1/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v1/z_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]yZ:[/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v1/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="v2" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v2/x_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]zX:[/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v2/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v2/y_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]zY:[/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v2/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v2/z_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]zZ:[/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/basis_schema/paramValue/v2/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="proj_schema" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList"]
+visible = false
+layout_mode = 2
+script = ExtResource("45_wyglv")
+
+[node name="paramName" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+tooltip_text = "Vector2 type"
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/Transform3D.png[/img] Transform3D Name"
+fit_content = true
+
+[node name="paramValue" type="VBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="v0" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0/x_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]xX:[/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0/y_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]xY:[/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0/z_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]xZ:[/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="w_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0/w_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93dbfa]xW: [/color]"
+fit_content = true
+
+[node name="w_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v0/w_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="v1" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1/x_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]yX:[/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1/y_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]yY:[/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1/z_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]yZ:[/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="w_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1/w_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93dbfa]yW:[/color]"
+fit_content = true
+
+[node name="w_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v1/w_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="v2" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2/x_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]zX:[/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2/y_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]zY:[/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2/z_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]zZ:[/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="w_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2/w_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93dbfa]zW:[/color]"
+fit_content = true
+
+[node name="w_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v2/w_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="v3" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3/x_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]wX:[/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3/y_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]wY:[/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3/z_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]wZ:[/color]"
+fit_content = true
+
+[node name="z_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="w_box" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3/w_box"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93dbfa]wW:[/color]"
+fit_content = true
+
+[node name="w_value" type="SpinBox" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/proj_schema/paramValue/v3/w_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
 
 [node name="panel_item_blocker" type="Panel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2"]
 visible = false
@@ -1195,7 +2730,7 @@ script = ExtResource("45_3s3h2")
 
 [node name="OB_paramType" type="OptionButton" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
-item_count = 8
+item_count = 17
 selected = 0
 popup/item_0/text = "String"
 popup/item_0/icon = ExtResource("18_g50xn")
@@ -1221,6 +2756,33 @@ popup/item_6/id = 6
 popup/item_7/text = "Bool"
 popup/item_7/icon = ExtResource("49_afkii")
 popup/item_7/id = 7
+popup/item_8/text = "Quaternion"
+popup/item_8/icon = ExtResource("53_1yv65")
+popup/item_8/id = 9
+popup/item_9/text = "Ressource"
+popup/item_9/icon = ExtResource("52_kwb32")
+popup/item_9/id = 8
+popup/item_10/text = "Rect"
+popup/item_10/icon = ExtResource("58_hcrso")
+popup/item_10/id = 10
+popup/item_11/text = "Plane"
+popup/item_11/icon = ExtResource("59_xn7mm")
+popup/item_11/id = 11
+popup/item_12/text = "Transform2D"
+popup/item_12/icon = ExtResource("62_6ccc5")
+popup/item_12/id = 12
+popup/item_13/text = "Transform3D"
+popup/item_13/icon = ExtResource("63_8vkpt")
+popup/item_13/id = 13
+popup/item_14/text = "AABB"
+popup/item_14/icon = ExtResource("64_6d6m2")
+popup/item_14/id = 14
+popup/item_15/text = "Basis"
+popup/item_15/icon = ExtResource("67_yujfd")
+popup/item_15/id = 15
+popup/item_16/text = "Projection"
+popup/item_16/icon = ExtResource("69_j3xui")
+popup/item_16/id = 16
 
 [node name="OB_paramSize" type="OptionButton" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
@@ -1271,11 +2833,14 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="nSize" type="Button" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="nSize" type="Button" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/icon_pressed_color = Color(1, 1, 1, 1)
@@ -1285,14 +2850,14 @@ button_mask = 0
 icon = ExtResource("47_hdmps")
 icon_alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
 text = "test type"
 fit_content = true
 
-[node name="b_delete_param" type="Button" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="b_delete_param" type="Button" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
@@ -1305,6 +2870,28 @@ text = "  X  "
 icon = ExtResource("27_p6oml")
 icon_alignment = 1
 script = ExtResource("47_8n2ia")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Comment: "
+
+[node name="in_comment_param" type="LineEdit" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="bg_help" type="Panel" parent="MarginContainer"]
 visible = false

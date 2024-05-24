@@ -21,7 +21,16 @@ const TYPE_VECTOR2 = 4
 const TYPE_VECTOR3 = 5
 const TYPE_VECTOR4 = 6
 const TYPE_BOOL = 7
-const TYPE_MAX = 8
+const TYPE_RESS = 8 # Ressource
+const TYPE_QUAT = 9 # Quaternion
+const TYPE_RECT = 10
+const TYPE_PLANE = 11
+const TYPE_T2 = 12 # Transform2D
+const TYPE_T3 = 13 # Transform3D
+const TYPE_AABB = 14
+const TYPE_BASIS = 15
+const TYPE_PROJ = 16
+const TYPE_MAX = 17
 
 var plugin_version = "1.1.0"
 
@@ -216,11 +225,16 @@ func load_from_ressource():
 			
 			var param = type["params"][param_key]
 			
-			table_types[main_key]["params"][param_key] = {"name":param['name'], "type": param['type'], "size": 0}
+			table_types[main_key]["params"][param_key] = {"name":param['name'], "type": param['type'], "size": 0, "comment": ""}
 			
 			# As the "size" object has been created after first release, we do a check so if the size
 			# is not inside the data, we add it with the default value
 			if param.size() == 3:
 				table_types[main_key]["params"][param_key]['size'] = param['size']
+			
+			# As the "comment" object has been created after first release, we do a check so if the size
+			# is not inside the data, we add it with the default value
+			if param.size() == 4:
+				table_types[main_key]["params"][param_key]['comment'] = param['comment']
 	
 	pass

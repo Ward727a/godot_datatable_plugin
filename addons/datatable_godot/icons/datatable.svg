@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 4.2333332 4.2333333"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="dessin-1.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="false"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="25.000898"
+     inkscape:cx="5.4198053"
+     inkscape:cy="7.7197227"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     shape-rendering="auto">
+    <inkscape:grid
+       type="xygrid"
+       id="grid132"
+       empspacing="1"
+       dotted="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="fill-opacity:1;fill:#ffffff">
+    <g
+       aria-label="dt"
+       transform="scale(0.86574704,1.1550718)"
+       id="text643"
+       style="font-size:3.01491px;font-family:'Reddit Mono';-inkscape-font-specification:'Reddit Mono, Normal';text-align:center;text-anchor:middle;fill:#ffffff">
+      <path
+         d="M 2.2535247,2.9778091 Q 2.1431154,2.9159799 2.0812862,2.8320688 2.0209292,2.7466856 2.0179849,2.6657188 l 0.047108,0.035331 H 1.9502672 L 2.0150407,2.5273391 V 1.7412249 L 1.9502672,1.5851798 h 0.032387 V 0.68718412 H 2.2358593 V 2.5214506 q 0,0.075078 0.030915,0.1383797 0.030915,0.061829 0.080967,0.088327 z m -0.712508,0 q -0.1884318,0 -0.3297558,-0.098632 Q 1.0714092,2.7790723 0.99338659,2.5980011 0.91683614,2.4169298 0.91683614,2.1710851 q 0,-0.2429004 0.0765504,-0.4239717 0.0780226,-0.1810712 0.21787431,-0.2797036 0.141324,-0.1001044 0.3297558,-0.1001044 0.1825434,0 0.3179788,0.1001044 0.1369075,0.1001045 0.2119859,0.2811757 0.07655,0.1810713 0.07655,0.4224996 0,0.2429005 -0.07655,0.4239717 Q 1.995903,2.7761281 1.8589955,2.8777047 1.7235601,2.9778091 1.5410167,2.9778091 Z m 0.047108,-0.2296514 q 0.1251305,0 0.2178743,-0.072134 0.094216,-0.072134 0.1457403,-0.201681 0.051524,-0.1295469 0.051524,-0.3032576 0,-0.1751827 -0.051524,-0.3032575 Q 1.900215,1.7382807 1.8074712,1.6676187 1.7147274,1.5969568 1.5910689,1.5969568 q -0.1266026,0 -0.2208186,0.072134 -0.094216,0.070662 -0.1457402,0.2002089 -0.051524,0.1280748 -0.051524,0.3017854 0,0.1737107 0.050052,0.3032576 0.051524,0.1295469 0.1442682,0.201681 0.094216,0.072134 0.2208186,0.072134 z"
+         id="path1708"
+         style="fill:#ffffff" />
+      <path
+         d="m 3.5431054,2.9778091 q -0.1604615,0 -0.2870642,-0.064773 Q 3.1294385,2.8467901 3.0558323,2.7304923 2.9836982,2.6141945 2.9836982,2.4625657 V 0.89328148 H 3.2369036 V 2.4360675 q 0,0.1339632 0.091272,0.2208186 0.092744,0.085383 0.2267071,0.085383 0.092744,0 0.1840155,-0.038275 0.092744,-0.039747 0.1604615,-0.094216 l 0.09716,0.2325956 q -0.09716,0.061829 -0.2149301,0.098632 -0.1162978,0.036803 -0.2384841,0.036803 z M 2.6186115,1.623455 V 1.3938036 H 3.8993594 V 1.623455 Z"
+         id="path1710"
+         style="fill:#ffffff" />
+    </g>
+  </g>
+</svg>

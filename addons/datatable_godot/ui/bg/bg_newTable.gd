@@ -34,18 +34,6 @@ extends Panel
 
 @onready var param_list: VBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList
 
-@onready var string_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/string_schema
-@onready var int_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/int_schema
-@onready var float_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/float_schema
-@onready var color_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/color_schema
-@onready var vector2_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector2_schema
-@onready var vector3_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector3_schema
-@onready var vector4_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/vector4_schema
-@onready var bool_schema: HBoxContainer = $VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/bool_schema
-
-
-@onready var schema_array: Dictionary = {}
-
 signal reload_table_type_options_ask
 
 signal add_table_response
@@ -84,15 +72,6 @@ func _ready():
 	common.ask_reload_data.connect(check_data)
 	
 	common.presave_data.connect(_presave_data)
-	
-	schema_array[common.TYPE_STRING] = string_schema
-	schema_array[common.TYPE_INT] = int_schema
-	schema_array[common.TYPE_FLOAT] = float_schema
-	schema_array[common.TYPE_COLOR] = color_schema
-	schema_array[common.TYPE_VECTOR2] = vector2_schema
-	schema_array[common.TYPE_VECTOR3] = vector3_schema
-	schema_array[common.TYPE_VECTOR4] = vector4_schema
-	schema_array[common.TYPE_BOOL] = bool_schema
 	
 	## custom signal
 	create_table.connect(_create_table)
@@ -148,8 +127,11 @@ func reload_items_list():
 			node.queue_free()
 	
 	var data = selected_table_data['rows']
+	var structure = selected_table_data['structure']
 	
 	for i: String in data:
+	
+		
 		var row: Dictionary = data[i]
 		var row_name: String = row['name']
 		
@@ -256,7 +238,7 @@ func _select_table(table_node: Node):
 	selected_table_data = selected_table_node.get_meta("table_data")
 	
 	if !param_block.reload(selected_table_data):
-		common.popup_alert_ask.emit("Can't open this data", "The plugin can't load this data because the structure of the table is not found!")
+		common.popup_alert_ask.emit("Can't open this data", str("The plugin can't load this data because the structure (structure name: \"",selected_table_data['structure'],"\") used by the table is not found!"))
 		return
 	
 	selected_table_node.select(true)

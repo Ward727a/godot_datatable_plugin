@@ -35,9 +35,8 @@ func add_item(value: Variant):
 	
 	duplicate.set_disabled(true)
 	
-	# remove the text as we don't need it
-	var text_node = duplicate.get_child(0)
-	duplicate.remove_child(text_node)
+	# Hide text node
+	duplicate.text.visible = false
 	
 	duplicate.visible = true
 	item.visible = true

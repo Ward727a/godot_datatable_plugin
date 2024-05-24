@@ -7,6 +7,7 @@ extends Panel
 @onready var script_key: int = -1
 
 @onready var types_data: Dictionary = {}
+@onready var tables_data: Dictionary = {}
 
 @onready var b_addParam: Button = $VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/HBoxContainer/b_add_param
 
@@ -14,22 +15,31 @@ extends Panel
 @onready var paramList: VBoxContainer = $VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer
 
 @onready var schemaType: HBoxContainer = $VBoxContainer/HBoxContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/schema_type
-@onready var schemaParam: HBoxContainer = $VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer
+@onready var schemaParam: VBoxContainer = $VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer
 
 @onready var selected_object_key: String = ""
 @onready var selected_object_node: Node
 
-@onready var int_icon = "res://addons/datatable_godot/icons/int.svg"
-@onready var float_icon = "res://addons/datatable_godot/icons/float.svg"
-@onready var str_icon = "res://addons/datatable_godot/icons/String.svg"
-@onready var color_icon = "res://addons/datatable_godot/icons/Color.svg"
-@onready var v2_icon = "res://addons/datatable_godot/icons/Vector2.svg"
-@onready var v3_icon = "res://addons/datatable_godot/icons/Vector3.svg"
-@onready var v4_icon = "res://addons/datatable_godot/icons/Vector4.svg"
-@onready var bool_icon = "res://addons/datatable_godot/icons/bool.png"
+const int_icon = "res://addons/datatable_godot/icons/int.svg"
+const float_icon = "res://addons/datatable_godot/icons/float.svg"
+const str_icon = "res://addons/datatable_godot/icons/String.svg"
+const color_icon = "res://addons/datatable_godot/icons/Color.svg"
+const v2_icon = "res://addons/datatable_godot/icons/Vector2.svg"
+const v3_icon = "res://addons/datatable_godot/icons/Vector3.svg"
+const v4_icon = "res://addons/datatable_godot/icons/Vector4.svg"
+const bool_icon = "res://addons/datatable_godot/icons/bool.png"
+const ress_icon = "res://addons/datatable_godot/icons/Ressource.png"
+const quat_icon = "res://addons/datatable_godot/icons/Quaternion.png"
+const rect_icon = "res://addons/datatable_godot/icons/Rect2.png"
+const plane_icon = "res://addons/datatable_godot/icons/Plane.png"
+const t2_icon = "res://addons/datatable_godot/icons/Transform2D.png"
+const t3_icon = "res://addons/datatable_godot/icons/Transform3D.png"
+const aabb_icon = "res://addons/datatable_godot/icons/AABB.png"
+const basis_icon = "res://addons/datatable_godot/icons/Basis.png"
+const proj_icon = "res://addons/datatable_godot/icons/Projection.png"
 
-@onready var arr_icon = "res://addons/datatable_godot/icons/array_value.png"
-@onready var single_icon = "res://addons/datatable_godot/icons/single_value.png"
+const arr_icon = "res://addons/datatable_godot/icons/array_value.png"
+const single_icon = "res://addons/datatable_godot/icons/single_value.png"
 
 @onready var _shown = false
 
@@ -72,6 +82,9 @@ func _ready():
 	## link this signal to get the types data once asked
 	common.get_type_response.connect(_signal_type_response)
 	
+	## link this signal to get the table data once asked
+	common.get_data_response.connect(_signal_data_response)
+	
 	## link this signal to check if param name is valid
 	edit_param_name_ask.connect(_signal_edit_param_name)
 	
@@ -97,6 +110,7 @@ func check_data():
 
 func _signal_onShown():
 	common.get_type_ask.emit(script_key)
+	common.get_data_ask.emit(script_key)
 	_shown = true
 	pass
 
@@ -110,11 +124,19 @@ func _signal_key_response(key: int, script_name: String):
 
 func _signal_type_response(types: Dictionary, key: int):
 	if key == script_key:
+		
+		
 		types_data = types
 		
 		reload_list()
 
+func _signal_data_response(datas: Dictionary, key: int):
+	
+	if key == script_key:
+		tables_data = datas
+
 func reload_list():
+	print(types_data)
 	
 	if typeList.get_child_count() != 0:
 		for child:Node in typeList.get_children():
@@ -161,15 +183,24 @@ func _signal_select_type(object_node: HBoxContainer):
 		for param_key: String in object['params']:
 			var param: Dictionary = object['params'][param_key]
 			
-			var duplicate: HBoxContainer = schemaParam.duplicate()
+			var duplicate: VBoxContainer = schemaParam.duplicate()
 			paramList.add_child(duplicate)
 			
-			var nSize = duplicate.get_child(0)
-			var node = duplicate.get_child(1)
+			var nSize = duplicate.get_child(0).get_child(0)
+			var node = duplicate.get_child(0).get_child(1)
 			
-			var b_delete = duplicate.get_child(2)
+			var b_delete = duplicate.get_child(0).get_child(2)
+			
+			var in_comment: LineEdit = duplicate.get_child(1).get_child(1).get_child(0).get_child(1)
 			
 			b_delete.set_meta('param_name', param['name'])
+			
+			if !param.has('comment'):
+				param['comment'] = str(param['name']," parameter...")
+			
+			in_comment.set_text(param['comment'])
+			
+			in_comment.text_changed.connect(_on_change_param_comment.bind(param['name']))
 			
 			var node_icon: String
 			var node_size: String
@@ -192,6 +223,24 @@ func _signal_select_type(object_node: HBoxContainer):
 					node_icon = v4_icon
 				common.TYPE_BOOL:
 					node_icon = bool_icon
+				common.TYPE_RESS:
+					node_icon = ress_icon
+				common.TYPE_QUAT:
+					node_icon = quat_icon
+				common.TYPE_RECT:
+					node_icon = rect_icon
+				common.TYPE_PLANE:
+					node_icon = plane_icon
+				common.TYPE_T2:
+					node_icon = t2_icon
+				common.TYPE_T3:
+					node_icon = t3_icon
+				common.TYPE_AABB:
+					node_icon = aabb_icon
+				common.TYPE_BASIS:
+					node_icon = basis_icon
+				common.TYPE_PROJ:
+					node_icon = proj_icon
 			
 			
 			if !param.has("size"):
@@ -223,6 +272,7 @@ func _signal_remove_type(object_node: HBoxContainer):
 					paramList.remove_child(i)
 		recheck_param_name.emit()
 		recheck_type_name.emit()
+		
 	common.save_in_ressource()
 	pass
 
@@ -246,6 +296,24 @@ func _signal_edit_param_name(param_name: String):
 		edit_param_name_response.emit(false)
 		return
 	edit_param_name_response.emit(true)
+
+func _on_change_param_comment(param_content: String, param_name: String):
+	
+	param_name = param_name.to_lower()
+	
+	if param_name.is_empty():
+		return
+	
+	if selected_object_key == "":
+		return
+	
+	if !types_data.has(selected_object_key):
+		return
+	
+	if !types_data[selected_object_key]['params'].has(param_name):
+		return
+	
+	types_data[selected_object_key]['params'][param_name]['comment'] = param_content
 
 func _signal_add_param(param_name: String, param_type: int, param_size: int):
 	
@@ -273,6 +341,14 @@ func _signal_remove_param(param_name: String):
 	if types_data[selected_object_key]['params'].has(param_name):
 		types_data[selected_object_key]['params'].erase(param_name)
 		_signal_select_type(selected_object_node)
+		
+	for i in tables_data.keys():
+		if tables_data[i]['structure'] == selected_object_key:
+			for row_key in tables_data[i]['rows'].keys():
+				if tables_data[i]['rows'][row_key]['columns'].has(param_name):
+					print("Erased key: ",param_name," in item: ", row_key)
+					tables_data[i]['rows'][row_key]['columns'].erase(param_name)
+	
 	common.save_in_ressource()
 
 func _signal_check_type_name(new_type: String):

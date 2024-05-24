@@ -1,23 +1,38 @@
 ##
 ## This singleton is used to get the data that you created inside the "Datatable" tab.[br]
 ## Be sure to [b]NOT DELETE[/b] the "datatable.res" that can be found inside your game files![br]
+##
+## This singleton is totaly obsolote and WILL BE removed in the next update, please replace it with [datatable_]!!
+## @deprecated
 
 extends Node
 
 # Public variables
 
+## @deprecated
 const TYPE_STRING = 0
+## @deprecated
 const TYPE_INT = 1
+## @deprecated
 const TYPE_FLOAT = 2
+## @deprecated
 const TYPE_COLOR = 3
+## @deprecated
 const TYPE_VECTOR2 = 4
+## @deprecated
 const TYPE_VECTOR3 = 5
+## @deprecated
 const TYPE_VECTOR4 = 6
+## @deprecated
 const TYPE_BOOL = 7
+## @deprecated
 const TYPE_MAX = 8
 
+## @deprecated
 const SIZE_SINGLE = 0
+## @deprecated
 const SIZE_ARRAY = 1
+## @deprecated
 const SIZE_MAX = 2
 
 # Private variables
@@ -227,6 +242,7 @@ func _get_table_rows(table_name: String)->Dictionary:
 	return {"error":str("The table ",table_name," doesn't contains the 'rows' key!")}
 
 ## Convert the data that the user get (with less information to be more compact) to the data that the plugin need
+## @deprecated
 func _convert_comfort_data_to_complex_data(table_data: Dictionary, structure_data: Dictionary)->Dictionary:
 	
 	table_data = table_data.duplicate(true)
@@ -315,7 +331,10 @@ func _save_table():
 ## -  data_to_check: The data that need to be checked[br]
 ## -  log: If you want to log an error message (will be done only 1 time by data)[br]
 ## -  force_log: If you want to log every error message (without the 1 time by data limitation)[br]
+## @deprecated
 func is_error(data_to_check: Dictionary, log: bool = true, force_log: bool = false)->bool:
+	
+	push_error("[Datatable] The singleton will be removed at the next update, please use the class datatable_!!")
 	
 	if data_to_check.has('error'):
 		if (!data_to_check.has('logged') && log) || force_log:
@@ -327,6 +346,7 @@ func is_error(data_to_check: Dictionary, log: bool = true, force_log: bool = fal
 
 ## Check if the table exist[br]
 ## For your information: This function is called each time you try to get a table!
+## @deprecated
 func has_table(table_name: String)->bool:
 	
 	var table = _get_table_datas()
@@ -335,6 +355,7 @@ func has_table(table_name: String)->bool:
 
 ## Init all the table inside datatable.res inside memory so it's not needed to do it each time this operation
 ## Not Needed, but I advice you to do it
+## @deprecated
 func init_table()->bool:
 	
 	if _is_table_init:
@@ -351,6 +372,7 @@ func init_table()->bool:
 
 ## Init all the struct inside datatable.res inside memory so it's not needed to do it each time this operation
 ## Not Needed, but I advice you to do it
+## @deprecated
 func init_struct()->bool:
 	
 	if _is_struct_init:
@@ -371,6 +393,7 @@ func init_struct()->bool:
 ## - size: Size of the table[br]
 ## - structure: The structure name used by the table[br]
 ## - rows: The row contained inside the table
+## @deprecated
 func get_table(table_name: String)->Dictionary:
 	
 	if !has_table(table_name):
@@ -385,12 +408,14 @@ func get_table(table_name: String)->Dictionary:
 	return table[table_name]
 
 ## Return the list of table that can be found inside the file "datatable.res"
+## @deprecated
 func get_tables_list()->Array:
 	
 	var table = _get_table_datas()
 	
 	return table.keys()
 
+## @deprecated
 func get_table_struct(table_name: String)->Dictionary:
 	
 	var table = get_table(table_name)
@@ -416,6 +441,7 @@ func get_table_struct(table_name: String)->Dictionary:
 ## Return the structure data.
 ## [br]
 ## You can use that to manually check the data that you can get from a table
+## @deprecated
 func get_struct(structure_name: String)->Dictionary:
 	
 	var structs = _get_table_structs()
@@ -426,6 +452,7 @@ func get_struct(structure_name: String)->Dictionary:
 	return {"error": str("The structure ",structure_name," doesn't exist!")}
 
 ## Check if an item is in the table.
+## @deprecated
 func has_item(table_name: String, key: String)->bool:
 	
 	var rows = _get_table_rows(table_name)
@@ -439,6 +466,7 @@ func has_item(table_name: String, key: String)->bool:
 ## [br]
 ## Here is an example of what you could get from it:[br]
 ## { "a_string": "little string", "float_object": 0.3241, ..., "vector3 object": (0.1, 1, -5) }
+## @deprecated
 func get_item(table_name: String, key: String)->Dictionary:
 	
 	if !has_item(table_name,key):
@@ -457,6 +485,7 @@ func get_item(table_name: String, key: String)->Dictionary:
 
 ## Add an item inside the datatable[br]
 ## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+## @deprecated
 func add_item(table_name: String, item_key: String, item_data: Dictionary, save_data: bool = true)->bool:
 	
 	var rows = _get_table_rows(table_name)
@@ -488,6 +517,7 @@ func add_item(table_name: String, item_key: String, item_data: Dictionary, save_
 
 ## Remove an item inside the datatable[br]
 ## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+## @deprecated
 func remove_item(table_name: String, item_key: String, save_data: bool = true)->bool:
 	
 	var rows = _get_table_rows(table_name)
@@ -511,6 +541,7 @@ func remove_item(table_name: String, item_key: String, save_data: bool = true)->
 
 ## Set an item inside the datatable[br]
 ## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+## @deprecated
 func set_item(table_name: String, item_key: String, item_data: Dictionary, save_data: bool = true)->bool:
 	var rows = _get_table_rows(table_name)
 	
@@ -533,6 +564,7 @@ func set_item(table_name: String, item_key: String, item_data: Dictionary, save_
 	return true
 
 ## This function return you a dictionary that is pre-filled with the needed key for this table
+## @deprecated
 func get_void_item(table_name: String)->Dictionary:
 	
 	var table = get_table(table_name)
@@ -577,6 +609,7 @@ func get_void_item(table_name: String)->Dictionary:
 ## Return:[br]
 ## - True: The item can be added to the table
 ## - False: The item can't be added to the table
+## @deprecated
 func is_item_compatible(item: Dictionary, table_name: String)->bool:
 	
 	var structure = get_table_struct(table_name)
@@ -597,6 +630,7 @@ func is_item_compatible(item: Dictionary, table_name: String)->bool:
 	return params.keys() == item.keys()
 
 ## return all the KEY of items found in the table
+## @deprecated
 func get_items_list(table_name: String)->Array:
 	
 	var rows = _get_table_rows(table_name)

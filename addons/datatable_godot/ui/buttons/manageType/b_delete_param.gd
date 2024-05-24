@@ -1,7 +1,7 @@
 @tool
 extends Button
 
-@onready var bg_manageType: Panel = $"../../../../../../../../../../.."
+@onready var bg_manageType: Panel = $"../../../../../../../../../../../.."
 
 
 func _pressed():

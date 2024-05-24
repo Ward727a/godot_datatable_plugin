@@ -40,6 +40,11 @@ const cant_check_tip: String = "The plugin couldn't check if an update was avail
 
 const LOCAL_CONFIG_PATH: String = "res://addons/datatable_godot/plugin.cfg"
 
+# this variable is temporary for this version, it will be removed at the next update
+# it's used so the warning message will appear only once
+const WARNING_CLASS_PATH: String = "res://addons/datatable_godot/class/warning_class_change.tres"
+var warning_dialog: AcceptDialog
+
 ###############
 ## Functions ##
 ###############
@@ -67,6 +72,29 @@ func _ready():
 	bg_autoupdate.failed.connect(_failed_update)
 	
 	common.plugin_version = get_version()
+	
+	_temp_show_warning()
+
+func _temp_show_warning():
+	if FileAccess.file_exists(WARNING_CLASS_PATH):
+		warning_dialog = AcceptDialog.new()
+		EditorInterface.get_base_control().add_child(warning_dialog)
+		warning_dialog.dialog_text = "PLEASE READ!!"
+		var text: RichTextLabel = RichTextLabel.new()
+		warning_dialog.add_child(text)
+		text.bbcode_enabled = true
+		warning_dialog.min_size = Vector2(500, 300)
+		text.set_text("[font_size=24][color=red][Datatable] PLEASE READ!!\r[font_size=16]If you use the singleton.gd (it's probably the case), you need to convert your code to use the class \"datatable_\", at the next update, the singleton.gd will be totaly removed!!\r\r[color=white]Don't worry, this warning will only show once!\r\rIf you just download this addons, you don't need to worry!")
+		warning_dialog.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
+		warning_dialog.visible = true
+		
+		warning_dialog.confirmed.connect(_temp_close_warning)
+		warning_dialog.canceled.connect(_temp_close_warning)
+		OS.move_to_trash(ProjectSettings.globalize_path(WARNING_CLASS_PATH))
+
+func _temp_close_warning():
+	warning_dialog.visible = false
+	warning_dialog.queue_free()
 
 #####################
 ## Signal Callable ##
