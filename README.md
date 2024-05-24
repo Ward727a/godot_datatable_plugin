@@ -1,3 +1,5 @@
+## **FYI: The license of this project will change to the MIT License at the next version!**
+
 # 💾Godot DataTable Plugin
 
 A plugin that give you the ability to create datatable directly inside the editor.
