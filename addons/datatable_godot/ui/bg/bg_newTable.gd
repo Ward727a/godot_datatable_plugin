@@ -96,7 +96,6 @@ func reload_table_list():
 		if node != table_schema:
 			node.queue_free()
 	
-	
 	for table_name: String in table_data:
 		
 		var data: Dictionary = table_data[table_name]
@@ -121,10 +120,13 @@ func reload_table_list():
 
 func reload_items_list():
 	
+	print("clean reload item list")
 	
 	for node: Node in item_list.get_children():
 		if node != item_schema:
+			node.visible = false
 			node.queue_free()
+			print(node)
 	
 	if selected_table_data == {} || selected_table_node == null:
 		return
@@ -183,6 +185,7 @@ func _signal_on_hide():
 	shown = false
 	
 	common.save_in_ressource()
+	selected_table_data = {}
 	return
 
 
@@ -206,8 +209,10 @@ func _signal_get_datas(datas: Dictionary, key: int):
 		return
 	
 	table_data = datas
+	selected_table_data = {}
 	reload_table_list()
 	reload_items_list()
+	param_list._clean(true)
 
 
 func _create_table(table_name: String):

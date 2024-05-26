@@ -116,6 +116,16 @@ func _signal_onShown():
 
 func _signal_onHide():
 	_shown = false
+	for i:Node in paramList.get_children():
+		if schemaParam == i:
+			continue
+		paramList.remove_child(i)
+	
+	if selected_object_node != null:
+		var text: RichTextLabel = selected_object_node.get_child(0)
+		text.remove_theme_color_override("default_color")
+	selected_object_node = null
+	selected_object_key = ""
 	pass
 
 func _signal_key_response(key: int, script_name: String):
@@ -136,8 +146,6 @@ func _signal_data_response(datas: Dictionary, key: int):
 		tables_data = datas
 
 func reload_list():
-	print(types_data)
-	
 	if typeList.get_child_count() != 0:
 		for child:Node in typeList.get_children():
 			if child != schemaType:
