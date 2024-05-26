@@ -166,6 +166,9 @@ func reload_from_struct(struct: Dictionary):
 			
 			parent.set_type(type)
 			parent.set_title(title)
+			var name_node = parent.get_child(0).get_child(0)
+			
+			name_node.set_tooltip_text(comment)
 			node_structure[key] = parent
 			
 			parent.visible = true
@@ -183,12 +186,7 @@ func reload_from_struct(struct: Dictionary):
 		
 		duplicate.set_title(title)
 		
-		var name_node
-		if paramSize == 0:
-			name_node = duplicate.get_child(0)
-		else:
-			name_node = duplicate.get_child(0).get_child(0)
-		
+		var name_node = duplicate.get_child(0)
 		name_node.set_tooltip_text(comment)
 		
 		duplicate.visible = true
