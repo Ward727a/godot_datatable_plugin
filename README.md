@@ -25,11 +25,11 @@ If you got some suggestions (features, types, etc.), found a bug, or want to say
 
 - All data are saved inside a [PackedDataContainer](https://docs.godotengine.org/en/stable/classes/class_packeddatacontainer.html) that allow you to serielizes them with ease!
 
+- Collection system - A feature that allow you to create multiple datatable file for one project
+
 ## 👨‍💻Upcoming Features
 
 - The ability to link other table / table item inside another table
-
-- Collection system - A feature that will allow you to create multiple datatable file for one project
 
 - Setting a default value for each parameters of a structure
 
@@ -45,7 +45,7 @@ The C# is not actually supported, I will work on it if it's needed, but for now 
 
 #### I created my table, and added elements in it, how can I access it?
 
-You can access it by using the `datatable_` class, please be aware that this class will be renamed to `datatable` in the next version!
+You can access it by using the `Collection` class!
 
 ## ©License
 
