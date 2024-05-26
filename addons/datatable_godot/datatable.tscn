@@ -1,12 +1,10 @@
-[gd_scene load_steps=95 format=3 uid="uid://doa4a6glaf5xx"]
+[gd_scene load_steps=88 format=3 uid="uid://doa4a6glaf5xx"]
 
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/datatable_ui.gd" id="1_u3r8m"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/b_newTable.gd" id="2_4grge"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/b_manageTableType.gd" id="4_igs8k"]
 [ext_resource type="Texture2D" uid="uid://dwb1kfrq35nuy" path="res://addons/datatable_godot/icons/Load.png" id="5_3t6xb"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/mb_manageCollection.gd" id="5_jk0la"]
-[ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/b_help.gd" id="6_jskvc"]
-[ext_resource type="Texture2D" uid="uid://bwwxi1ostoe7b" path="res://addons/datatable_godot/icons/Help.svg" id="6_m2owa"]
 [ext_resource type="Texture2D" uid="uid://bck1i8evwspny" path="res://addons/datatable_godot/icons/Save.png" id="6_r5abj"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/txt_version_status.gd" id="7_76wdw"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/newTable/b_closeWindow.gd" id="8_4vur3"]
@@ -27,7 +25,6 @@
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/int_schema.gd" id="17_rbj10"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/float_schema.gd" id="18_0j6q2"]
 [ext_resource type="Texture2D" uid="uid://bh4utwbo8c1th" path="res://addons/datatable_godot/icons/String.svg" id="18_g50xn"]
-[ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/help/b_closeHelp.gd" id="19_3yiss"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/color_schema.gd" id="19_7fgjh"]
 [ext_resource type="Texture2D" uid="uid://bpl61j5iclrvd" path="res://addons/datatable_godot/icons/int.svg" id="19_eb0qd"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/new_table/param_block.gd" id="19_l23ym"]
@@ -50,15 +47,12 @@
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/t3_schema.gd" id="32_qc5jy"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/ress_schema.gd" id="36_wke7h"]
 [ext_resource type="Script" path="res://addons/datatable_godot/Button.gd" id="37_ikjq8"]
-[ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/help/title.gd" id="38_8v420"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/quaternionSchema.gd" id="38_47e3s"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/b_closeWindow.gd" id="39_7ex4j"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/bg/bg_manageType.gd" id="39_mg6or"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/plane_schema.gd" id="39_qbw7h"]
-[ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/help/about.gd" id="39_unu0t"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/rect_schema.gd" id="40_i7lsn"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/type_title.gd" id="41_acyeb"]
-[ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/help/changelog.gd" id="41_ahyjt"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/b_addType.gd" id="42_ppf6e"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/manage_type/in_newTypeName.gd" id="42_slt2x"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/aabb_schema.gd" id="43_1qtkx"]
@@ -128,17 +122,6 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3otyk"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wd2h0"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0.2, 0.2, 0.2, 0)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p2t0m"]
 bg_color = Color(0.109804, 0.109804, 0.109804, 0.584314)
@@ -313,21 +296,6 @@ text = "No collection opened"
 [node name="right_top_menu" type="HBoxContainer" parent="MarginContainer/bg_main/FlowContainer"]
 layout_mode = 2
 alignment = 2
-
-[node name="b_help" type="Button" parent="MarginContainer/bg_main/FlowContainer/right_top_menu"]
-layout_mode = 2
-tooltip_text = "Some useless informations"
-theme_override_colors/font_color = Color(0, 0, 0, 0)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 0)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0)
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 0)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
-text = "  X  "
-icon = ExtResource("6_m2owa")
-icon_alignment = 1
-script = ExtResource("6_jskvc")
 
 [node name="Panel" type="Panel" parent="MarginContainer/bg_main"]
 layout_mode = 2
@@ -2967,141 +2935,6 @@ text = "Comment: "
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Add a comment to this parameter that will be shown has a tooltip when hovering this parameter inside the table manager"
-
-[node name="bg_help" type="Panel" parent="MarginContainer"]
-visible = false
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_wd2h0")
-metadata/last_parent = Object(Control,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 300),"layout_direction":0,"layout_mode":3,"anchors_preset":15,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":2,"grow_vertical":2,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":3,"size_flags_vertical":3,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":null)
-
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/bg_help"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="top_menu" type="HBoxContainer" parent="MarginContainer/bg_help/VBoxContainer"]
-layout_mode = 2
-
-[node name="left_part" type="HBoxContainer" parent="MarginContainer/bg_help/VBoxContainer/top_menu"]
-layout_mode = 2
-
-[node name="title" type="Label" parent="MarginContainer/bg_help/VBoxContainer/top_menu/left_part"]
-layout_mode = 2
-text = "Datatable Documentation - Version 1.1.0"
-script = ExtResource("38_8v420")
-
-[node name="center_part" type="HBoxContainer" parent="MarginContainer/bg_help/VBoxContainer/top_menu"]
-layout_mode = 2
-size_flags_horizontal = 3
-alignment = 1
-
-[node name="about" type="Button" parent="MarginContainer/bg_help/VBoxContainer/top_menu/center_part"]
-layout_mode = 2
-text = "About"
-script = ExtResource("39_unu0t")
-
-[node name="changelog" type="Button" parent="MarginContainer/bg_help/VBoxContainer/top_menu/center_part"]
-layout_mode = 2
-text = "Changelog"
-script = ExtResource("41_ahyjt")
-
-[node name="right_part" type="HBoxContainer" parent="MarginContainer/bg_help/VBoxContainer/top_menu"]
-layout_mode = 2
-
-[node name="b_closeHelp" type="Button" parent="MarginContainer/bg_help/VBoxContainer/top_menu/right_part"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 0)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 0)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0)
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 0)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
-text = "  X  "
-icon = ExtResource("24_5ei7p")
-icon_alignment = 1
-script = ExtResource("19_3yiss")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/bg_help/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="left_menu_box" type="Panel" parent="MarginContainer/bg_help/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/bg_help/VBoxContainer/HBoxContainer/left_menu_box"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 3
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 3
-theme_override_constants/margin_bottom = 3
-
-[node name="about" type="ScrollContainer" parent="MarginContainer/bg_help/VBoxContainer/HBoxContainer/left_menu_box/MarginContainer"]
-visible = false
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_help/VBoxContainer/HBoxContainer/left_menu_box/MarginContainer/about"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-bbcode_enabled = true
-text = "[font_size=32]About[/font_size]
-
-Hey, I'm Ward, the creator of this plugin, this part of the documentation is only for a small presentation of this addons, why I created it, etc..
-If you want to know how to make this plugin work, click on the \"Get Started\" button!
-
-This addons was primaly created due to the fact that I come from Unreal Engine, and in this engine we can create some \"DataTable\", to register data about the game, and I wanted to use again this system in Godot, but from my research, there is no system in Godot for this, and each plugins that I found was outdated, so I decided to make one myself.
-
-After a month and a total rewrite of the code, I come to this result.
-
-What could you expect of the next update?
-First I don't know if I will update this plugin, I think I will do it if I need it, or if needed.
-Second, what I could see as a future update is more type for the datatype creation (rect, vect2i, vect3i, vect4i, image, etc..).
-
-Ho and a little info: 
-I'm not a native english speaker, so I will make some error in the text, do not hesitate to say it to me on github! :)
-And If you got a bug, same, say it to me on github.
-
-Created at 4:52AM - 23/04/2024
-Edit at 3:32PM - 17/05/2024"
-
-[node name="changelog" type="ScrollContainer" parent="MarginContainer/bg_help/VBoxContainer/HBoxContainer/left_menu_box/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_help/VBoxContainer/HBoxContainer/left_menu_box/MarginContainer/changelog"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-bbcode_enabled = true
-text = "[u]Version 1.1.0:[/u]
-Here is the first update of the plugin!
-
-- Added the \"array\" system in the structure: 
-	If you open your structure, you can now choose between \"single\" and \"array\". 
-	[img]res://addons/datatable_godot/icons/single_value.png[/img] [b]Single[/b] will make your parameters work like before.
-	[img]res://addons/datatable_godot/icons/array_value.png[/img] [b]Array[/b] will allow you to add multiple data in the same parameter like an.. array, yeah, you got it
-- Added the ability to Add, Remove, and Set item in a datatable from your script, check inside the [color=lightblue]singleton.gd[/color]!
-		Asked by [color=lightgreen]HelterSkelterGames[/color], thanks!
-- Added an autoupdate system, now if an update is release on the github repo, you should get an popup that ask you [b]if you want[/b] to update the plugin. I wanted to not make it a requirement, if you don't want to do the update, you can. But if you got a bug, please, do the update before reporting it on the github! [u]You can check manually if an update is available by clicking on the text at the bottom right of the main screen![/u]
-- Added a new type: [img]res://addons/datatable_godot/icons/bool.png[/img] bool
-
-The update should work with your old data!
-
-If you got a bug, have an idea, or need something with this plugin, say it on GitHub! :)
-
-[u]Version 1.0.0:[/u]
-- Well, this is the first version, pretty scared that this will be bugged as hell even after all the testing I had done on it =')"
-fit_content = true
 
 [node name="bg_autoupdate" type="Panel" parent="MarginContainer"]
 visible = false

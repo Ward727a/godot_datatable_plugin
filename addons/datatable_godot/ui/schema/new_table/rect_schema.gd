@@ -72,3 +72,5 @@ func set_disabled(disable: bool):
 	
 	x_input.editable = !disable
 	y_input.editable = !disable
+	w_input.editable = !disable
+	h_input.editable = !disable

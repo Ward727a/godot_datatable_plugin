@@ -16,7 +16,6 @@ extends Control
 ## UI Components - Background
 @onready var bg_main: VBoxContainer = $MarginContainer/bg_main
 @onready var bg_newTable: Panel = $MarginContainer/bg_newTable
-@onready var bg_help: Panel = $MarginContainer/bg_help
 @onready var bg_manageType: Panel = $MarginContainer/bg_manageType
 @onready var bg_autoupdate: Panel = $MarginContainer/bg_autoupdate
 
@@ -64,7 +63,6 @@ func _ready():
 	## Connect each asking signal for the toggle on/off of UI main window
 	common.toggle_main_ask.connect(_signal_toggleMain)
 	common.toggle_newTable_ask.connect(_signal_toggleNewTable)
-	common.toggle_help_ask.connect(_signal_toggleHelp)
 	common.toggle_manageType_ask.connect(_signal_toggleManageType)
 	common.popup_alert_ask.connect(_signal_show_alert_popup)
 	
@@ -99,7 +97,6 @@ func _temp_close_warning():
 func _disable_all_UI():
 	bg_main.visible = false
 	bg_newTable.visible = false
-	bg_help.visible = false
 	bg_manageType.visible = false
 
 #####################
@@ -123,12 +120,6 @@ func _signal_toggleManageType():
 	bg_manageType.visible = true
 	
 	common.toggle_manageType_response.emit()
-
-func _signal_toggleHelp():
-	_disable_all_UI()
-	bg_help.visible = true
-	
-	common.toggle_help_response.emit()
 
 
 func _signal_show_alert_popup(title: String, description: String):
