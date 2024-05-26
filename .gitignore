@@ -33,3 +33,4 @@ safeguard.gd
 # addons that i'm using
 explore-editor-theme/
 nv.file_system/
+test/test.tableCollection.res

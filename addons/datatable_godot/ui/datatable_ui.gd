@@ -96,41 +96,40 @@ func _temp_close_warning():
 	warning_dialog.visible = false
 	warning_dialog.queue_free()
 
+func _disable_all_UI():
+	bg_main.visible = false
+	bg_newTable.visible = false
+	bg_help.visible = false
+	bg_manageType.visible = false
+
 #####################
 ## Signal Callable ##
 #####################
 
 func _signal_toggleMain():
+	_disable_all_UI()
 	bg_main.visible = true
-	bg_newTable.visible = false
-	bg_help.visible = false
-	bg_manageType.visible = false
 	
 	common.toggle_main_response.emit()
 
 func _signal_toggleNewTable():
-	bg_main.visible = false
+	_disable_all_UI()
 	bg_newTable.visible = true
-	bg_help.visible = false
-	bg_manageType.visible = false
 	
 	common.toggle_newTable_response.emit()
 
 func _signal_toggleManageType():
-	bg_main.visible = false
-	bg_newTable.visible = false
-	bg_help.visible = false
+	_disable_all_UI()
 	bg_manageType.visible = true
 	
 	common.toggle_manageType_response.emit()
 
 func _signal_toggleHelp():
-	bg_main.visible = false
-	bg_newTable.visible = false
+	_disable_all_UI()
 	bg_help.visible = true
-	bg_manageType.visible = false
 	
 	common.toggle_help_response.emit()
+
 
 func _signal_show_alert_popup(title: String, description: String):
 	pop_alert_title.text = title

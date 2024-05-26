@@ -9,6 +9,9 @@ var item_delete: Button
 signal item_pressed(item_node: Node)
 signal item_deleted(item_node: Node)
 
+var common
+var table_name
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -20,6 +23,8 @@ func _ready():
 	pass # Replace with function body.
 
 func set_title(new_value: String):
+	tableItemName.common = common
+	tableItemName.table_name = table_name
 	itemName = new_value
 	tableItemName.set_text(new_value)
 	item_delete.pressed.connect(_delete_event)

@@ -1,37 +1,34 @@
 
 @icon("res://addons/datatable_godot/icons/datatable.svg")
-class_name datatable_
+class_name Datatable
 ##
-## This class is used for getting the table you created.[br]
-## 
-## You can call [method init_table] and [method init_struct] so the table 
-## and structure data will be saved inside the memory, and not read again and again.[br][br]
-## [color=ffde66]Warning: The name of the class (datatable_) is temporary in this version,
-## I set it to this so the people that use the singleton will not see their game be broken, but on the
-## next update, it will be renamed to "datatable" only![br]
-## If you want to, you can delete singleton.gd, then rename this class to "datatable" so on the next update, you will not need to do it again!
-## [/color][br][br]
+## This class is used for getting the table you created.
+##
+## You shouldn't create this class yourself, but use the [method Collection.get_table] to get this class[br]
+## [br]
 ## Example:
 ## [codeblock]
 ## func _ready():
 ##     
-##     datatable_.init_table() # initiating the table data inside memory
-##     datatable_.init_struct() # initiating the structure data inside memory
+##     var collection: Collection = Collection.new("res://datatable.tableCollection.res")
 ##     
-##     if !datatable_.has_table("myTable"): # Checking if the table exist
+##     if !collection.has_table("myTable"): # Checking if the table exist
 ##         push_error("The table 'myTable' doesn't exist!")
 ##         return
 ##     
-##     var table: datatable_ = datatable_.new("myTable") # Getting the table with the name "myTable"
+##     var datatable: Datatable = collection.get_table("myTable") # Getting the table with the name "myTable"
 ##     
-##     if !table.has_item("myItem"): # Checking if the item exist inside the table "myTable"
+##     if !datatable.has_item("myItem"): # Checking if the item exist inside the table "myTable"
 ##         push_error("The table 'myTable' doesn't have 'myItem' key!")
 ##         return
 ##     
-##     var item: Dictionary = table.get_item("myItem") # Getting the item "myItem" inside "myTable"
+##     var item: Dictionary = datatable.get_item("myItem") # Getting the item "myItem" inside "myTable"
 ##     
 ##     print(item) # print the result
 ## [/codeblock]
+## [b]
+## You can copy a personalised template code for your own item / table by right clicking on your table / item
+## [/b]
 ##     
 ##     
 ## @experimental
@@ -52,7 +49,7 @@ signal item_setted(item_name: String, old_data: Dictionary, new_data: Dictionary
 signal item_getted(item_name: String, item_data: Dictionary)
 
 ## This signal is emitted when the table is saved (when calling [method add_item], [method remove_item], or [method set_item])
-signal table_saved
+signal table_saved(datas: PackedDataContainer)
 
 ## This signal is emitted when the table is getted (example: Calling [method get_item], will emit this signal)
 signal table_getted
@@ -94,6 +91,8 @@ var _table_data: Dictionary
 var _struct_name: String = ""
 var _struct_data: Dictionary
 
+var _collection: Object
+
 # static var
 
 static var _is_table_init: bool = false
@@ -102,10 +101,10 @@ static var _saved_table: Dictionary = {}
 static var _is_struct_init: bool = false
 static var _saved_struct: Dictionary = {}
 
-func _init(table_name: String):
-	if !has_table(table_name):
-		assert(false, str("Table ",table_name," doesn't exist!"))
-		return
+func _init(collection: Object, table_name: String):
+	
+	_collection = collection
+	
 	_table_name = table_name
 	_table_data = _get_table()
 	
@@ -465,17 +464,11 @@ static func _convert_basis_to_string(value: Basis) -> String:
 	value.z.x,",",value.z.y,",",value.z.z
 	)
 
-static func _get_table_datas()->Dictionary:
-	
-	if _is_table_init:
-		return _saved_table
-	
-	if !ResourceLoader.exists("datatable.res"):
-		return {}
+func _get_table_datas()->Dictionary:
 	
 	var table_datas = {}
 	
-	var packedData = load("datatable.res")
+	var packedData = _collection
 	
 	var table_data = packedData['table']
 	
@@ -528,24 +521,17 @@ static func _get_table_datas()->Dictionary:
 					table_datas[main_key]['rows'][row_key][column_key] = arr_value
 					continue
 				
-						
-				print(column_data['value'])
+				
 				table_datas[main_key]['rows'][row_key][column_key] = _convert_complex_string_to_data(column_data['type'], column_data['value'])
 
 	
 	return table_datas
 
-static func _get_table_structs()->Dictionary:
-	
-	if _is_struct_init:
-		return _saved_struct
-	
-	if !ResourceLoader.exists("datatable.res"):
-		return {}
+func _get_table_structs()->Dictionary:
 	
 	var table_types = {}
 	
-	var packedData = load("datatable.res")
+	var packedData = _collection
 	
 	var type_data = packedData['type']
 	
@@ -619,30 +605,20 @@ func _convert_comfort_data_to_complex_data(table_data: Dictionary, structure_dat
 	
 	return table_data
 
-func _save_table():
+func _save_table(table_data: Dictionary):
 	
 	var packedData: PackedDataContainer = PackedDataContainer.new()
 	
-	var table_datas = _get_table_datas()
+	var table_datas = table_data
 	var table_types = _get_table_structs()
 	table_datas = _convert_comfort_data_to_complex_data(table_datas, table_types)
 	
 	var datas = {"table": table_datas, "type": table_types}
 	
-	
 	packedData.pack(datas)
-	table_saved.emit()
-	
-	ResourceSaver.save(packedData, "datatable.res")
+	table_saved.emit(packedData)
 
 func _get_table()->Dictionary:
-	
-	if !has_table(_table_name):
-		var err = {"error":str("The table ",_table_name," doesn't exist!")}
-		
-		is_error(err)
-		
-		return err
 	
 	var table = _get_table_datas()
 	
@@ -657,83 +633,6 @@ func _get_structure()->Dictionary:
 	
 	assert(false, str("Can't find the structure: ", _struct_name))
 	return {}
-
-## Init all the table inside datatable.res inside memory so it's not needed to do it each time this operation[br]
-## Not Needed, but I advice you to do it
-static func init_table()->bool:
-	
-	if _is_table_init:
-		return true
-	
-	_saved_table = _get_table_datas()
-	
-	if _saved_table == {}:
-		return false
-	
-	_is_table_init = true
-	
-	return true
-
-## Init all the struct inside datatable.res inside memory so it's not needed to do it each time this operation[br]
-## Not Needed, but I advice you to do it
-static func init_struct()->bool:
-	
-	if _is_struct_init:
-		return true
-	
-	_saved_struct = _get_table_structs()
-	
-	if _saved_struct == {}:
-		return false
-	
-	_is_struct_init = true
-	
-	return true
-
-## Return the structure data.
-## [br]
-## You can use that to manually check the data that you can get from a table
-## Dictionary key:[br]
-## - name[br]
-## - params[br]
-## - params.[b](key)[/b].name[br]
-## - params.[b](key)[/b].size[br]
-## - params.[b](key)[/b].type[br]
-## [br]
-## Example:
-## [codeblock]
-## {
-##     "name": "Simple structure",
-##     "params": {
-##         "A string": {
-##             "name": "A String",
-##             "size": 0,
-##             "type": 0
-##         },
-##         "Lot of float": {
-##             "name": "An array of float",
-##             "size": 1,
-##             "type": 2
-##         }
-##     }
-## }
-## [/codeblock]
-static func get_struct_by_name(struct_name: String)->Dictionary:
-	
-	var structs = _get_table_structs()
-	
-	if structs.has(struct_name):
-		return structs[struct_name]
-	
-	return {"error": str("The structure ",struct_name," doesn't exist!")}
-
-## Check if the table exist[br]
-## For your information: This function is called each time you try to get a table!
-static func has_table(table_name: String)->bool:
-	
-	var table = _get_table_datas()
-	
-	return table.has(table_name)
 
 ## Function to check if the return data is an error or not.[br]
 ## More precisely, it check if the data has the "error" key in it (if it is, it's an error).[br][br]
@@ -798,6 +697,7 @@ func get_item(key: String)->Dictionary:
 func add_item(item_key: String, item_data: Dictionary, save_data: bool = true)->bool:
 	
 	var rows = _get_table_rows()
+	var table = _get_table_datas()
 	
 	if is_error(rows):
 		return false
@@ -819,8 +719,10 @@ func add_item(item_key: String, item_data: Dictionary, save_data: bool = true)->
 	
 	rows[item_key] = item_data
 	
+	table[_table_name] = _table_data
+	
 	if save_data:
-		_save_table()
+		_save_table(table)
 	
 	item_added.emit(item_key, item_data)
 	
@@ -833,6 +735,7 @@ func add_item(item_key: String, item_data: Dictionary, save_data: bool = true)->
 func remove_item(item_key: String, save_data: bool = true)->bool:
 	
 	var rows = _get_table_rows()
+	var table = _get_table_datas()
 	
 	if is_error(rows):
 		return false
@@ -848,8 +751,10 @@ func remove_item(item_key: String, save_data: bool = true)->bool:
 	
 	rows.erase(item_key)
 	
+	table[_table_name] = _table_data
+	
 	if save_data:
-		_save_table()
+		_save_table(table)
 	
 	item_removed.emit(item_key, old_data)
 	
@@ -861,6 +766,7 @@ func remove_item(item_key: String, save_data: bool = true)->bool:
 ## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
 func set_item(item_key: String, item_data: Dictionary, save_data: bool = true)->bool:
 	var rows = _get_table_rows()
+	var table = _get_table_datas()
 	
 	if is_error(rows):
 		return false
@@ -875,8 +781,10 @@ func set_item(item_key: String, item_data: Dictionary, save_data: bool = true)->
 	
 	rows[item_key] = item_data
 	
+	table[_table_name] = _table_data
+	
 	if save_data:
-		_save_table()
+		_save_table(table)
 	
 	return true
 

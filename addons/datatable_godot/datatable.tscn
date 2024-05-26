@@ -1,10 +1,13 @@
-[gd_scene load_steps=92 format=3 uid="uid://doa4a6glaf5xx"]
+[gd_scene load_steps=95 format=3 uid="uid://doa4a6glaf5xx"]
 
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/datatable_ui.gd" id="1_u3r8m"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/b_newTable.gd" id="2_4grge"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/b_manageTableType.gd" id="4_igs8k"]
+[ext_resource type="Texture2D" uid="uid://dwb1kfrq35nuy" path="res://addons/datatable_godot/icons/Load.png" id="5_3t6xb"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/mb_manageCollection.gd" id="5_jk0la"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/b_help.gd" id="6_jskvc"]
 [ext_resource type="Texture2D" uid="uid://bwwxi1ostoe7b" path="res://addons/datatable_godot/icons/Help.svg" id="6_m2owa"]
+[ext_resource type="Texture2D" uid="uid://bck1i8evwspny" path="res://addons/datatable_godot/icons/Save.png" id="6_r5abj"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/txt_version_status.gd" id="7_76wdw"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/newTable/b_closeWindow.gd" id="8_4vur3"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/bg/bg_newTable.gd" id="8_n6v0j"]
@@ -268,18 +271,44 @@ layout_mode = 2
 
 [node name="b_newTable" type="Button" parent="MarginContainer/bg_main/FlowContainer/left_top_menu"]
 layout_mode = 2
+tooltip_text = "Manage your table by adding new one, editing or deleting them."
+disabled = true
 text = "Manage Table"
 script = ExtResource("2_4grge")
 
 [node name="b_manageTableType" type="Button" parent="MarginContainer/bg_main/FlowContainer/left_top_menu"]
 layout_mode = 2
+tooltip_text = "Manage your structure by adding new one, editing or deleting them."
+disabled = true
 text = "Manage Structure"
 script = ExtResource("4_igs8k")
+
+[node name="mb_manageCollection" type="MenuButton" parent="MarginContainer/bg_main/FlowContainer/left_top_menu"]
+layout_mode = 2
+tooltip_text = "Manage your collection by loading them or creating new one"
+text = "Manage Collections"
+flat = false
+item_count = 2
+popup/item_0/text = "Load collection..."
+popup/item_0/icon = ExtResource("5_3t6xb")
+popup/item_0/id = 0
+popup/item_1/text = "New collection..."
+popup/item_1/icon = ExtResource("6_r5abj")
+popup/item_1/id = 1
+script = ExtResource("5_jk0la")
 
 [node name="center_top_menu" type="HBoxContainer" parent="MarginContainer/bg_main/FlowContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
+
+[node name="label_collection" type="Label" parent="MarginContainer/bg_main/FlowContainer/center_top_menu"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "You don't have any collection opened, please create or load a collection!"
+mouse_filter = 0
+theme_override_font_sizes/font_size = 16
+text = "No collection opened"
 
 [node name="right_top_menu" type="HBoxContainer" parent="MarginContainer/bg_main/FlowContainer"]
 layout_mode = 2
@@ -287,6 +316,7 @@ alignment = 2
 
 [node name="b_help" type="Button" parent="MarginContainer/bg_main/FlowContainer/right_top_menu"]
 layout_mode = 2
+tooltip_text = "Some useless informations"
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
@@ -312,6 +342,36 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 2
 
+[node name="HBoxContainer1" type="HBoxContainer" parent="MarginContainer/bg_main/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="RichTextLabel" parent="MarginContainer/bg_main/Panel/VBoxContainer/HBoxContainer1"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "
+[center][font_size=24]Please make a save of your data file!![/font_size]
+
+This version of the plugin doesn't have a automatic back-up system, I'm still working on it.
+
+This plugin is still in development, so you could get bug, crash, or your data [b]COULD[/b] be deleted.
+
+If it's happen, first, I'm sorry for this
+second, open an issue explaining what was your action before this happen
+third, [color=red]COPY-PASTE[/color] your back-up, do not in any circonstences move it, as this bug could happen again (if it happen one time, it could happen a second time).
+
+Just to be clear: If you didn't make a back-up of your data, I probably can't help get your data back.
+
+[font_size=24]Don't know where to start?[/font_size]
+
+- First create a collection by clicking on the \"Manage Collections\"
+- Once this is created, create a structure with the \"Manage Structure\"
+- You now have structure, you need to create a table that will be using this structure, for this, click on the \"Manage Table\"
+- Finaly, you need to start using this table in you code, for this, use the class named \"Collection\", for more information, check the documentation of it with the button in the script editor"
+fit_content = true
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/bg_main/Panel/VBoxContainer"]
 layout_mode = 2
 
@@ -320,15 +380,18 @@ layout_mode = 2
 
 [node name="github" type="LinkButton" parent="MarginContainer/bg_main/Panel/VBoxContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Open the GitHub repo of the addon"
 text = "Github Repo"
 
 [node name="twitter" type="LinkButton" parent="MarginContainer/bg_main/Panel/VBoxContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Open the twitter account of the creator of this addon (be aware that he is a french guy)"
 text = "Twitter Account"
 uri = "https://x.com/Ward72727"
 
 [node name="reportBug" type="LinkButton" parent="MarginContainer/bg_main/Panel/VBoxContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "If you got a bug, or have an idea, do not hesitate to open an issue, I'm really open to all  idea!"
 text = "Report an issue / Have an idea"
 uri = "https://github.com/Ward727a/godot_datatable_plugin/issues"
 
@@ -343,11 +406,11 @@ alignment = 2
 
 [node name="version_status" type="RichTextLabel" parent="MarginContainer/bg_main/Panel/VBoxContainer/HBoxContainer/HBoxContainer3"]
 layout_mode = 2
-tooltip_text = "You good to go, you got the last version available!"
+tooltip_text = "The plugin is check for an update..."
 theme_override_styles/focus = SubResource("StyleBoxFlat_w7rfg")
 theme_override_styles/normal = SubResource("StyleBoxFlat_w7rfg")
 bbcode_enabled = true
-text = "[img]res://addons/datatable_godot/icons/StatusSuccess.png[/img] [color=lightgreen]Version up-to-date! "
+text = "[img]res://addons/datatable_godot/icons/Reload.png[/img] Checking for update... "
 fit_content = true
 autowrap_mode = 0
 script = ExtResource("7_76wdw")
@@ -387,6 +450,7 @@ alignment = 2
 
 [node name="b_closeWindow" type="Button" parent="MarginContainer/bg_newTable/VBoxContainer/FlowContainer/right_top_menu"]
 layout_mode = 2
+tooltip_text = "Close this window and go back to the main menu (your data will be saved)"
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
@@ -414,11 +478,13 @@ layout_mode = 2
 [node name="in_tableTitle" type="LineEdit" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Type your table name here, if it's red, it's already taken"
 placeholder_text = "Table name"
 script = ExtResource("9_nq8rd")
 
 [node name="b_createTable" type="Button" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Create a new table"
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
@@ -448,6 +514,7 @@ script = ExtResource("14_1gj4k")
 [node name="txt_table_name" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/table_list/schema_table"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "You can right click on this to copy a template code to get this table"
 mouse_default_cursor_shape = 2
 text = "Test table title"
 script = ExtResource("14_igr0e")
@@ -556,12 +623,14 @@ layout_mode = 2
 [node name="in_itemTableName" type="LineEdit" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Type your item name here, if it's red, it's already taken"
 placeholder_text = "Item Name"
 script = ExtResource("11_p3d64")
 
 [node name="b_addItemTable" type="Button" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
+tooltip_text = "Create a new item"
 theme_override_constants/icon_max_width = 16
 disabled = true
 icon = ExtResource("26_aoqmn")
@@ -604,6 +673,7 @@ script = ExtResource("15_1mk7i")
 [node name="in_tableItemName" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/VBC_TableItemList/HBC_tableItemSchema"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "You can right click on this to copy a template code to get this item inside this table"
 mouse_default_cursor_shape = 2
 text = "Test name"
 fit_content = true
@@ -2629,11 +2699,13 @@ layout_mode = 2
 [node name="in_newTypeName" type="LineEdit" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "New type name..."
+tooltip_text = "The name of the new structure, if it's red, it's already taken"
+placeholder_text = "New structure name..."
 script = ExtResource("42_slt2x")
 
 [node name="b_addType" type="Button" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+tooltip_text = "Create a new structure"
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
@@ -2725,6 +2797,7 @@ layout_mode = 2
 [node name="in_new_param_name" type="LineEdit" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "The new parameter name, if it's red, it already taken or you didn't choose a structure before doing this"
 placeholder_text = "New Parameter Name"
 script = ExtResource("45_3s3h2")
 
@@ -2797,6 +2870,7 @@ popup/item_1/id = 1
 
 [node name="b_add_param" type="Button" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Add the new parameter to the list"
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
@@ -2892,6 +2966,7 @@ text = "Comment: "
 [node name="in_comment_param" type="LineEdit" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Add a comment to this parameter that will be shown has a tooltip when hovering this parameter inside the table manager"
 
 [node name="bg_help" type="Panel" parent="MarginContainer"]
 visible = false

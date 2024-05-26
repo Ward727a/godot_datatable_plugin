@@ -11,6 +11,13 @@ extends Node
 @onready var table_types: Dictionary = {}
 @onready var table_datas: Dictionary = {}
 
+var collection_path: String = "":
+	set(new_value):
+		collection_path = new_value
+		if !collection_path.is_empty():
+			$"../MarginContainer/bg_main/FlowContainer/left_top_menu/b_newTable".disabled = false
+			$"../MarginContainer/bg_main/FlowContainer/left_top_menu/b_manageTableType".disabled = false
+
 @onready var script_keys: Array = []
 
 const TYPE_STRING = 0
@@ -146,6 +153,7 @@ func _signal_add_type(type: Dictionary):
 	add_type_response.emit(true)
 
 func _signal_get_type(key: int):
+	load_from_ressource()
 	get_type_response.emit(table_types, key)
 
 func _signal_get_data(key: int):
@@ -168,26 +176,34 @@ func _signal_generate_key(script_name: String):
 
 func save_in_ressource():
 	
+	if collection_path.is_empty():
+		return
+	
 	var packedData: PackedDataContainer = PackedDataContainer.new()
 	
 	var datas = {"table": table_datas, "type": table_types}
 	
 	print("[DataTable] Saving data...")
 	
+	#print(datas['table'])
+	
 	packedData.pack(datas)
 	
-	ResourceSaver.save(packedData, "datatable.res")
+	ResourceSaver.save(packedData, collection_path)
 	
 	pass
 
 func load_from_ressource():
 	
-	## load table data from the ressource file
-	## from here
-	if !ResourceLoader.exists("datatable.res"):
+	if collection_path.is_empty():
 		return
 	
-	var packedData = load("datatable.res")
+	## load table data from the ressource file
+	## from here
+	if !ResourceLoader.exists(collection_path):
+		return
+	
+	var packedData = load(collection_path)
 	
 	var table_data = packedData['table']
 	
@@ -208,8 +224,6 @@ func load_from_ressource():
 				var column_data = row_data['columns'][column_key] # name, value, type
 				
 				table_datas[main_key]['rows'][row_key]['columns'][column_key] = {"name": column_data['name'], "value": column_data['value'], "type": column_data['type'], "size": column_data['size']}
-	
-	
 	
 	## to here
 	

@@ -96,6 +96,7 @@ func reload_table_list():
 		if node != table_schema:
 			node.queue_free()
 	
+	
 	for table_name: String in table_data:
 		
 		var data: Dictionary = table_data[table_name]
@@ -105,6 +106,7 @@ func reload_table_list():
 		
 		var text_node = duplicate_node.get_child(0)
 		text_node.set_text(data['name'])
+		text_node.common = common
 		
 		duplicate_node.set_meta("table_data", data)
 		
@@ -119,12 +121,13 @@ func reload_table_list():
 
 func reload_items_list():
 	
-	if selected_table_data == {} || selected_table_node == null:
-		return
 	
 	for node: Node in item_list.get_children():
 		if node != item_schema:
 			node.queue_free()
+	
+	if selected_table_data == {} || selected_table_node == null:
+		return
 	
 	var data = selected_table_data['rows']
 	var structure = selected_table_data['structure']
@@ -138,6 +141,9 @@ func reload_items_list():
 		var item_duplicate: HBoxContainer = item_schema.duplicate()
 		
 		item_list.add_child(item_duplicate)
+		
+		item_duplicate.common = common
+		item_duplicate.table_name = selected_table_data['name']
 		
 		item_duplicate.set_title(row_name)
 		item_duplicate.set_data(row)
@@ -201,6 +207,7 @@ func _signal_get_datas(datas: Dictionary, key: int):
 	
 	table_data = datas
 	reload_table_list()
+	reload_items_list()
 
 
 func _create_table(table_name: String):
@@ -235,7 +242,11 @@ func _select_table(table_node: Node):
 		add_item_but.set_meta('force_disabled',false)
 	
 	selected_table_node = table_node
-	selected_table_data = selected_table_node.get_meta("table_data")
+	
+	if !selected_table_node.get_meta("table_data").has('name'):
+		return
+	
+	selected_table_data = table_data[selected_table_node.get_meta("table_data")['name']]
 	
 	if !param_block.reload(selected_table_data):
 		common.popup_alert_ask.emit("Can't open this data", str("The plugin can't load this data because the structure (structure name: \"",selected_table_data['structure'],"\") used by the table is not found!"))
@@ -346,7 +357,7 @@ func _delete_item(item_node: Node):
 		return
 	
 	selected_table_data['rows'].erase(data['name'])
-	selected_table_data['size'] -= 1
+	selected_table_data['size'] = selected_table_data['rows'].size()
 	
 	param_block.reload(selected_table_data)
 	

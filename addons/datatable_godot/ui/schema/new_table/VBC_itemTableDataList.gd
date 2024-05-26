@@ -214,7 +214,7 @@ func save_data_of_struct():
 		data['columns'][i]['type'] = struct_data['type']
 		data['columns'][i]['value'] = node.get_value()
 		data['columns'][i]['size'] = struct_data['size']
-		
+	
 
 func set_data_on_struct(key: String, data: Variant):
 	
