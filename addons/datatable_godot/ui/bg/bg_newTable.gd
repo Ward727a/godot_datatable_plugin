@@ -120,7 +120,6 @@ func reload_table_list():
 
 func reload_items_list():
 	
-	print("clean reload item list")
 	
 	for node: Node in item_list.get_children():
 		if node != item_schema:

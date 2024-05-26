@@ -13,7 +13,6 @@ func _gui_input(event):
 			copy_template_code()
 
 func copy_template_code():
-	print("template copied!")
 	
 	var label: Label = Label.new()
 	var timer: Timer = Timer.new()
