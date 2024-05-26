@@ -1,5 +1,3 @@
-## **FYI: The license of this project will change to the MIT License at the next version!**
-
 # 💾Godot DataTable Plugin
 
 A plugin that give you the ability to create datatable directly inside the editor.
@@ -51,4 +49,4 @@ You can access it by using the `datatable_` class, please be aware that this cla
 
 ## ©License
 
-This plugin is licensed under the GPL-3.0 License, see [License](https://github.com/Ward727a/godot_datatable_plugin/blob/master/LICENSE) for more info.
+This plugin is licensed under the MIT License, see [License](https://github.com/Ward727a/godot_datatable_plugin/blob/master/LICENSE) for more info.
