@@ -11,12 +11,28 @@ extends Node
 @onready var table_types: Dictionary = {}
 @onready var table_datas: Dictionary = {}
 
+## timer
+@onready var backup_timer: Timer = %backup_timer
+
+const backup_folder: String = "res://datatable_backup/"
+
 var collection_path: String = "":
 	set(new_value):
 		collection_path = new_value
 		if !collection_path.is_empty():
 			$"../MarginContainer/bg_main/FlowContainer/left_top_menu/b_newTable".disabled = false
 			$"../MarginContainer/bg_main/FlowContainer/left_top_menu/b_manageTableType".disabled = false
+			
+			# Working on the backup timer to restart it, reset the signal, and set it again
+			backup_timer.stop()
+			backup_timer.set_meta('index_backup', 1)
+			if backup_timer.timeout.get_connections().size() != 0:
+				backup_timer.timeout.disconnect(_do_backup_data)
+			backup_timer.timeout.connect(_do_backup_data.bind(new_value))
+			backup_timer.start()
+			
+			# doing a pre-backup for security reason
+			_do_backup_data(new_value)
 
 @onready var script_keys: Array = []
 
@@ -173,7 +189,6 @@ func _signal_generate_key(script_name: String):
 	
 	script_key_response.emit(script_key, script_name)
 
-
 func save_in_ressource():
 	
 	if collection_path.is_empty():
@@ -246,3 +261,61 @@ func load_from_ressource():
 				table_types[main_key]["params"][param_key]['size'] = param['size']
 	
 	pass
+
+
+func _do_backup_data(path: String):
+	
+	if path.is_empty():
+		return
+	
+	if !ResourceLoader.exists(path):
+		return
+	
+	var data = load(path)
+	
+	var file_name
+	
+	# skip the backup if it's a backup that is openned
+	if path.contains("datatable_backup"):
+		assert(false, "Can't back-up a back-up file, please copy-paste the back-up in another directory. The back-up system will not work otherwise!")
+		return
+	
+	if path.ends_with(".tableCollection.res"):
+		var path_splitted = path.split(".tableCollection.res")
+		path_splitted = path_splitted[0].split("/")
+		file_name = path_splitted[path_splitted.size()-1]
+	else:
+		var path_splitted = path.split(".res")
+		path_splitted = path_splitted[0].split("/")
+		file_name = path_splitted[path_splitted.size()-1]
+	
+	if file_name.is_empty():
+		assert(false, "couldn't create backup file!")
+		return
+
+	var index_backup = backup_timer.get_meta('index_backup')
+	
+	var backup_file_path = str(backup_folder, "/", file_name, "_backup",index_backup,".tableCollection.res")
+	
+	index_backup += 1
+	
+	if index_backup > 3:
+		index_backup = 1
+	
+	backup_timer.set_meta('index_backup', index_backup)
+	
+	var backup_dir = DirAccess.open("res://")
+	
+	if !backup_dir.dir_exists("datatable_backup"):
+		var make_err = backup_dir.make_dir("datatable_backup")
+		
+		if make_err != OK:
+			assert(false, "The plugin couldn't create the 'datatable_backup' folder in the path: 'res://', the back-up system can't work without it!")
+	
+	var err = ResourceSaver.save(data, backup_file_path)
+	
+	if err != OK:
+		assert(false, "Couldn't create backup file!")
+	else:
+		print_rich("[color=lightgreen][DataTable] Created a backup for '",file_name,"' collection, path: ",backup_file_path)
+	

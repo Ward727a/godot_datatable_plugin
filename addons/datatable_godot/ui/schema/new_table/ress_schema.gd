@@ -14,6 +14,7 @@ var select_path: String = "res://" :
 	set(new_path):
 		select_path = str(new_path)
 		path_label.set_text(new_path)
+		path_label.set_tooltip_text(new_path)
 	get:
 		return select_path
 

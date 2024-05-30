@@ -46,12 +46,12 @@
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/box/arr_item_box.gd" id="32_olfsa"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/t3_schema.gd" id="32_qc5jy"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/ress_schema.gd" id="36_wke7h"]
-[ext_resource type="Script" path="res://addons/datatable_godot/Button.gd" id="37_ikjq8"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/quaternionSchema.gd" id="38_47e3s"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/b_closeWindow.gd" id="39_7ex4j"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/bg/bg_manageType.gd" id="39_mg6or"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/plane_schema.gd" id="39_qbw7h"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/rect_schema.gd" id="40_i7lsn"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/newTable/b_resource_import.gd" id="40_ygtq0"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/type_title.gd" id="41_acyeb"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/manageType/b_addType.gd" id="42_ppf6e"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/manage_type/in_newTypeName.gd" id="42_slt2x"]
@@ -224,6 +224,10 @@ bbcode_enabled = true
 text = "Hmm it's seem we got a problem right here"
 fit_content = true
 
+[node name="backup_timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 600.0
+
 [node name="signals" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("13_3q25f")
@@ -244,6 +248,7 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
 [node name="bg_main" type="VBoxContainer" parent="MarginContainer"]
+visible = false
 layout_mode = 2
 
 [node name="FlowContainer" type="FlowContainer" parent="MarginContainer/bg_main"]
@@ -1441,6 +1446,7 @@ metadata/array = true
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/array_schema/HBoxContainer"]
+custom_minimum_size = Vector2(163, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
@@ -1455,10 +1461,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="paramValue" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/array_schema/HBoxContainer/HBoxContainer"]
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="b_add_arr_item" type="Button" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/array_schema/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
@@ -1552,13 +1560,16 @@ size_flags_horizontal = 3
 [node name="Label" type="Label" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/ress_schema/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 0
+clip_text = true
+text_overrun_behavior = 3
 
-[node name="Button" type="Button" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/ress_schema/VBoxContainer/HBoxContainer"]
+[node name="b_resource_import" type="Button" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/ress_schema/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Import..."
-script = ExtResource("37_ikjq8")
+script = ExtResource("40_ygtq0")
 
-[node name="FileDialog" type="FileDialog" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/ress_schema/VBoxContainer/HBoxContainer/Button"]
+[node name="FileDialog" type="FileDialog" parent="MarginContainer/bg_newTable/VBoxContainer/HBoxContainer/HSplitContainer/Panel2/MarginContainer/ScrollContainer/VBC_itemTableDataList/ress_schema/VBoxContainer/HBoxContainer/b_resource_import"]
 title = "Open a File"
 initial_position = 2
 size = Vector2i(500, 400)
@@ -2611,7 +2622,6 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ij0bt")
 
 [node name="bg_manageType" type="Panel" parent="MarginContainer"]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3otyk")
 script = ExtResource("39_mg6or")
@@ -2877,7 +2887,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer"]
@@ -2929,6 +2938,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer2/VSplitContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 text = "Comment: "
 

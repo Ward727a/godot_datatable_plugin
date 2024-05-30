@@ -1,5 +1,6 @@
 
 @icon("res://addons/datatable_godot/icons/datatable.svg")
+extends Object
 class_name Datatable
 ##
 ## This class is used for getting the table you created.

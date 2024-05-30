@@ -1,7 +1,7 @@
-
+extends Object
 class_name Collection
 ##
-## This class is used for getting a collection of datatable[br]
+## This class is used for getting a collection of datatable.
 ##
 ## To get the collection, you need the path to your collection file (should end by ".tableCollection.res", or just ".res" if you use the old collection system)[br]
 ## [br]

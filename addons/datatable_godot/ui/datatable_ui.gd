@@ -8,6 +8,7 @@ extends Control
 ## import common
 @onready var common:Node = %signals
 
+
 ## Popup components - Alert
 @onready var pop_alert_main: Popup = $alert
 @onready var pop_alert_title: Label = $alert/Panel/MarginContainer/Panel/MarginContainer/VBoxContainer/alert_title
@@ -39,10 +40,6 @@ const cant_check_tip: String = "The plugin couldn't check if an update was avail
 
 const LOCAL_CONFIG_PATH: String = "res://addons/datatable_godot/plugin.cfg"
 
-# this variable is temporary for this version, it will be removed at the next update
-# it's used so the warning message will appear only once
-const WARNING_CLASS_PATH: String = "res://addons/datatable_godot/class/warning_class_change.tres"
-var warning_dialog: AcceptDialog
 
 ###############
 ## Functions ##
@@ -70,29 +67,6 @@ func _ready():
 	bg_autoupdate.failed.connect(_failed_update)
 	
 	common.plugin_version = get_version()
-	
-	_temp_show_warning()
-
-func _temp_show_warning():
-	if FileAccess.file_exists(WARNING_CLASS_PATH):
-		warning_dialog = AcceptDialog.new()
-		EditorInterface.get_base_control().add_child(warning_dialog)
-		warning_dialog.dialog_text = "PLEASE READ!!"
-		var text: RichTextLabel = RichTextLabel.new()
-		warning_dialog.add_child(text)
-		text.bbcode_enabled = true
-		warning_dialog.min_size = Vector2(500, 300)
-		text.set_text("[font_size=24][color=red][Datatable] PLEASE READ!!\r[font_size=16]If you use the singleton.gd (it's probably the case), you need to convert your code to use the class \"datatable_\", at the next update, the singleton.gd will be totaly removed!!\r\r[color=white]Don't worry, this warning will only show once!\r\rIf you just download this addons, you don't need to worry!")
-		warning_dialog.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
-		warning_dialog.visible = true
-		
-		warning_dialog.confirmed.connect(_temp_close_warning)
-		warning_dialog.canceled.connect(_temp_close_warning)
-		OS.move_to_trash(ProjectSettings.globalize_path(WARNING_CLASS_PATH))
-
-func _temp_close_warning():
-	warning_dialog.visible = false
-	warning_dialog.queue_free()
 
 func _disable_all_UI():
 	bg_main.visible = false
@@ -121,7 +95,6 @@ func _signal_toggleManageType():
 	
 	common.toggle_manageType_response.emit()
 
-
 func _signal_show_alert_popup(title: String, description: String):
 	pop_alert_title.text = title
 	pop_alert_description.text = description
@@ -145,21 +118,21 @@ func _check_update():
 # Original creator of this code part is nathanhoad, I only edited it a little to make it work with mine!
 # Github link to his plugin: https://github.com/nathanhoad/godot_input_helper/tree/main
 # Thanks to nathanhoad!
-#
+# 
 # Nathanhoad License:
 # MIT License
 # Copyright (c) 2022-present Nathan Hoad
-#
+# 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-#
+# 
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-#
+# 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -240,7 +213,7 @@ func _success_update(new_version):
 	finished_dialog.confirmed.connect(restart_addon)
 	EditorInterface.get_base_control().add_child(finished_dialog)
 	finished_dialog.popup_centered()
-	
+
 # OC: Nathanhoad (https://github.com/nathanhoad/godot_input_helper/tree/main) under MIT License (see above)
 func _failed_update() -> void:
 	var failed_dialog: AcceptDialog = AcceptDialog.new()

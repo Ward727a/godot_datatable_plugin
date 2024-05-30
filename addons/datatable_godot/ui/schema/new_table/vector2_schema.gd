@@ -1,6 +1,8 @@
 @tool
 extends HBoxContainer
 
+var vec_input: Node
+
 var x_input: SpinBox
 var y_input: SpinBox
 var text: RichTextLabel
