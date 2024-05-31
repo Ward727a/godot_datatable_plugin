@@ -1,10 +1,14 @@
-# This code is using some code from Nathanhoad
-# Under the given license of his plugin (https://github.com/nathanhoad/godot_input_helper/tree/main)
-# See below for more details!
+
 
 @tool
 extends _dt_common
 class_name _dt_updater
+
+## Class that manage all the update system of the plugin
+##
+## This code is using some code from Nathanhoad[br]
+## Under the given license of his plugin (link: https://github.com/nathanhoad/godot_input_helper/tree/main)[br]
+## See the code for more details!
 
 var _plugin: _dt_plugin
 var _http_request: HTTPRequest
@@ -13,11 +17,10 @@ var _is_checking_update: bool = false
 
 const UPDATE_URL: String = "https://api.github.com/repos/Ward727a/godot_datatable_plugin/releases"
 
-signal update_available(new_version: String)
-signal update_error
-signal update_not_available
-signal checking_update
-
+signal update_available(new_version: String) ## The plugin has a more recent version available on GitHub
+signal update_error ## The plugin couldn't check if a most recent version is available due to an error
+signal update_not_needed ## The plugin is already at the most recent version
+signal checking_update ## The plugin is checking for an update, need to wait
 
 static var _INSTANCE: _dt_updater = null
 
@@ -110,7 +113,7 @@ func _on_update_resp(result: int, response_code: int, headers: PackedStringArray
 		
 		_get_http().request_completed.disconnect(_on_update_resp)
 	else:
-		update_not_available.emit()
+		update_not_needed.emit()
 
 # OC: Nathanhoad (https://github.com/nathanhoad/godot_input_helper/tree/main) under MIT License (see above)
 func _on_success_update(new_version):

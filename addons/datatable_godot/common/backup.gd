@@ -2,6 +2,8 @@
 extends _dt_common
 class_name _dt_backup
 
+## Class that manage all the backup system
+
 static var _INSTANCE: _dt_backup = null
 
 var _folder: String
@@ -19,7 +21,6 @@ static func get_instance() -> _dt_backup:
 	_INSTANCE = _dt_backup.new()
 	return _INSTANCE
 
-
 # Init
 
 func _init():
@@ -29,7 +30,6 @@ func _init():
 	_folder = config.get_backup_path()
 	_max = int(config.get_backup_max())
 	_suffix = config.get_backup_suffix()
-
 
 # Backend
 
