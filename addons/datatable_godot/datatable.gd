@@ -20,6 +20,8 @@ func _enter_tree():
 	
 	common.toggle_plugin_on.emit()
 	
+	_dt_interface.get_instance().set_main(datatableDock)
+	
 	print_rich("[color=lightgreen][Datatable] This warning ([color=ffde66]core/config/project_settings.cpp:365 - Property not found: autoload/datatable[/color]) & error ([color=ff786b]Request for nonexistent project setting: autoload/datatable.[/color]) message can be ignored, it will be fixed at the next version, but for now it's needed to remove the old singleton autoload to free the name for the class")
 	remove_autoload_singleton("datatable")
 	
