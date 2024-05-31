@@ -23,7 +23,7 @@ func _init():
 	_config = ConfigFile.new()
 	_config.load(LOCAL_CONFIG_PATH)
 
-# Backend
+# Config
 
 func get_version() -> String:
 	return _config.get_value("plugin", "version")
@@ -31,11 +31,20 @@ func get_version() -> String:
 func get_name() -> String:
 	return _config.get_value("plugin", "name")
 
+func get_file_version() -> String:
+	return _config.get_value("file", "version")
+
+func get_file_ext() -> String:
+	return _config.get_value("file", "ext")
+
 func get_backup_path() -> String:
 	return _config.get_value("backup", "folder")
 
 func get_backup_max() -> String:
 	return _config.get_value("backup", "max")
+
+func get_backup_suffix() -> String:
+	return _config.get_value("backup", "suffix")
 
 # Convert a version number to an actually comparable number
 # OC: Nathanhoad (https://github.com/nathanhoad/godot_input_helper/tree/main) under MIT License (see above)
