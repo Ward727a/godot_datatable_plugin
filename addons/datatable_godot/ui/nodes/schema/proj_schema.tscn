@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/proj_schema.gd" id="1_unwl8"]
 
 [node name="proj_schema" type="HBoxContainer"]
-visible = false
 script = ExtResource("1_unwl8")
 
 [node name="paramName" type="RichTextLabel" parent="."]

@@ -5,7 +5,7 @@ var input: HBoxContainer
 var paramValue: HBoxContainer
 var text: RichTextLabel
 var add_item: Button
-var used_schema: HBoxContainer
+var used_schema: Resource
 var item_value_node: Node
 
 @onready var paramName: String = ""
@@ -74,7 +74,7 @@ func set_type(new_type: int):
 			icon = "res://addons/datatable_godot/icons/Projection.png"
 			used_schema = _dt_schema.get_instance().proj_schema
 	
-	input = used_schema.duplicate()
+	input = used_schema.instantiate()
 	
 	paramValue.add_child(input)
 	

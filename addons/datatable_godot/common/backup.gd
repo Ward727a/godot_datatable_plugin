@@ -4,7 +4,6 @@ class_name _dt_backup
 
 ## Class that manage all the backup system
 
-
 static var _INSTANCE: _dt_backup
 
 static func delete():
@@ -51,6 +50,8 @@ func make(path: String):
 		return
 	
 	if !_check_path(path):
+		ASSERT_ERROR("Error in the path, can't make a backup!")
+		DEBUG(str("Path: ", path))
 		return
 	
 	var data = load(path)
@@ -58,6 +59,7 @@ func make(path: String):
 	var file_name = _get_file_name(path)
 	
 	if file_name.is_empty():
+		DEBUG(str("packedData: ", data, " file_name: ", file_name, " path: ",path))
 		ASSERT_ERROR("File name is empty, cancelling backup")
 		return
 	
@@ -71,15 +73,22 @@ func make(path: String):
 	var err = ResourceSaver.save(data, backup_file_path)
 	
 	if err != OK:
+		DEBUG(str("packedData: ", data, " file_name: ", file_name, " file_path: ", backup_file_path, " path: ",path))
 		ASSERT_ERROR("Couldn't create backup file!")
 	else:
 		print_rich("[color=lightgreen][DataTable] Created a backup for '",file_name,"' collection, path: ",backup_file_path)
 
 func link(timer: Timer, path: String):
+	
+	DEBUG("Link timer to backup system")
+	
 	if timer.timeout.get_connections().has(make):
+		DEBUG("Disconnect already connected func")
 		timer.timeout.disconnect(make)
+	
 	timer.timeout.connect(make.bind(path))
 	timer.start()
+
 
 func _get_file_name(path: String)->String:
 	
@@ -109,7 +118,6 @@ func _check_path(path: String)->bool:
 	return true
 
 func _get_index(path: String)->int:
-	
 	
 	_index += 1
 	

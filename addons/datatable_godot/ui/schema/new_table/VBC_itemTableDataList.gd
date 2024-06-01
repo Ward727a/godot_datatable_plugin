@@ -115,10 +115,10 @@ func reload_from_struct(struct: Dictionary):
 			_dt_common.TYPE_BASIS:
 				schema = _dt_schema.get_instance().basis_schema
 			_dt_common.TYPE_PROJ:
-				schema = _dt_schema.get_instance().proj_schema
+				schema = _dt_schema.get_instance().proj_schema ## Getting the scene with spinbox in it
 		
 		if paramSize != 0:
-			var parent = _dt_schema.get_instance().array_schema.duplicate()
+			var parent = _dt_schema.get_instance().array_schema.instantiate()
 			add_child(parent)
 			add_child(separator)
 			
@@ -133,21 +133,20 @@ func reload_from_struct(struct: Dictionary):
 			
 			continue
 		
-		var duplicate: Node = schema.duplicate()
+		var object: Node = schema.instantiate()
 		
-		
-		add_child(duplicate)
+		add_child(object) ## adding it to the VBox
 		
 		add_child(separator)
 		
-		node_structure[key] = duplicate
+		node_structure[key] = object
 		
-		duplicate.set_title(title)
+		object.set_title(title)
 		
-		var name_node = duplicate.get_child(0)
+		var name_node = object.get_child(0)
 		name_node.set_tooltip_text(comment)
 		
-		duplicate.visible = true
+		object.visible = true
 
 func save_data_of_struct():
 	
@@ -165,6 +164,7 @@ func save_data_of_struct():
 		if !data['columns'].has(i):
 			data['columns'][i] = {}
 		
+		print(struct_data['name']," : ",node.get_value())
 		
 		data['columns'][i]['name'] = struct_data['name']
 		data['columns'][i]['type'] = struct_data['type']

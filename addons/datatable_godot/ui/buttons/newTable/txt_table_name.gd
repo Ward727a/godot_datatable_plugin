@@ -34,7 +34,7 @@ func copy_template_code():
 	
 	var template = str(
 		"\n",
-		"const collection_path: String = \"",common.collection_path,"\"\n",
+		"const collection_path: String = \"",_dt_resource.get_instance().get_path(),"\"\n",
 		"var collec: Collection = Collection.new(collection_path)\n",
 		"\n",
 		"const table_name: String = \"",get_text(),"\"\n",

@@ -42,6 +42,7 @@ func _exit_tree():
 	_dt_resource.get_instance().delete()
 	_dt_backup.get_instance().delete()
 	_dt_updater.get_instance().delete()
+	_dt_schema.get_instance().delete()
 	pass
 
 func _has_main_screen():
