@@ -89,6 +89,7 @@ func check_update(label: RichTextLabel):
 
 func _update_available(new_v: String):
 	update_available.emit(new_v)
+	_next_version = new_v
 	_update_statut(update_available_text, update_available_tip)
 
 func _update_not_needed():
@@ -229,11 +230,16 @@ func _on_http_request_completed(result: int, response_code: int, headers: Packed
 	
 	save_zip(body)
 	
-	OS.move_to_trash(ProjectSettings.globalize_path("res://addons/datatable_godot"))
-	
 	var zip_reader: ZIPReader = ZIPReader.new()
-	zip_reader.open(TEMP_FILE_NAME)
+	var success = zip_reader.open(TEMP_FILE_NAME)
+	
+	if success != OK:
+		
+		ASSERT_ERROR("Can't open the zip update file")
+		return
 	var files: PackedStringArray = zip_reader.get_files()
+	
+	OS.move_to_trash(ProjectSettings.globalize_path("res://addons/datatable_godot"))
 	
 	var base_path = files[1]
 	
