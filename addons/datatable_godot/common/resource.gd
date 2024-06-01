@@ -4,33 +4,58 @@ class_name _dt_resource
 
 ## Class that manage all the save / load datatable collection file
 
+const _collection_required_key = ["table", "type"]
+
 signal res_saved(path: String)
 signal res_loaded(path: String)
+signal res_created(path: String)
 signal res_reload
 
-static var _INSTANCE: _dt_resource = null
+static var _INSTANCE
 
 var table_datas: Dictionary
 var table_types: Dictionary
 
 var _loaded_path: String
 var _collection_path: String
+var _collection_name: String
+
+var _ext: String
+var _version: String
 
 static func get_instance() -> _dt_resource:
 	
-	if _INSTANCE:
-		return _INSTANCE
+	if !_INSTANCE || _dt_plugin.get_instance().get_dev_reset_instance() == "true":
+		_INSTANCE = _dt_resource.new()
 	
-	_INSTANCE = _dt_resource.new()
+	_INSTANCE.load_var()
 	return _INSTANCE
+
+# Init
+
+func load_var():
+	
+	_ext = _dt_plugin.get_instance().get_file_ext()
+	_version = _dt_plugin.get_instance().get_file_version()
 
 # public
 
+func set_name(path_or_name: String):
+	
+	if path_or_name.contains(".res"):
+		_collection_name = _get_file_name(path_or_name)
+	else:
+		_collection_name = path_or_name
+
 func set_path(path: String):
 	_collection_path = path
+	set_name(path)
 
 func get_path():
 	return _collection_path
+
+func get_name():
+	return _collection_name
 
 func get_data() -> Dictionary:
 	
@@ -41,6 +66,9 @@ func get_type() -> Dictionary:
 	return table_types
 
 func set_data(packedData: PackedDataContainer):
+	
+	table_datas.clear()
+	
 	var table_data = packedData['table']
 	
 	for main_key in table_data:
@@ -62,6 +90,9 @@ func set_data(packedData: PackedDataContainer):
 				table_datas[main_key]['rows'][row_key]['columns'][column_key] = {"name": column_data['name'], "value": column_data['value'], "type": column_data['type'], "size": column_data['size']}
 
 func set_type(packedData: PackedDataContainer):
+	
+	table_types.clear()
+	
 	var type_data = packedData['type']
 	
 	for main_key in type_data: # name of type
@@ -80,12 +111,21 @@ func set_type(packedData: PackedDataContainer):
 				table_types[main_key]["params"][param_key]['comment'] = param['comment']
 				table_types[main_key]["params"][param_key]['size'] = param['size']
 
-func load_file():
+func load_file(path: String = ""):
 	
-	var save_path = get_path()
+	var save_path = path
+	
+	if path.is_empty():
+		save_path = get_path()
+	else:
+		set_path(path)
 	
 	if !_check_path(save_path):
 		ASSERT_ERROR(str("The file '",save_path,"' doesn't exist!"))
+		return
+	
+	if !_is_valid_resource_file(save_path):
+		ERROR(str("The file '",save_path,"' is not a valid collection file!"))
 		return
 	
 	if _loaded_path == save_path:
@@ -95,7 +135,6 @@ func load_file():
 	var packedData = load(save_path)
 	
 	set_data(packedData)
-	
 	set_type(packedData)
 	
 	res_loaded.emit(_collection_path)
@@ -117,6 +156,32 @@ func save_file():
 	ResourceSaver.save(packedData, _collection_path)
 	res_saved.emit(_collection_path)
 
+func new_file(path: String) -> bool:
+	if path.is_empty():
+		ERROR("Can't create a new file with an empty given path")
+		return false
+	
+	var _file_name = _get_file_name(path)
+	
+	var packedData: PackedDataContainer = PackedDataContainer.new()
+	
+	packedData.pack({"table": {}, "type": {}})
+	
+	var ret = ResourceSaver.save(packedData, path)
+	
+	if ret != OK:
+		ERROR("Can't save collection due to an error when trying to save it!")
+		return false
+	
+	set_data(packedData)
+	set_type(packedData)
+	
+	set_path(path)
+	
+	res_created.emit(path)
+	
+	return true
+
 # private
 
 func _check_path(path: String) -> bool:
@@ -125,6 +190,38 @@ func _check_path(path: String) -> bool:
 		return false
 	
 	if !ResourceLoader.exists(path):
+		return false
+	
+	return true
+
+func _get_file_name(path: String) -> String:
+	var collections_name
+	
+	if path.ends_with(_ext):
+		collections_name = path.split(_ext)[0].split("/")
+	else:
+		collections_name = path.split(".res")[0].split("/")
+	
+	var collection_name = collections_name[collections_name.size()-1]
+	
+	return collection_name
+
+func _is_valid_resource_file(path: String) -> bool:
+	
+	var res = load(path)
+	
+	if res.get_class() != "PackedDataContainer":
+		ERROR("This file isn't a PackedDataContainer!")
+		return false
+	
+	var key_index = 0
+	
+	for i in res:
+		if _collection_required_key.has(i):
+			key_index += 1
+	
+	if key_index != _collection_required_key.size():
+		ERROR("This file doesn't have the required key to be an valid collection!")
 		return false
 	
 	return true

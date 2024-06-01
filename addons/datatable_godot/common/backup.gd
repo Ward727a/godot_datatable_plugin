@@ -15,15 +15,15 @@ var _most_recent_path: String
 
 static func get_instance() -> _dt_backup:
 	
-	if _INSTANCE:
-		return _INSTANCE
+	if !_INSTANCE || _dt_plugin.get_instance().get_dev_reset_instance() == "true":
+		_INSTANCE = _dt_backup.new()
 	
-	_INSTANCE = _dt_backup.new()
+	_INSTANCE.load_var()
 	return _INSTANCE
 
 # Init
 
-func _init():
+func load_var():
 	
 	var config = _dt_plugin.get_instance()
 	
@@ -40,6 +40,10 @@ func get_max():
 	return _max
 
 func make(path: String):
+	
+	if _dt_plugin.get_instance().get_dev_stop_backup() == "true":
+		WARNING("Can't make backup as the dev config 'stop_backup' is on true!")
+		return
 	
 	if !_check_path(path):
 		return
@@ -100,17 +104,20 @@ func _check_path(path: String)->bool:
 
 func _get_index(path: String)->int:
 	
+	
 	_index += 1
 	
 	if _index > _max:
 		_index = 1
-	
+		return 1
+		
 	if _most_recent_path != path:
 		_index = 1
+		return 1
 	
 	_most_recent_path = path
 	
-	return _index
+	return (_index)
 
 func _has_dir()->bool:
 	var backup_dir = DirAccess.open("res://")

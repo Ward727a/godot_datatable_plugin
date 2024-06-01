@@ -20,11 +20,17 @@ static var _INSTANCE: _dt_interface = null
 
 static func get_instance() -> _dt_interface:
 	
-	if _INSTANCE:
-		return _INSTANCE
+	if !_INSTANCE || _dt_plugin.get_instance().get_dev_reset_instance() == "true":
+		_INSTANCE = _dt_interface.new()
 	
-	_INSTANCE = _dt_interface.new()
+	_INSTANCE.load_var()
 	return _INSTANCE
+
+# Init
+
+func load_var():
+	# can be used to init variable if needed
+	pass
 
 # Backend
 
@@ -39,3 +45,11 @@ func get_main() -> Control:
 	
 	return _main
 
+func show_main():
+	get_main().toggleMain()
+
+func show_type():
+	get_main().toggleManageType()
+
+func show_table():
+	get_main().toggleNewTable()

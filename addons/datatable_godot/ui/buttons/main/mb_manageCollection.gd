@@ -66,84 +66,41 @@ func _item_pressed(id: int):
 			pass
 
 func _on_load_collection(collection_path: String):
-	print_rich("[color=ffde66][DataTable] Loading collection at path: ", collection_path)
+	print_rich("[color=",_dt_common.txt_color.WARNING,"][DataTable] Loading collection at path: ", collection_path)
 	
-	var collections_name
+	_dt_resource.get_instance().load_file(collection_path)
+	_dt_resource.get_instance().res_reload.emit()
 	
-	if collection_path.ends_with(".tableCollection.res"):
-		collections_name = collection_path.split(".tableCollection.res")[0].split("/")
-	else:
-		collections_name = collection_path.split(".res")[0].split("/")
+	var collection_name = _dt_resource.get_instance().get_name()
+	collection_path = _dt_resource.get_instance().get_path()
 	
-	var collection_name = collections_name[collections_name.size()-1]
-	
-	if !FileAccess.file_exists(collection_path):
-		push_error("This file doesn't exist!")
-		return
-	
-	var packedData = load(collection_path)
-	
-	if packedData.get_class() != "PackedDataContainer":
-		push_error("This file is not of the class \"PackedDataContainer\"!")
-		return
-	
-	var success_key: int = 0
-	
-	for i in packedData:
-		if _collection_required_key.has(i):
-			success_key += 1
-	
-	if success_key != _collection_required_key.size():
-		push_error("This file doesn't have the required key to be an valid collection!")
-		return
-	
-	print_rich("[color=lightgreen][DataTable] Loaded collection '",collection_name,"' with success!")
-	
-	common.table_datas = {}
-	common.table_types = {}
-	
-	common.collection_path = collection_path
-	common.ask_reload_data.emit()
+	print_rich("[color=",_dt_common.txt_color.SUCCESS,"][DataTable] Loaded collection '",collection_name,"' with success!")
 	
 	%label_collection.set_text(str("Opened collection: ", collection_name))
 	%label_collection.set_tooltip_text(str("path: ",collection_path))
+	
+	_dt_backup.get_instance().make(collection_path)
+	
+	$"../b_newTable".disabled = false
+	$"../b_manageTableType".disabled = false
 	
 	_load_file_dialog.queue_free()
 
 func _on_new_collection(collection_path: String):
-	print_rich("[color=ffde66][DataTable] Creating new collection at path: ", collection_path)
+	print_rich("[color=",_dt_common.txt_color.WARNING,"][DataTable] Creating new collection at path: ", collection_path)
 	
-	var collections_name
+	_dt_resource.get_instance().new_file(collection_path)
+	_dt_resource.get_instance().res_reload.emit()
 	
-	if collection_path.ends_with(".tableCollection.res"):
-		collections_name = collection_path.split(".tableCollection.res")[0].split("/")
-	else:
-		collections_name = collection_path.split(".res")[0].split("/")
+	var collection_name = _dt_resource.get_instance().get_name()
+	collection_path = _dt_resource.get_instance().get_path()
 	
-	var collection_name = collections_name[collections_name.size()-1]
-	
-	var packedData: PackedDataContainer = PackedDataContainer.new()
-	
-	var template_data = {"table": {}, "type": {}}
-	
-	packedData.pack(template_data)
-	
-	var ret = ResourceSaver.save(packedData, collection_path)
-	
-	if ret != OK:
-		push_error("Can't create collection due to an error when trying to save it!")
-		return
-	
-	common.table_datas = {}
-	common.table_types = {}
-	
-	common.collection_path = collection_path
-	common.ask_reload_data.emit()
-	
-	print_rich("[color=lightgreen][DataTable] Created collection '",collection_name,"' with success!")
+	print_rich("[color=",_dt_common.txt_color.SUCCESS,"][DataTable] Created collection '",collection_name,"' with success!")
 	
 	%label_collection.set_text(str("Opened collection: ", collection_name))
 	%label_collection.set_tooltip_text(str("path: ",collection_path))
+	
+	_dt_backup.get_instance().make(collection_path)
 	
 	_new_file_dialog.queue_free()
 

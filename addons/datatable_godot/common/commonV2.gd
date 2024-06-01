@@ -36,6 +36,27 @@ const TYPE_BASIS = 15
 const TYPE_PROJ = 16
 const TYPE_MAX = 17
 
+const INT_ICON = "res://addons/datatable_godot/icons/int.svg"
+const FLOAT_ICON = "res://addons/datatable_godot/icons/float.svg"
+const STR_ICON = "res://addons/datatable_godot/icons/String.svg"
+const COLOR_ICON = "res://addons/datatable_godot/icons/Color.svg"
+const V2_ICON = "res://addons/datatable_godot/icons/Vector2.svg"
+const V3_ICON = "res://addons/datatable_godot/icons/Vector3.svg"
+const V4_ICON = "res://addons/datatable_godot/icons/Vector4.svg"
+const BOOL_ICON = "res://addons/datatable_godot/icons/bool.png"
+const RESS_ICON = "res://addons/datatable_godot/icons/Ressource.png"
+const QUAT_ICON = "res://addons/datatable_godot/icons/Quaternion.png"
+const RECT_ICON = "res://addons/datatable_godot/icons/Rect2.png"
+const PLANE_ICON = "res://addons/datatable_godot/icons/Plane.png"
+const T2_ICON = "res://addons/datatable_godot/icons/Transform2D.png"
+const T3_ICON = "res://addons/datatable_godot/icons/Transform3D.png"
+const AABB_ICON = "res://addons/datatable_godot/icons/AABB.png"
+const BASIS_ICON = "res://addons/datatable_godot/icons/Basis.png"
+const PROJ_ICON = "res://addons/datatable_godot/icons/Projection.png"
+
+const ARR_ICON = "res://addons/datatable_godot/icons/array_value.png"
+const SINGLE_ICON = "res://addons/datatable_godot/icons/single_value.png"
+
 # backend func
 
 func ASSERT_ERROR(message: String):
@@ -57,3 +78,7 @@ func WARNING(message: String):
 
 func ERROR(message: String):
 	push_error(str("[DataTable] ", message))
+
+func DEBUG(message: String):
+	if _dt_plugin.get_instance().get_dev_debug() == "true":
+		print_rich(str("[DataTable - Debug] ", message))

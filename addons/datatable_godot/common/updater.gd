@@ -12,8 +12,20 @@ class_name _dt_updater
 
 var _plugin: _dt_plugin
 var _http_request: HTTPRequest
+var _version_statut: RichTextLabel
 
 var _is_checking_update: bool = false
+var _next_version
+
+const check_update_text: String = "[img]res://addons/datatable_godot/icons/Reload.png[/img] Checking for update... "
+const up_to_date_text: String = "[img]res://addons/datatable_godot/icons/StatusSuccess.png[/img] [color=lightgreen]Version up-to-date! "
+const update_available_text: String = "[img]res://addons/datatable_godot/icons/StatusError.png[/img] [color=#ff768b]An update is available! "
+const cant_check_text: String = "[img]res://addons/datatable_godot/icons/StatusWarning.png[/img] [color=ffde66]Couldn't check for update! "
+
+const check_update_tip: String = "The plugin is check for an update..."
+const up_to_date_tip: String = "You good to go, you got the last version available!"
+const update_available_tip: String = "A new update is available, please update it!"
+const cant_check_tip: String = "The plugin couldn't check if an update was available due to an unknown error. Check it manually please!"
 
 const UPDATE_URL: String = "https://api.github.com/repos/Ward727a/godot_datatable_plugin/releases"
 
@@ -22,19 +34,22 @@ signal update_error ## The plugin couldn't check if a most recent version is ava
 signal update_not_needed ## The plugin is already at the most recent version
 signal checking_update ## The plugin is checking for an update, need to wait
 
+signal failed ## Failed updating while doing so
+signal updated ## Plugin updated, need a restart
+
 static var _INSTANCE: _dt_updater = null
 
 static func get_instance() -> _dt_updater:
 	
-	if _INSTANCE:
-		return _INSTANCE
+	if !_INSTANCE || _dt_plugin.get_instance().get_dev_reset_instance() == "true":
+		_INSTANCE = _dt_updater.new()
 	
-	_INSTANCE = _dt_updater.new()
+	_INSTANCE.load_var()
 	return _INSTANCE
 
 # Init
 
-func _init():
+func load_var():
 	_plugin = _dt_plugin.get_instance()
 
 # Backend
@@ -51,15 +66,42 @@ func _get_http() -> HTTPRequest:
 	
 	return _http_request
 
-func check_update():
+func check_update(label: RichTextLabel):
+	
+	if _dt_plugin.get_instance().get_dev_stop_update() == "true":
+		WARNING("Can't make update as the dev config 'stop_update' is on true!")
+		return
 	
 	if _is_checking_update:
 		return
 	_is_checking_update = true
 	
-	checking_update.emit()
+	_checking_update()
+	
+	_version_statut = label
 	
 	_get_http().request(UPDATE_URL)
+
+
+func _update_available(new_v: String):
+	update_available.emit(new_v)
+	_update_statut(update_available_text, update_available_tip)
+
+func _update_not_needed():
+	update_not_needed.emit()
+	_update_statut(up_to_date_text, up_to_date_tip)
+
+func _checking_update():
+	checking_update.emit()
+	_update_statut(check_update_text, check_update_tip)
+
+func _update_error():
+	update_error.emit()
+	_update_statut(cant_check_text, cant_check_tip)
+
+func _update_statut(txt: String, tip: String):
+	_version_statut.set_text(txt)
+	_version_statut.set_tooltip_text(tip)
 
 # Hook
 
@@ -93,14 +135,14 @@ func _on_update_resp(result: int, response_code: int, headers: PackedStringArray
 	_is_checking_update = false
 	
 	if result != HTTPRequest.RESULT_SUCCESS:
-		update_error.emit()
+		_update_error()
 		return
 	
 	var current_version: String = _plugin.get_version()
 	
 	var response = JSON.parse_string(body.get_string_from_utf8())
 	if typeof(response) != TYPE_ARRAY:
-		update_error.emit()
+		_update_error()
 		return
 	
 	var versions = (response as Array).filter(func(release):
@@ -109,11 +151,11 @@ func _on_update_resp(result: int, response_code: int, headers: PackedStringArray
 	)
 	
 	if versions.size() > 0:
-		update_available.emit(versions[0].tag_name.substr(1))
+		_update_available(versions[0].tag_name.substr(1))
 		
 		_get_http().request_completed.disconnect(_on_update_resp)
 	else:
-		update_not_needed.emit()
+		_update_not_needed()
 
 # OC: Nathanhoad (https://github.com/nathanhoad/godot_input_helper/tree/main) under MIT License (see above)
 func _on_success_update(new_version):
@@ -142,3 +184,70 @@ func _on_failed_update() -> void:
 	failed_dialog.confirmed.connect(func(): failed_dialog.queue_free())
 	EditorInterface.get_base_control().add_child(failed_dialog)
 	failed_dialog.popup_centered()
+
+
+# # # Function used by the UI
+
+
+func save_zip(bytes: PackedByteArray) -> void:
+	
+	var TEMP_FILE_NAME = _dt_plugin.get_instance().get_update_temp_file()
+	
+	var file: FileAccess = FileAccess.open(TEMP_FILE_NAME, FileAccess.WRITE)
+	file.store_buffer(bytes)
+	file.flush()
+
+func _on_download_button_pressed() -> bool:
+	
+	var TEMP_FILE_NAME = _dt_plugin.get_instance().get_update_temp_file()
+	var SAFEGUARD_PATH = _dt_plugin.get_instance().get_update_safeguard()
+	
+	# Safeguard
+	if FileAccess.file_exists(SAFEGUARD_PATH):
+		ERROR(str("Can't update due to safeguard (please delete: ",SAFEGUARD_PATH,")"))
+		failed.emit()
+		return false
+	_get_http().request_completed.connect(_on_http_request_completed)
+	
+	_get_http().request(str("https://github.com/Ward727a/godot_datatable_plugin/archive/refs/tags/v",_next_version,".zip"))
+	
+	return true
+
+func _on_http_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+	
+	var TEMP_FILE_NAME = _dt_plugin.get_instance().get_update_temp_file()
+	
+	if result != HTTPRequest.RESULT_SUCCESS:
+		failed.emit()
+		return
+	
+	save_zip(body)
+	
+	OS.move_to_trash(ProjectSettings.globalize_path("res://addons/datatable_godot"))
+	
+	var zip_reader: ZIPReader = ZIPReader.new()
+	zip_reader.open(TEMP_FILE_NAME)
+	var files: PackedStringArray = zip_reader.get_files()
+	
+	var base_path = files[1]
+	
+	# Remove archive folder
+	files.remove_at(0)
+	# Remove assets folder
+	files.remove_at(0)
+	
+	for path in files:
+		var new_file_path: String = path.replace(base_path,  "")
+		
+		if path.ends_with("/"):
+			DirAccess.make_dir_recursive_absolute(str("res://addons/",new_file_path))
+		else:
+			var file: FileAccess = FileAccess.open(str("res://addons/",new_file_path), FileAccess.WRITE)
+			file.store_buffer(zip_reader.read_file(path))
+	
+	zip_reader.close()
+	
+	DirAccess.remove_absolute(TEMP_FILE_NAME)
+	
+	updated.emit(_next_version)
+

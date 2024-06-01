@@ -31,8 +31,6 @@ signal failed()
 
 signal updated(new_version: String)
 
-const TEMP_FILE_NAME = "user://temp_update_datatable.zip"
-
 @onready var title: Label = $MarginContainer/MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Label
 @onready var downloadButton: Button = $MarginContainer/MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer3/MarginContainer/b_downloadUpdate
 @onready var close: Button = $MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/right_top/Button
@@ -55,59 +53,24 @@ func _ready():
 func _close_window():
 	self.visible = false
 
-func save_zip(bytes: PackedByteArray) -> void:
-	var file: FileAccess = FileAccess.open(TEMP_FILE_NAME, FileAccess.WRITE)
-	file.store_buffer(bytes)
-	file.flush()
-
 func _on_download_button_pressed() -> void:
 	
-	# Safeguard
-	if FileAccess.file_exists("res://safeguard/safeguard.gd"):
-		prints("Can't update due to safeguard (please delete: safeguard/safeguard.gd)")
-		failed.emit()
+	_dt_updater.get_instance().failed.connect(_on_failed_update)
+	_dt_updater.get_instance().updated.connect(_on_success_update)
+	
+	if _dt_updater.get_instance()._on_download_button_pressed():
 		error_txt.visible = true
 		return
-	http_request.request_completed.connect(_on_http_request_completed)
 	
-	http_request.request(str("https://github.com/Ward727a/godot_datatable_plugin/archive/refs/tags/v",next_version,".zip"))
 	downloadButton.disabled = true
 	downloadButton.text = "Downloading the update..."
 
-func _on_http_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+func _on_failed_update():
 	
-	if result != HTTPRequest.RESULT_SUCCESS:
-		failed.emit()
-		error_txt.visible = true
-		return
+	error_txt.visible = true
+	downloadButton.text = "Error when trying to update!"
+
+func _on_success_update(next_v:String):
 	
-	save_zip(body)
-	
-	OS.move_to_trash(ProjectSettings.globalize_path("res://addons/datatable_godot"))
-	
-	var zip_reader: ZIPReader = ZIPReader.new()
-	zip_reader.open(TEMP_FILE_NAME)
-	var files: PackedStringArray = zip_reader.get_files()
-	
-	var base_path = files[1]
-	
-	# Remove archive folder
-	files.remove_at(0)
-	# Remove assets folder
-	files.remove_at(0)
-	
-	for path in files:
-		var new_file_path: String = path.replace(base_path,  "")
-		
-		if path.ends_with("/"):
-			DirAccess.make_dir_recursive_absolute(str("res://addons/",new_file_path))
-		else:
-			var file: FileAccess = FileAccess.open(str("res://addons/",new_file_path), FileAccess.WRITE)
-			file.store_buffer(zip_reader.read_file(path))
-	
-	zip_reader.close()
-	
-	DirAccess.remove_absolute(TEMP_FILE_NAME)
-	
-	updated.emit(next_version)
 	success_txt.visible = true
+	downloadButton.text = str("Update: ",next_v," done with success!")

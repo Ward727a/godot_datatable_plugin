@@ -5,5 +5,5 @@ extends Button
 @onready var common: Node = %signals
 
 func _pressed():
-	common.toggle_manageType_ask.emit()
+	_dt_interface.get_instance().show_type()
 

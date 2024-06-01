@@ -61,13 +61,11 @@ signal delete_item_response(success: bool)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	common.script_key_ask.emit("bg_newTable")
-	
 	
 	common.toggle_newTable_response.connect(_signal_on_shown)
 	common.toggle_main_response.connect(_signal_on_hide)
 	
-	common.ask_reload_data.connect(check_data)
+	_dt_resource.get_instance().res_reload.connect(check_data)
 	
 	common.presave_data.connect(_presave_data)
 	

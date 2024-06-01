@@ -20,8 +20,6 @@ var collection_path: String = "":
 	set(new_value):
 		collection_path = new_value
 		if !collection_path.is_empty():
-			$"../MarginContainer/bg_main/FlowContainer/left_top_menu/b_newTable".disabled = false
-			$"../MarginContainer/bg_main/FlowContainer/left_top_menu/b_manageTableType".disabled = false
 			
 			# Working on the backup timer to restart it, reset the signal, and set it again
 			backup_timer.stop()
