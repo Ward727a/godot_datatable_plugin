@@ -38,3 +38,4 @@ func get_main() -> Control:
 		return null
 	
 	return _main
+

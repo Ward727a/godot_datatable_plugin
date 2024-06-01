@@ -66,6 +66,11 @@ func make(path: String):
 	else:
 		print_rich("[color=lightgreen][DataTable] Created a backup for '",file_name,"' collection, path: ",backup_file_path)
 
+func link(timer: Timer, path: String):
+	if timer.timeout.get_connections().has(make):
+		timer.timeout.disconnect(make)
+	timer.timeout.connect(make.bind(path))
+
 func _get_file_name(path: String)->String:
 	
 	var file_name

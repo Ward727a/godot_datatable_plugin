@@ -27,12 +27,12 @@ var collection_path: String = "":
 			backup_timer.stop()
 			backup_timer.set_meta('index_backup', 1)
 			if backup_timer.timeout.get_connections().size() != 0:
-				backup_timer.timeout.disconnect(_do_backup_data)
-			backup_timer.timeout.connect(_do_backup_data.bind(new_value))
+				backup_timer.timeout.disconnect(_dt_backup.get_instance().make)
+			backup_timer.timeout.connect(_dt_backup.get_instance().make.bind(new_value))
 			backup_timer.start()
 			
 			# doing a pre-backup for security reason
-			_do_backup_data(new_value)
+			_dt_backup.get_instance().make(new_value)
 
 @onready var script_keys: Array = []
 
@@ -95,86 +95,12 @@ signal presave_data
 
 func _ready():
 	script_key_ask.connect(_signal_generate_key)
-	toggle_plugin_off.connect(_signal_disconnect_all)
 	
-	get_type_ask.connect(_signal_get_type)
-	get_data_ask.connect(_signal_get_data)
-	
-	add_type_ask.connect(_signal_add_type)
-	
-	
-	load_from_ressource()
-
-func disconnect_signal(object: Signal):
-	for connection:Dictionary in object.get_connections():
-		object.disconnect(connection['callable'])
+	_dt_resource.get_instance().load_file()
 
 #####################
 ## Signal Callable ##
 #####################
-
-# I don't really know if this is really usefull, but by security I will keep it here
-# It doesn't cause bug for now, so will see in the future
-func _signal_disconnect_all():
-	
-	print("[DataTable] => Disconnecting all signals...")
-	
-	disconnect_signal(toggle_plugin_on)
-	disconnect_signal(toggle_plugin_off)
-	disconnect_signal(toggle_main_ask)
-	disconnect_signal(toggle_main_response)
-	disconnect_signal(toggle_newTable_ask)
-	disconnect_signal(toggle_newTable_response)
-	disconnect_signal(toggle_manageTable_ask)
-	disconnect_signal(toggle_manageTable_response)
-	disconnect_signal(toggle_newType_ask)
-	disconnect_signal(toggle_newType_response)
-	disconnect_signal(toggle_manageType_ask)
-	disconnect_signal(toggle_manageType_response)
-	disconnect_signal(toggle_help_ask)
-	disconnect_signal(toggle_help_response)
-	disconnect_signal(add_type_ask)
-	disconnect_signal(add_type_response)
-	disconnect_signal(get_data_ask)
-	disconnect_signal(get_data_response)
-	disconnect_signal(get_type_ask)
-	disconnect_signal(get_type_response)
-	
-	disconnect_signal(script_key_ask)
-	disconnect_signal(script_key_response)
-	
-	disconnect_signal(presave_data)
-	
-	disconnect_signal(popup_alert_ask)
-	
-	print("[DataTable] => Disconnected all signals with success!")
-
-## add our new type to the global type list
-func _signal_add_type(type: Dictionary):
-	
-	# if the type given miss one of the parameters, cancel the operation
-	if !type.has('name') || !type.has('params'):
-		add_type_response.emit(false)
-		return
-	
-	var type_name = type['name']
-	
-	# if the type name is already registered, cancel the operation
-	if table_types.has(type_name):
-		add_type_response.emit(false)
-		return
-	
-	table_types[type_name] = type
-	
-	add_type_response.emit(true)
-
-func _signal_get_type(key: int):
-	load_from_ressource()
-	get_type_response.emit(table_types, key)
-
-func _signal_get_data(key: int):
-	load_from_ressource()
-	get_data_response.emit(table_datas, key)
 
 func _signal_generate_key(script_name: String):
 
@@ -188,134 +114,3 @@ func _signal_generate_key(script_name: String):
 	script_keys.push_back(script_key)
 	
 	script_key_response.emit(script_key, script_name)
-
-func save_in_ressource():
-	
-	if collection_path.is_empty():
-		return
-	
-	var packedData: PackedDataContainer = PackedDataContainer.new()
-	
-	var datas = {"table": table_datas, "type": table_types}
-	
-	print("[DataTable] Saving data...")
-	
-	#print(datas['table'])
-	
-	packedData.pack(datas)
-	
-	ResourceSaver.save(packedData, collection_path)
-	
-	pass
-
-func load_from_ressource():
-	
-	if collection_path.is_empty():
-		return
-	
-	## load table data from the ressource file
-	## from here
-	if !ResourceLoader.exists(collection_path):
-		return
-	
-	var packedData = load(collection_path)
-	
-	var table_data = packedData['table']
-	
-	for main_key in table_data:
-		
-		var data = table_data[main_key]
-		
-		table_datas[main_key] = {"name": data['name'], "size": data['size'], "structure": data['structure'], "rows": {}}
-		
-		for row_key in data['rows']:
-			
-			var row_data = data['rows'][row_key] # name, columns
-			
-			table_datas[main_key]['rows'][row_key] = {"name": row_data['name'], "columns": {}}
-			
-			for column_key in row_data['columns']:
-				
-				var column_data = row_data['columns'][column_key] # name, value, type
-				
-				table_datas[main_key]['rows'][row_key]['columns'][column_key] = {"name": column_data['name'], "value": column_data['value'], "type": column_data['type'], "size": column_data['size']}
-	
-	## to here
-	
-	var type_data = packedData['type']
-	
-	for main_key in type_data: # name of type
-		
-		var type = type_data[main_key]
-		
-		table_types[main_key] = {"name": type['name'], "params":{}}
-		
-		for param_key in type['params']:
-			
-			var param = type["params"][param_key]
-			
-			table_types[main_key]["params"][param_key] = {"name":param['name'], "type": param['type'], "size": 0, "comment": ""}
-			
-			if param.size() == 4:
-				table_types[main_key]["params"][param_key]['comment'] = param['comment']
-				table_types[main_key]["params"][param_key]['size'] = param['size']
-	
-	pass
-
-
-func _do_backup_data(path: String):
-	
-	if path.is_empty():
-		return
-	
-	if !ResourceLoader.exists(path):
-		return
-	
-	var data = load(path)
-	
-	var file_name
-	
-	# skip the backup if it's a backup that is openned
-	if path.contains("datatable_backup"):
-		assert(false, "Can't back-up a back-up file, please copy-paste the back-up in another directory. The back-up system will not work otherwise!")
-		return
-	
-	if path.ends_with(".tableCollection.res"):
-		var path_splitted = path.split(".tableCollection.res")
-		path_splitted = path_splitted[0].split("/")
-		file_name = path_splitted[path_splitted.size()-1]
-	else:
-		var path_splitted = path.split(".res")
-		path_splitted = path_splitted[0].split("/")
-		file_name = path_splitted[path_splitted.size()-1]
-	
-	if file_name.is_empty():
-		assert(false, "couldn't create backup file!")
-		return
-
-	var index_backup = backup_timer.get_meta('index_backup')
-	
-	var backup_file_path = str(backup_folder, "/", file_name, "_backup",index_backup,".tableCollection.res")
-	
-	index_backup += 1
-	
-	if index_backup > 3:
-		index_backup = 1
-	
-	backup_timer.set_meta('index_backup', index_backup)
-	
-	var backup_dir = DirAccess.open("res://")
-	
-	if !backup_dir.dir_exists("datatable_backup"):
-		var make_err = backup_dir.make_dir("datatable_backup")
-		
-		if make_err != OK:
-			assert(false, "The plugin couldn't create the 'datatable_backup' folder in the path: 'res://', the back-up system can't work without it!")
-	
-	var err = ResourceSaver.save(data, backup_file_path)
-	
-	if err != OK:
-		assert(false, "Couldn't create backup file!")
-	else:
-		print_rich("[color=lightgreen][DataTable] Created a backup for '",file_name,"' collection, path: ",backup_file_path)
-	

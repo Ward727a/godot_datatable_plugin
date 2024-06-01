@@ -63,8 +63,6 @@ func _ready():
 	
 	common.script_key_ask.emit("bg_newTable")
 	
-	common.get_type_response.connect(_signal_get_types)
-	common.get_data_response.connect(_signal_get_datas)
 	
 	common.toggle_newTable_response.connect(_signal_on_shown)
 	common.toggle_main_response.connect(_signal_on_hide)
@@ -87,8 +85,17 @@ func _ready():
 
 func check_data():
 	if shown:
-		common.get_data_ask.emit(script_key)
-		common.get_type_ask.emit(script_key)
+		var local_data = _dt_resource.get_instance().load_file()
+		
+		type_data = local_data['type']
+		table_data = local_data['table']
+		
+		selected_table_data = {}
+		reload_table_list()
+		reload_items_list()
+		param_list._clean(true)
+		
+		reload_table_type_options_ask.emit(type_data)
 
 func reload_table_list():
 	
@@ -114,7 +121,8 @@ func reload_table_list():
 		if selected_table_data == data:
 			_select_table(duplicate_node)
 	
-	common.save_in_ressource()
+	
+	_dt_resource.get_instance().save_file()
 	
 	pass
 
@@ -161,29 +169,28 @@ func reload_items_list():
 	
 	reload_item_list.emit()
 	
-	common.save_in_ressource()
+	
+	_dt_resource.get_instance().save_file()
 
 
 func _signal_on_shown():
-	
-	common.get_data_ask.emit(script_key)
-	common.get_type_ask.emit(script_key)
-	
 	shown = true
 	
-	common.save_in_ressource()
+	check_data()
+	
+	_dt_resource.get_instance().save_file()
 	return
 
 func _presave_data():
 	param_list.save_data_of_struct()
-	common.save_in_ressource()
+	_dt_resource.get_instance().save_file()
 
 func _signal_on_hide():
 	param_list.save_data_of_struct()
 	
 	shown = false
 	
-	common.save_in_ressource()
+	_dt_resource.get_instance().save_file()
 	selected_table_data = {}
 	return
 
@@ -191,27 +198,6 @@ func _signal_on_hide():
 func _signal_on_receive_key(key: int, script_name: String):
 	if script_name == "bg_newTable":
 		script_key = key
-
-
-func _signal_get_types(types: Dictionary, key: int):
-	
-	if script_key != key:
-		return
-	
-	type_data = types
-	
-	reload_table_type_options_ask.emit(type_data)
-
-func _signal_get_datas(datas: Dictionary, key: int):
-	
-	if script_key != key:
-		return
-	
-	table_data = datas
-	selected_table_data = {}
-	reload_table_list()
-	reload_items_list()
-	param_list._clean(true)
 
 
 func _create_table(table_name: String):
@@ -340,7 +326,7 @@ func _select_item(item_node: Node):
 	
 	selected_item_node.select(true)
 	
-	common.save_in_ressource()
+	_dt_resource.get_instance().save_file()
 
 func _delete_item(item_node: Node):
 	

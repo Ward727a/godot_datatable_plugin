@@ -6,19 +6,16 @@ var datatableDock: Node
 @onready var common: Node
 
 const tab_icon = preload("res://addons/datatable_godot/icons/tab_icon.svg")
-
-var editor_window: Window
+const tab_path = "res://addons/datatable_godot/datatable.tscn"
 
 func _enter_tree():
 	# Initialization of the plugin goes here.
-	datatableDock = preload("res://addons/datatable_godot/datatable.tscn").instantiate()
+	datatableDock = preload(tab_path).instantiate()
 	
 	_add_data_table_dock()
 	datatableDock.hide()
 	
 	common = datatableDock.get_node('signals')
-	
-	common.toggle_plugin_on.emit()
 	
 	_dt_interface.get_instance().set_main(datatableDock)
 	
@@ -26,9 +23,11 @@ func _enter_tree():
 	remove_autoload_singleton("datatable")
 	
 	print("[DataTable] => Plugin is enabled!")
+	
+	_dt_plugin.get_instance().plugin_on.emit()
 
 func _exit_tree():
-	common.toggle_plugin_off.emit()
+	_dt_plugin.get_instance().plugin_off.emit()
 	
 	# Clean-up of the plugin goes here.
 	_remove_data_table_dock()

@@ -43,6 +43,7 @@ const LOCAL_CONFIG_PATH: String = "res://addons/datatable_godot/plugin.cfg"
 func _ready():
 	
 	## We check if a new update is available or not
+	_dt_updater.get_instance().check_update()
 	
 	## By security we reset the visible state of the main window to true
 	_signal_toggleMain()
@@ -87,7 +88,7 @@ func _signal_show_alert_popup(title: String, description: String):
 
 func check_for_datatable_change():
 	
-	common.ask_reload_data.emit()
+	_dt_resource.get_instance().res_reload.emit()
 
 func _show_update_window():
 	bg_autoupdate.visible = true
