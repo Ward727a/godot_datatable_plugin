@@ -5,7 +5,7 @@ extends VBoxContainer
 
 var data = {}
 
-var used_schema: HBoxContainer = null
+var used_schema: Resource = null
 @onready var item_schema: HBoxContainer = get_child(0)
 
 func add_item(value: Variant):
@@ -20,7 +20,7 @@ func add_item(value: Variant):
 	
 	var item = item_schema.duplicate()
 	add_child(item)
-	var duplicate = used_schema.duplicate()
+	var duplicate = used_schema.instantiate()
 	item.add_child(duplicate)
 	item.move_child(duplicate, 0)
 	duplicate.set_value(value)
