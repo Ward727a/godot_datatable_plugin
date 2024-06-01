@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://doa4a6glaf5xx"]
+[gd_scene load_steps=69 format=3 uid="uid://doa4a6glaf5xx"]
 
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/datatable_ui.gd" id="1_u3r8m"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/b_newTable.gd" id="2_4grge"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/txt_version_status.gd" id="7_76wdw"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/newTable/b_closeWindow.gd" id="8_4vur3"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/bg/bg_newTable.gd" id="8_n6v0j"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/link handler project mainscreen.gd" id="8_yg82y"]
 [ext_resource type="Shortcut" uid="uid://canf3frmvnvfd" path="res://addons/datatable_godot/escape_shortcut.tres" id="9_e2ynf"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/new_table/in_tableTitle.gd" id="9_nq8rd"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/new_table/OB_tableType.gd" id="9_sfsm6"]
@@ -309,8 +310,17 @@ text = "
 - First create a collection by clicking on the \"Manage Collections\"
 - Once this is created, create a structure with the \"Manage Structure\"
 - You now have structure, you need to create a table that will be using this structure, for this, click on the \"Manage Table\"
-- Finaly, you need to start using this table in you code, for this, use the class named \"Collection\", for more information, check the documentation of it with the button in the script editor"
+- Finaly, you need to start using this table in you code, for this, use the class named \"Collection\", for more information, check the documentation of it with the button in the script editor
+
+[font_size=24]New major version information[/font_size]
+The plugin is officialy at the version 2.0, but some of you that use this plugin will say:
+\"It's not that major, there is no big feature added appart from the back-up system, why say it's a 2.0\"
+
+This version is more of a \"code\" update than a \"feature\" update, but it's a major code update, I edited many script, and cleaned a lot of the code to prepare for bigger feature that will be added in the near future!
+
+Want to know what the \"feature\" are? Go check the [url=https://github.com/users/Ward727a/projects/2]project tab on GitHub[/url]!"
 fit_content = true
+script = ExtResource("8_yg82y")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/bg_main/Panel/VBoxContainer"]
 layout_mode = 2
