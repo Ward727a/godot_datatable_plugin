@@ -24,6 +24,7 @@ var _version: String
 static var _INSTANCE: _dt_resource
 
 static func delete():
+	_INSTANCE.DEBUG("Delete resource instance")
 	_INSTANCE = null
 
 
@@ -31,6 +32,8 @@ static func get_instance() -> _dt_resource:
 	
 	if !_INSTANCE || _dt_plugin.get_instance().get_dev_reset_instance() == "true":
 		_INSTANCE = _dt_resource.new()
+	
+	_INSTANCE.DEBUG("Getting resource instance")
 	
 	_INSTANCE.load_var()
 	return _INSTANCE
@@ -45,13 +48,14 @@ func load_var():
 # public
 
 func set_name(path_or_name: String):
-	
+	DEBUG(str("Set name of resource: ", path_or_name))
 	if path_or_name.contains(".res"):
 		_collection_name = _get_file_name(path_or_name)
 	else:
 		_collection_name = path_or_name
 
 func set_path(path: String):
+	DEBUG(str("Set path of resource: ", path))
 	_collection_path = path
 	set_name(path)
 

@@ -81,6 +81,8 @@ func _on_load_collection(collection_path: String):
 	
 	_dt_backup.get_instance().make(collection_path)
 	
+	_dt_backup.get_instance().link(%backup_timer, collection_path)
+	
 	$"../b_newTable".disabled = false
 	$"../b_manageTableType".disabled = false
 	
@@ -101,6 +103,8 @@ func _on_new_collection(collection_path: String):
 	%label_collection.set_tooltip_text(str("path: ",collection_path))
 	
 	_dt_backup.get_instance().make(collection_path)
+	
+	_dt_backup.get_instance().link(%backup_timer, collection_path)
 	
 	_new_file_dialog.queue_free()
 

@@ -79,6 +79,7 @@ func link(timer: Timer, path: String):
 	if timer.timeout.get_connections().has(make):
 		timer.timeout.disconnect(make)
 	timer.timeout.connect(make.bind(path))
+	timer.start()
 
 func _get_file_name(path: String)->String:
 	
@@ -118,9 +119,8 @@ func _get_index(path: String)->int:
 		
 	if _most_recent_path != path:
 		_index = 1
+		_most_recent_path = path
 		return 1
-	
-	_most_recent_path = path
 	
 	return (_index)
 
