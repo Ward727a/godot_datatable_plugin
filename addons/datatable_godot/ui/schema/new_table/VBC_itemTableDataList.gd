@@ -3,25 +3,7 @@ extends VBoxContainer
 
 @onready var common = %signals
 
-@onready var string_schema = $string_schema
-@onready var bool_schema = $bool_schema
-@onready var int_schema = $int_schema
-@onready var float_schema = $float_schema
-@onready var color_schema = $color_schema
-@onready var vector2_schema = $vector2_schema
-@onready var vector3_schema = $vector3_schema
-@onready var vector4_schema = $vector4_schema
-@onready var ress_schema = $ress_schema
-@onready var quat_schema = $quat_schema
-@onready var rect_schema = $rect_schema
-@onready var plane_schema = $plane_schema
-@onready var t2_schema = $t2_schema
-@onready var t3_schema = $t3_schema
-@onready var aabb_schema = $aabb_schema
-@onready var basis_schema = $basis_schema
-@onready var proj_schema = $proj_schema
 
-@onready var array_schema = $array_schema
 
 @onready var data: Dictionary = {}
 
@@ -33,29 +15,6 @@ extends VBoxContainer
 
 signal save_data(data_to_save: Dictionary)
 
-func get_each():
-	var each = [
-		string_schema,
-		int_schema,
-		float_schema,
-		color_schema,
-		vector2_schema,
-		vector3_schema,
-		vector4_schema,
-		array_schema,
-		bool_schema,
-		ress_schema,
-		quat_schema,
-		rect_schema,
-		plane_schema,
-		t2_schema,
-		t3_schema,
-		aabb_schema,
-		basis_schema,
-		proj_schema
-	]
-	
-	return each
 
 func _clean(remove_form: bool):
 	
@@ -63,8 +22,7 @@ func _clean(remove_form: bool):
 	
 	if remove_form:
 		for i: Node in get_children():
-			if !get_each().has(i):
-				i.queue_free()
+			i.queue_free()
 		
 		structure = {}
 	
@@ -124,43 +82,43 @@ func reload_from_struct(struct: Dictionary):
 		var schema
 		
 		match(type):
-			common.TYPE_STRING:
-				schema = string_schema
-			common.TYPE_INT:
-				schema = int_schema
-			common.TYPE_FLOAT:
-				schema = float_schema
-			common.TYPE_COLOR:
-				schema = color_schema
-			common.TYPE_VECTOR2:
-				schema = vector2_schema
-			common.TYPE_VECTOR3:
-				schema = vector3_schema
-			common.TYPE_VECTOR4:
-				schema = vector4_schema
-			common.TYPE_BOOL:
-				schema = bool_schema
-			common.TYPE_RESS:
-				schema = ress_schema
-			common.TYPE_QUAT:
-				schema = quat_schema
-			common.TYPE_RECT:
-				schema = rect_schema
-			common.TYPE_PLANE:
-				schema = plane_schema
-			common.TYPE_T2:
-				schema = t2_schema
-			common.TYPE_T3:
-				schema = t3_schema
-			common.TYPE_AABB:
-				schema = aabb_schema
-			common.TYPE_BASIS:
-				schema = basis_schema
-			common.TYPE_PROJ:
-				schema = proj_schema
+			_dt_common.TYPE_STRING:
+				schema = _dt_schema.get_instance().string_schema
+			_dt_common.TYPE_INT:
+				schema = _dt_schema.get_instance().int_schema
+			_dt_common.TYPE_FLOAT:
+				schema = _dt_schema.get_instance().float_schema
+			_dt_common.TYPE_COLOR:
+				schema = _dt_schema.get_instance().color_schema
+			_dt_common.TYPE_VECTOR2:
+				schema = _dt_schema.get_instance().vector2_schema
+			_dt_common.TYPE_VECTOR3:
+				schema = _dt_schema.get_instance().vector3_schema
+			_dt_common.TYPE_VECTOR4:
+				schema = _dt_schema.get_instance().vector4_schema
+			_dt_common.TYPE_BOOL:
+				schema = _dt_schema.get_instance().bool_schema
+			_dt_common.TYPE_RESS:
+				schema = _dt_schema.get_instance().ress_schema
+			_dt_common.TYPE_QUAT:
+				schema = _dt_schema.get_instance().quat_schema
+			_dt_common.TYPE_RECT:
+				schema = _dt_schema.get_instance().rect_schema
+			_dt_common.TYPE_PLANE:
+				schema = _dt_schema.get_instance().plane_schema
+			_dt_common.TYPE_T2:
+				schema = _dt_schema.get_instance().t2_schema
+			_dt_common.TYPE_T3:
+				schema = _dt_schema.get_instance().t3_schema
+			_dt_common.TYPE_AABB:
+				schema = _dt_schema.get_instance().aabb_schema
+			_dt_common.TYPE_BASIS:
+				schema = _dt_schema.get_instance().basis_schema
+			_dt_common.TYPE_PROJ:
+				schema = _dt_schema.get_instance().proj_schema ## Getting the scene with spinbox in it
 		
 		if paramSize != 0:
-			var parent = array_schema.duplicate()
+			var parent = _dt_schema.get_instance().array_schema.instantiate()
 			add_child(parent)
 			add_child(separator)
 			
@@ -175,21 +133,20 @@ func reload_from_struct(struct: Dictionary):
 			
 			continue
 		
-		var duplicate: Node = schema.duplicate()
+		var object: Node = schema.instantiate()
 		
-		
-		add_child(duplicate)
+		add_child(object) ## adding it to the VBox
 		
 		add_child(separator)
 		
-		node_structure[key] = duplicate
+		node_structure[key] = object
 		
-		duplicate.set_title(title)
+		object.set_title(title)
 		
-		var name_node = duplicate.get_child(0)
+		var name_node = object.get_child(0)
 		name_node.set_tooltip_text(comment)
 		
-		duplicate.visible = true
+		object.visible = true
 
 func save_data_of_struct():
 	
@@ -207,6 +164,7 @@ func save_data_of_struct():
 		if !data['columns'].has(i):
 			data['columns'][i] = {}
 		
+		print(struct_data['name']," : ",node.get_value())
 		
 		data['columns'][i]['name'] = struct_data['name']
 		data['columns'][i]['type'] = struct_data['type']

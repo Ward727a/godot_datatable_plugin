@@ -6,27 +6,28 @@ var datatableDock: Node
 @onready var common: Node
 
 const tab_icon = preload("res://addons/datatable_godot/icons/tab_icon.svg")
-
-var editor_window: Window
+const tab_path = "res://addons/datatable_godot/datatable.tscn"
 
 func _enter_tree():
 	# Initialization of the plugin goes here.
-	datatableDock = preload("res://addons/datatable_godot/datatable.tscn").instantiate()
+	datatableDock = preload(tab_path).instantiate()
 	
 	_add_data_table_dock()
 	datatableDock.hide()
 	
 	common = datatableDock.get_node('signals')
 	
-	common.toggle_plugin_on.emit()
+	_dt_interface.get_instance().set_main(datatableDock)
 	
 	print_rich("[color=lightgreen][Datatable] This warning ([color=ffde66]core/config/project_settings.cpp:365 - Property not found: autoload/datatable[/color]) & error ([color=ff786b]Request for nonexistent project setting: autoload/datatable.[/color]) message can be ignored, it will be fixed at the next version, but for now it's needed to remove the old singleton autoload to free the name for the class")
 	remove_autoload_singleton("datatable")
 	
 	print("[DataTable] => Plugin is enabled!")
+	
+	_dt_plugin.get_instance().plugin_on.emit()
 
 func _exit_tree():
-	common.toggle_plugin_off.emit()
+	_dt_plugin.get_instance().plugin_off.emit()
 	
 	# Clean-up of the plugin goes here.
 	_remove_data_table_dock()
@@ -35,6 +36,13 @@ func _exit_tree():
 	remove_autoload_singleton("datatable")
 	
 	print("[DataTable] => Plugin is disabled!")
+	
+	_dt_plugin.get_instance().delete()
+	_dt_interface.get_instance().delete()
+	_dt_resource.get_instance().delete()
+	_dt_backup.get_instance().delete()
+	_dt_updater.get_instance().delete()
+	_dt_schema.get_instance().delete()
 	pass
 
 func _has_main_screen():

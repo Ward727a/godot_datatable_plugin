@@ -1,7 +1,6 @@
 @tool
 extends Panel
 
-## import common to access signals and enum
 @onready var common: Node = %signals
 
 @onready var script_key: int = -1
@@ -19,27 +18,6 @@ extends Panel
 
 @onready var selected_object_key: String = ""
 @onready var selected_object_node: Node
-
-const int_icon = "res://addons/datatable_godot/icons/int.svg"
-const float_icon = "res://addons/datatable_godot/icons/float.svg"
-const str_icon = "res://addons/datatable_godot/icons/String.svg"
-const color_icon = "res://addons/datatable_godot/icons/Color.svg"
-const v2_icon = "res://addons/datatable_godot/icons/Vector2.svg"
-const v3_icon = "res://addons/datatable_godot/icons/Vector3.svg"
-const v4_icon = "res://addons/datatable_godot/icons/Vector4.svg"
-const bool_icon = "res://addons/datatable_godot/icons/bool.png"
-const ress_icon = "res://addons/datatable_godot/icons/Ressource.png"
-const quat_icon = "res://addons/datatable_godot/icons/Quaternion.png"
-const rect_icon = "res://addons/datatable_godot/icons/Rect2.png"
-const plane_icon = "res://addons/datatable_godot/icons/Plane.png"
-const t2_icon = "res://addons/datatable_godot/icons/Transform2D.png"
-const t3_icon = "res://addons/datatable_godot/icons/Transform3D.png"
-const aabb_icon = "res://addons/datatable_godot/icons/AABB.png"
-const basis_icon = "res://addons/datatable_godot/icons/Basis.png"
-const proj_icon = "res://addons/datatable_godot/icons/Projection.png"
-
-const arr_icon = "res://addons/datatable_godot/icons/array_value.png"
-const single_icon = "res://addons/datatable_godot/icons/single_value.png"
 
 @onready var _shown = false
 
@@ -72,18 +50,7 @@ func _ready():
 	## link this signal to get when the window is closed
 	common.toggle_main_response.connect(_signal_onHide)
 	
-	## link this signal to get the script key once asked
-	common.script_key_response.connect(_signal_key_response)
-	
-	common.script_key_ask.emit("bg_manageType")
-	
-	common.ask_reload_data.connect(check_data)
-	
-	## link this signal to get the types data once asked
-	common.get_type_response.connect(_signal_type_response)
-	
-	## link this signal to get the table data once asked
-	common.get_data_response.connect(_signal_data_response)
+	_dt_resource.get_instance().res_reload.connect(check_data)
 	
 	## link this signal to check if param name is valid
 	edit_param_name_ask.connect(_signal_edit_param_name)
@@ -106,11 +73,13 @@ func _ready():
 func check_data():
 	
 	if _shown:
-		common.get_type_ask.emit(script_key)
+		get_type()
+		get_data()
 
 func _signal_onShown():
-	common.get_type_ask.emit(script_key)
-	common.get_data_ask.emit(script_key)
+	get_type()
+	get_data()
+	
 	_shown = true
 	pass
 
@@ -128,22 +97,13 @@ func _signal_onHide():
 	selected_object_key = ""
 	pass
 
-func _signal_key_response(key: int, script_name: String):
-	if script_name == "bg_manageType":
-		script_key = key
-
-func _signal_type_response(types: Dictionary, key: int):
-	if key == script_key:
-		
-		
-		types_data = types
-		
-		reload_list()
-
-func _signal_data_response(datas: Dictionary, key: int):
+func get_type():
+	types_data = _dt_resource.get_instance().get_type()
 	
-	if key == script_key:
-		tables_data = datas
+	reload_list()
+
+func get_data():
+	tables_data = _dt_resource.get_instance().get_data()
 
 func reload_list():
 	if typeList.get_child_count() != 0:
@@ -215,49 +175,49 @@ func _signal_select_type(object_node: HBoxContainer):
 			node.bbcode_enabled = true
 			
 			match int(param['type']):
-				common.TYPE_STRING:
-					node_icon = str_icon
-				common.TYPE_FLOAT:
-					node_icon = float_icon
-				common.TYPE_COLOR:
-					node_icon = color_icon
-				common.TYPE_INT:
-					node_icon = int_icon
-				common.TYPE_VECTOR2:
-					node_icon = v2_icon
-				common.TYPE_VECTOR3:
-					node_icon = v3_icon
-				common.TYPE_VECTOR4:
-					node_icon = v4_icon
-				common.TYPE_BOOL:
-					node_icon = bool_icon
-				common.TYPE_RESS:
-					node_icon = ress_icon
-				common.TYPE_QUAT:
-					node_icon = quat_icon
-				common.TYPE_RECT:
-					node_icon = rect_icon
-				common.TYPE_PLANE:
-					node_icon = plane_icon
-				common.TYPE_T2:
-					node_icon = t2_icon
-				common.TYPE_T3:
-					node_icon = t3_icon
-				common.TYPE_AABB:
-					node_icon = aabb_icon
-				common.TYPE_BASIS:
-					node_icon = basis_icon
-				common.TYPE_PROJ:
-					node_icon = proj_icon
+				_dt_common.TYPE_STRING:
+					node_icon = _dt_common.STR_ICON
+				_dt_common.TYPE_FLOAT:
+					node_icon = _dt_common.FLOAT_ICON
+				_dt_common.TYPE_COLOR:
+					node_icon = _dt_common.COLOR_ICON
+				_dt_common.TYPE_INT:
+					node_icon = _dt_common.INT_ICON
+				_dt_common.TYPE_VECTOR2:
+					node_icon = _dt_common.V2_ICON
+				_dt_common.TYPE_VECTOR3:
+					node_icon = _dt_common.V3_ICON
+				_dt_common.TYPE_VECTOR4:
+					node_icon = _dt_common.V4_ICON
+				_dt_common.TYPE_BOOL:
+					node_icon = _dt_common.BOOL_ICON
+				_dt_common.TYPE_RESS:
+					node_icon = _dt_common.RESS_ICON
+				_dt_common.TYPE_QUAT:
+					node_icon = _dt_common.QUAT_ICON
+				_dt_common.TYPE_RECT:
+					node_icon = _dt_common.RECT_ICON
+				_dt_common.TYPE_PLANE:
+					node_icon = _dt_common.PLANE_ICON
+				_dt_common.TYPE_T2:
+					node_icon = _dt_common.T2_ICON
+				_dt_common.TYPE_T3:
+					node_icon = _dt_common.T3_ICON
+				_dt_common.TYPE_AABB:
+					node_icon = _dt_common.AABB_ICON
+				_dt_common.TYPE_BASIS:
+					node_icon = _dt_common.BASIS_ICON
+				_dt_common.TYPE_PROJ:
+					node_icon = _dt_common.PROJ_ICON
 			
 			
 			if !param.has("size"):
 				param['size'] = 0
 			
 			if int(param['size']) == 0:
-				node_size = single_icon
+				node_size = _dt_common.SINGLE_ICON
 			else:
-				node_size = arr_icon
+				node_size = _dt_common.ARR_ICON
 			
 			nSize.icon = load(node_size)
 			node.text = str("[img]",node_icon,"[/img] ",param['name'])
@@ -280,8 +240,8 @@ func _signal_remove_type(object_node: HBoxContainer):
 					paramList.remove_child(i)
 		recheck_param_name.emit()
 		recheck_type_name.emit()
-		
-	common.save_in_ressource()
+	
+	_dt_resource.get_instance().save_file()
 	pass
 
 func _signal_edit_param_name(param_name: String):
@@ -339,7 +299,7 @@ func _signal_add_param(param_name: String, param_type: int, param_size: int):
 	
 	add_param_response.emit(true)
 	_signal_select_type(selected_object_node)
-	common.save_in_ressource()
+	_dt_resource.get_instance().save_file()
 
 func _signal_remove_param(param_name: String):
 	
@@ -357,7 +317,7 @@ func _signal_remove_param(param_name: String):
 					print("Erased key: ",param_name," in item: ", row_key)
 					tables_data[i]['rows'][row_key]['columns'].erase(param_name)
 	
-	common.save_in_ressource()
+	_dt_resource.get_instance().save_file()
 
 func _signal_check_type_name(new_type: String):
 	
@@ -385,5 +345,5 @@ func _signal_add_type(new_type: String):
 	reload_list()
 	
 	add_type_response.emit(true)
-	common.save_in_ressource()
+	_dt_resource.get_instance().save_file()
 

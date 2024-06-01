@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6xlum6l21b2x"]
+
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/ress_schema.gd" id="1_4nhhx"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/newTable/b_resource_import.gd" id="2_wose6"]
+
+[node name="ress_schema" type="HBoxContainer"]
+visible = false
+script = ExtResource("1_4nhhx")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+tooltip_text = "Ressource type"
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/Ressource.png[/img] test"
+fit_content = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 0
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="b_resource_import" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Import..."
+script = ExtResource("2_wose6")
+
+[node name="FileDialog" type="FileDialog" parent="VBoxContainer/HBoxContainer/b_resource_import"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(500, 400)
+ok_button_text = "Ouvrir"
+file_mode = 0

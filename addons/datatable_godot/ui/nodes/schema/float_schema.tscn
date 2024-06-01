@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://cs4r8tfwegfb3"]
+
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/float_schema.gd" id="1_xrp0f"]
+
+[node name="float_schema" type="HBoxContainer"]
+visible = false
+script = ExtResource("1_xrp0f")
+
+[node name="ParamName" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+tooltip_text = "Float type"
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/Float.svg[/img] Float Name"
+fit_content = true
+
+[node name="ParamValue" type="SpinBox" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 0.05

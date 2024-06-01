@@ -5,7 +5,7 @@ var input: HBoxContainer
 var paramValue: HBoxContainer
 var text: RichTextLabel
 var add_item: Button
-var used_schema: HBoxContainer
+var used_schema: Resource
 var item_value_node: Node
 
 @onready var paramName: String = ""
@@ -22,59 +22,59 @@ func set_type(new_type: int):
 	type = new_type
 	
 	match(type):
-		common.TYPE_STRING:
+		_dt_common.TYPE_STRING:
 			icon = "res://addons/datatable_godot/icons/String.svg"
-			used_schema = $"../string_schema"
-		common.TYPE_INT:
+			used_schema = _dt_schema.get_instance().string_schema
+		_dt_common.TYPE_INT:
 			icon = "res://addons/datatable_godot/icons/int.svg"
-			used_schema = $"../int_schema"
-		common.TYPE_FLOAT:
+			used_schema = _dt_schema.get_instance().int_schema
+		_dt_common.TYPE_FLOAT:
 			icon = "res://addons/datatable_godot/icons/float.svg"
-			used_schema = $"../float_schema"
-		common.TYPE_COLOR:
+			used_schema = _dt_schema.get_instance().float_schema
+		_dt_common.TYPE_COLOR:
 			icon = "res://addons/datatable_godot/icons/Color.svg"
-			used_schema = $"../color_schema"
-		common.TYPE_VECTOR2:
+			used_schema = _dt_schema.get_instance().color_schema
+		_dt_common.TYPE_VECTOR2:
 			icon = "res://addons/datatable_godot/icons/Vector2.svg"
-			used_schema = $"../vector2_schema"
-		common.TYPE_VECTOR3:
+			used_schema = _dt_schema.get_instance().vector2_schema
+		_dt_common.TYPE_VECTOR3:
 			icon = "res://addons/datatable_godot/icons/Vector3.svg"
-			used_schema = $"../vector3_schema"
-		common.TYPE_VECTOR4:
+			used_schema = _dt_schema.get_instance().vector3_schema
+		_dt_common.TYPE_VECTOR4:
 			icon = "res://addons/datatable_godot/icons/Vector4.svg"
-			used_schema = $"../vector4_schema"
-		common.TYPE_BOOL:
+			used_schema = _dt_schema.get_instance().vector4_schema
+		_dt_common.TYPE_BOOL:
 			icon = "res://addons/datatable_godot/icons/bool.png"
-			used_schema = $"../bool_schema"
-		common.TYPE_RESS:
+			used_schema = _dt_schema.get_instance().bool_schema
+		_dt_common.TYPE_RESS:
 			icon = "res://addons/datatable_godot/icons/Ressource.png"
-			used_schema = $"../ress_schema"
-		common.TYPE_QUAT:
+			used_schema = _dt_schema.get_instance().ress_schema
+		_dt_common.TYPE_QUAT:
 			icon = "res://addons/datatable_godot/icons/Quaternion.png"
-			used_schema = $"../quat_schema"
-		common.TYPE_RECT:
+			used_schema = _dt_schema.get_instance().quat_schema
+		_dt_common.TYPE_RECT:
 			icon = "res://addons/datatable_godot/icons/Rect2.png"
-			used_schema = $"../rect_schema"
-		common.TYPE_PLANE:
+			used_schema = _dt_schema.get_instance().rect_schema
+		_dt_common.TYPE_PLANE:
 			icon = "res://addons/datatable_godot/icons/Plane.png"
-			used_schema = $"../plane_schema"
-		common.TYPE_T2:
+			used_schema = _dt_schema.get_instance().plane_schema
+		_dt_common.TYPE_T2:
 			icon = "res://addons/datatable_godot/icons/Transform2D.png"
-			used_schema = $"../t2_schema"
-		common.TYPE_T3:
+			used_schema = _dt_schema.get_instance().t2_schema
+		_dt_common.TYPE_T3:
 			icon = "res://addons/datatable_godot/icons/Transform3D.png"
-			used_schema = $"../t3_schema"
-		common.TYPE_AABB:
+			used_schema = _dt_schema.get_instance().t3_schema
+		_dt_common.TYPE_AABB:
 			icon = "res://addons/datatable_godot/icons/AABB.png"
-			used_schema = $"../aabb_schema"
-		common.TYPE_BASIS:
+			used_schema = _dt_schema.get_instance().aabb_schema
+		_dt_common.TYPE_BASIS:
 			icon = "res://addons/datatable_godot/icons/Basis.png"
-			used_schema = $"../basis_schema"
-		common.TYPE_PROJ:
+			used_schema = _dt_schema.get_instance().basis_schema
+		_dt_common.TYPE_PROJ:
 			icon = "res://addons/datatable_godot/icons/Projection.png"
-			used_schema = $"../proj_schema"
+			used_schema = _dt_schema.get_instance().proj_schema
 	
-	input = used_schema.duplicate()
+	input = used_schema.instantiate()
 	
 	paramValue.add_child(input)
 	
@@ -116,7 +116,7 @@ func _ready():
 
 func add_pressed():
 	
-	if type == common.TYPE_STRING:
+	if type == _dt_common.TYPE_STRING:
 		input.set_value(input.get_value().replace(";", "").replace(" ARR/ ", ""))
 	
 	item_value_node.add_item(input.get_value())
