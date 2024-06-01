@@ -37,7 +37,11 @@ signal checking_update ## The plugin is checking for an update, need to wait
 signal failed ## Failed updating while doing so
 signal updated ## Plugin updated, need a restart
 
-static var _INSTANCE: _dt_updater = null
+
+static var _INSTANCE: _dt_updater
+
+static func delete():
+	_INSTANCE = null
 
 static func get_instance() -> _dt_updater:
 	
@@ -100,8 +104,10 @@ func _update_error():
 	_update_statut(cant_check_text, cant_check_tip)
 
 func _update_statut(txt: String, tip: String):
-	_version_statut.set_text(txt)
-	_version_statut.set_tooltip_text(tip)
+	
+	if _version_statut:
+		_version_statut.set_text(txt)
+		_version_statut.set_tooltip_text(tip)
 
 # Hook
 

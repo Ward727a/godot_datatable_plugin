@@ -1,0 +1,88 @@
+[gd_scene load_steps=5 format=3 uid="uid://6kgq5h8y7gcu"]
+
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/array_schema.gd" id="1_hlcei"]
+[ext_resource type="Texture2D" uid="uid://d4af0scr4f3ea" path="res://addons/datatable_godot/icons/Add.svg" id="2_43556"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/box/arr_item_box.gd" id="3_gepj5"]
+[ext_resource type="Texture2D" uid="uid://blh822uvyrgg1" path="res://addons/datatable_godot/icons/Remove.svg" id="4_gqklv"]
+
+[node name="array_schema" type="VBoxContainer"]
+visible = false
+size_flags_horizontal = 3
+script = ExtResource("1_hlcei")
+metadata/array = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(163, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+tooltip_text = "test"
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/array_value.png[/img]Array"
+fit_content = true
+scroll_active = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="paramValue" type="HBoxContainer" parent="HBoxContainer/HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="b_add_arr_item" type="Button" parent="HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+text = "  X  "
+icon = ExtResource("2_43556")
+icon_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.4
+
+[node name="arr_items_list" type="VBoxContainer" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_gepj5")
+
+[node name="arr_item_schema" type="HBoxContainer" parent="HBoxContainer2/arr_items_list"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="b_delete_arr_item" type="Button" parent="HBoxContainer2/arr_items_list/arr_item_schema"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+text = "  X  "
+icon = ExtResource("4_gqklv")
+icon_alignment = 1

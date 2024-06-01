@@ -82,3 +82,4 @@ func ERROR(message: String):
 func DEBUG(message: String):
 	if _dt_plugin.get_instance().get_dev_debug() == "true":
 		print_rich(str("[DataTable - Debug] ", message))
+

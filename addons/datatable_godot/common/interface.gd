@@ -16,7 +16,12 @@ const cant_check_tip: String = "The plugin couldn't check if an update was avail
 
 var _main: Control
 
-static var _INSTANCE: _dt_interface = null
+
+static var _INSTANCE: _dt_interface
+
+static func delete():
+	_INSTANCE = null
+
 
 static func get_instance() -> _dt_interface:
 	

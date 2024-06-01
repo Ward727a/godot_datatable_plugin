@@ -9,10 +9,14 @@ const LOCAL_CONFIG_PATH: String = "res://addons/datatable_godot/plugin.cfg"
 
 var _config: ConfigFile
 
-static var _INSTANCE: _dt_plugin = null
 
 signal plugin_off
 signal plugin_on
+
+static var _INSTANCE: _dt_plugin
+
+static func delete():
+	_INSTANCE = null
 
 static func get_instance() -> _dt_plugin:
 	

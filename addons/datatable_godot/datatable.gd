@@ -36,6 +36,12 @@ func _exit_tree():
 	remove_autoload_singleton("datatable")
 	
 	print("[DataTable] => Plugin is disabled!")
+	
+	_dt_plugin.get_instance().delete()
+	_dt_interface.get_instance().delete()
+	_dt_resource.get_instance().delete()
+	_dt_backup.get_instance().delete()
+	_dt_updater.get_instance().delete()
 	pass
 
 func _has_main_screen():

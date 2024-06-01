@@ -4,7 +4,12 @@ class_name _dt_backup
 
 ## Class that manage all the backup system
 
-static var _INSTANCE: _dt_backup = null
+
+static var _INSTANCE: _dt_backup
+
+static func delete():
+	_INSTANCE = null
+
 
 var _folder: String
 var _max: int

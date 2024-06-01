@@ -11,8 +11,6 @@ signal res_loaded(path: String)
 signal res_created(path: String)
 signal res_reload
 
-static var _INSTANCE
-
 var table_datas: Dictionary
 var table_types: Dictionary
 
@@ -22,6 +20,12 @@ var _collection_name: String
 
 var _ext: String
 var _version: String
+
+static var _INSTANCE: _dt_resource
+
+static func delete():
+	_INSTANCE = null
+
 
 static func get_instance() -> _dt_resource:
 	

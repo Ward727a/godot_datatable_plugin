@@ -17,7 +17,6 @@ extends Control
 
 @onready var version_statut: RichTextLabel = $MarginContainer/bg_main/Panel/VBoxContainer/HBoxContainer/HBoxContainer3/version_status
 
-
 ###############
 ## Functions ##
 ###############
@@ -26,6 +25,7 @@ func _ready():
 	
 	## We check if a new update is available or not
 	_dt_updater.get_instance().check_update(version_statut)
+	_dt_updater.get_instance().update_available.connect(_show_update_window)
 	
 	## By security we reset the visible state of the main window to true
 	toggleMain()
@@ -68,5 +68,6 @@ func check_for_datatable_change():
 	
 	_dt_resource.get_instance().res_reload.emit()
 
-func _show_update_window():
+func _show_update_window(next_v: String):
+	bg_autoupdate.next_version = next_v
 	bg_autoupdate.visible = true

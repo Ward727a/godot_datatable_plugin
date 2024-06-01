@@ -1,0 +1,152 @@
+[gd_scene load_steps=2 format=3 uid="uid://q3o4215f33m5"]
+
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/aabb_schema.gd" id="1_8bxvg"]
+
+[node name="aabb_schema" type="HBoxContainer"]
+visible = false
+script = ExtResource("1_8bxvg")
+
+[node name="paramName" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+tooltip_text = "Vector2 type"
+bbcode_enabled = true
+text = "[img]res://addons/datatable_godot/icons/AABB.png[/img] AABB Name"
+fit_content = true
+
+[node name="paramValue" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="v0" type="HBoxContainer" parent="paramValue"]
+layout_mode = 2
+
+[node name="x_box" type="HBoxContainer" parent="paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="paramValue/v0/x_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]X: [/color]"
+fit_content = true
+
+[node name="x_value" type="SpinBox" parent="paramValue/v0/x_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="y_box" type="HBoxContainer" parent="paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="paramValue/v0/y_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]Y: [/color]"
+fit_content = true
+
+[node name="y_value" type="SpinBox" parent="paramValue/v0/y_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="z_box" type="HBoxContainer" parent="paramValue/v0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="paramValue/v0/z_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]Z: [/color]"
+fit_content = true
+
+[node name="o_value" type="SpinBox" parent="paramValue/v0/z_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="v1" type="HBoxContainer" parent="paramValue"]
+layout_mode = 2
+
+[node name="w_box" type="HBoxContainer" parent="paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="paramValue/v1/w_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=fab293]W: [/color]"
+fit_content = true
+
+[node name="w_value" type="SpinBox" parent="paramValue/v1/w_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="h_box" type="HBoxContainer" parent="paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="paramValue/v1/h_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=93fab2]H: [/color]"
+fit_content = true
+
+[node name="h_value" type="SpinBox" parent="paramValue/v1/h_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
+
+[node name="d_box" type="HBoxContainer" parent="paramValue/v1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="paramValue/v1/d_box"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+bbcode_enabled = true
+text = "[color=b293fa]D: [/color]"
+fit_content = true
+
+[node name="d_value" type="SpinBox" parent="paramValue/v1/d_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+suffix = "px"
+custom_arrow_step = 0.05
