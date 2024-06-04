@@ -126,7 +126,15 @@ static func _convert_string_to_color(value: String) -> Color:
 	
 	var converter = convert.split(",")
 	
-	return Color(converter[0].to_float(),converter[1].to_float(),converter[2].to_float(),converter[3].to_float())
+	if converter.size() != 4:
+		return Color()
+	
+	return Color(
+		converter[0].to_float(),
+		converter[1].to_float(),
+		converter[2].to_float(),
+		converter[3].to_float()
+	)
 
 static func _convert_data_to_complex_string(type: int, data: Variant) -> String:
 	
@@ -194,6 +202,10 @@ static func _convert_string_to_v4(value: String) -> Vector4:
 		convert = convert.replace("V4/", "")
 	
 	var converter = convert.split(",")
+	
+	if converter.size() != 4:
+		return Vector4()
+	
 	return Vector4(
 		_round_vector_string(converter[0]),
 		_round_vector_string(converter[1]),
@@ -209,6 +221,9 @@ static func _convert_string_to_v2(value: String) -> Vector2:
 	
 	var vec3_str = value.split(",")
 	
+	if vec3_str.size() != 2:
+		return Vector2()
+	
 	vec3.x = _round_vector_string(vec3_str[0])
 	vec3.y = _round_vector_string(vec3_str[1])
 	
@@ -221,6 +236,9 @@ static func _convert_string_to_v3(value: String) -> Vector3:
 	value = value.replace("(","").replace(")", "")
 	
 	var vec3_str = value.split(",")
+	
+	if vec3_str.size() != 3:
+		return Vector3()
 	
 	vec3.x = _round_vector_string(vec3_str[0])
 	vec3.y = _round_vector_string(vec3_str[1])
@@ -241,6 +259,10 @@ static func _convert_string_to_quat(value: String) -> Quaternion:
 		convert = convert.replace("QT/", "")
 	
 	var converter = convert.split(",")
+	
+	if converter.size() != 4:
+		return Quaternion()
+	
 	return Quaternion(
 		_round_vector_string(converter[0]),
 		_round_vector_string(converter[1]),
@@ -255,6 +277,10 @@ static func _convert_string_to_rect(value: String) -> Rect2:
 		convert = convert.replace("RECT/", "")
 	
 	var converter = convert.split(",")
+	
+	if converter.size() != 4:
+		return Rect2()
+	
 	return Rect2(
 		_round_vector_string(converter[0]),
 		_round_vector_string(converter[1]),
@@ -269,6 +295,10 @@ static func _convert_string_to_plane(value: String) -> Plane:
 		convert = convert.replace("PL/", "")
 	
 	var converter = convert.split(",")
+	
+	if converter.size() != 4:
+		return Plane()
+	
 	return Plane(
 		_round_vector_string(converter[0]),
 		_round_vector_string(converter[1]),
@@ -283,6 +313,9 @@ static func _convert_string_to_t2(value: String) -> Transform2D:
 		convert = convert.replace("T2/", "")
 	
 	var converter = convert.split(",")
+	
+	if converter.size() != 6:
+		return Transform2D()
 	
 	return Transform2D(
 		Vector2(
@@ -306,6 +339,9 @@ static func _convert_string_to_t3(value: String) -> Transform3D:
 		convert = convert.replace("T3/", "")
 	
 	var converter = convert.split(",")
+	
+	if converter.size() != 12:
+		return Transform3D()
 	
 	return Transform3D(
 		Vector3(
@@ -338,6 +374,9 @@ static func _convert_string_to_aabb(value: String) -> AABB:
 	
 	var converter = convert.split(",")
 	
+	if converter.size() != 6:
+		return AABB()
+	
 	return AABB(
 		Vector3(
 			_round_vector_string(converter[0]),
@@ -358,6 +397,9 @@ static func _convert_string_to_basis(value: String) -> Basis:
 		convert = convert.replace("BS/", "")
 	
 	var converter = convert.split(",")
+	
+	if converter.size() != 9:
+		return Basis()
 	
 	return Basis(
 		Vector3(
@@ -386,6 +428,9 @@ static func _convert_string_to_proj(value: String) -> Projection:
 		convert = convert.replace("PJ/", "")
 	
 	var converter = convert.split(",")
+	
+	if converter.size() != 16:
+		return Projection()
 	
 	return Projection(
 		Vector4(

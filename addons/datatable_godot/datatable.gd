@@ -19,9 +19,6 @@ func _enter_tree():
 	
 	_dt_interface.get_instance().set_main(datatableDock)
 	
-	print_rich("[color=lightgreen][Datatable] This warning ([color=ffde66]core/config/project_settings.cpp:365 - Property not found: autoload/datatable[/color]) & error ([color=ff786b]Request for nonexistent project setting: autoload/datatable.[/color]) message can be ignored, it will be fixed at the next version, but for now it's needed to remove the old singleton autoload to free the name for the class")
-	remove_autoload_singleton("datatable")
-	
 	print("[DataTable] => Plugin is enabled!")
 	
 	_dt_plugin.get_instance().plugin_on.emit()
@@ -32,9 +29,6 @@ func _exit_tree():
 	# Clean-up of the plugin goes here.
 	_remove_data_table_dock()
 	
-	print_rich("[color=lightgreen][Datatable] This warning ([color=ffde66]core/config/project_settings.cpp:365 - Property not found: autoload/datatable[/color]) & error ([color=ff786b]Request for nonexistent project setting: autoload/datatable.[/color]) message can be ignored, it will be fixed at the next version, but for now it's needed to remove the old singleton autoload to free the name for the class")
-	remove_autoload_singleton("datatable")
-	
 	print("[DataTable] => Plugin is disabled!")
 	
 	_dt_plugin.get_instance().delete()
@@ -43,6 +37,7 @@ func _exit_tree():
 	_dt_backup.get_instance().delete()
 	_dt_updater.get_instance().delete()
 	_dt_schema.get_instance().delete()
+	_dt_class_generator.get_instance().delete()
 	pass
 
 func _has_main_screen():

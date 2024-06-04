@@ -35,9 +35,7 @@ func _on_open_file_pressed():
 	file_dialog.visible = true
 
 func _on_file_selected(file_path: String):
-	print("selected file: ", file_path)
 	select_path = file_path
-	print(get_value())
 
 func set_title(new_name: String):
 	text.set_text(str(icon,new_name))

@@ -681,6 +681,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ij0bt")
 
 [node name="bg_manageType" type="Panel" parent="MarginContainer"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3otyk")
 script = ExtResource("39_mg6or")
@@ -788,6 +789,7 @@ layout_mode = 2
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/bg_manageType/VBoxContainer/HBoxContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/schema_type"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "You can right click this structure name to generate, preview, and save a template class GDScript file!"
 mouse_default_cursor_shape = 2
 bbcode_enabled = true
 text = "Schema type"

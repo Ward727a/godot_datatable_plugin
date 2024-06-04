@@ -131,7 +131,6 @@ func reload_items_list():
 		if node != item_schema:
 			node.visible = false
 			node.queue_free()
-			print(node)
 	
 	if selected_table_data == {} || selected_table_node == null:
 		return

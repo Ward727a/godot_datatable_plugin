@@ -21,8 +21,11 @@ extends Panel
 
 @onready var _shown = false
 
+var _default_box_list = []
+
 signal select_type(object_node: HBoxContainer)
 signal remove_type(object_node: HBoxContainer)
+signal generate_class(object_node: HBoxContainer)
 
 signal recheck_param_name()
 signal recheck_type_name()
@@ -69,6 +72,7 @@ func _ready():
 	
 	select_type.connect(_signal_select_type)
 	remove_type.connect(_signal_remove_type)
+	generate_class.connect(_on_generate_class)
 
 func check_data():
 	
@@ -90,6 +94,10 @@ func _signal_onHide():
 			continue
 		paramList.remove_child(i)
 	
+	
+	if !selected_object_key.is_empty():
+		save_default(selected_object_key)
+	
 	if selected_object_node != null:
 		var text: RichTextLabel = selected_object_node.get_child(0)
 		text.remove_theme_color_override("default_color")
@@ -105,7 +113,34 @@ func get_type():
 func get_data():
 	tables_data = _dt_resource.get_instance().get_data()
 
+func save_default(object_key: String):
+	
+	if _default_box_list.size() == 0:
+		return
+	
+	for i: Node in _default_box_list:
+		
+		if !i.has_meta('key') || !i.has_meta('node'):
+			continue
+		
+		var key = i.get_meta('key')
+		var input = i.get_meta('node')
+		
+		var type = types_data[object_key]
+		
+		if key.is_empty() || !input:
+			continue
+		
+		if !type['params'].has(key):
+			continue
+		
+		type['params'][key]['default'] = input.get_value()
+
 func reload_list():
+	
+	if !selected_object_key.is_empty():
+		save_default(selected_object_key)
+	
 	if typeList.get_child_count() != 0:
 		for child:Node in typeList.get_children():
 			if child != schemaType:
@@ -129,9 +164,15 @@ func reload_list():
 		item_node.visible = true
 
 func _signal_select_type(object_node: HBoxContainer):
+	
+	if !selected_object_key.is_empty():
+		save_default(selected_object_key)
+	
 	if object_node.has_meta('item_key'):
 		var object_key = object_node.get_meta('item_key')
 		var object = types_data[object_key]
+		
+		
 		
 		if selected_object_node != null:
 			var text: RichTextLabel = selected_object_node.get_child(0)
@@ -174,42 +215,9 @@ func _signal_select_type(object_node: HBoxContainer):
 			var node_size: String
 			node.bbcode_enabled = true
 			
-			match int(param['type']):
-				_dt_common.TYPE_STRING:
-					node_icon = _dt_common.STR_ICON
-				_dt_common.TYPE_FLOAT:
-					node_icon = _dt_common.FLOAT_ICON
-				_dt_common.TYPE_COLOR:
-					node_icon = _dt_common.COLOR_ICON
-				_dt_common.TYPE_INT:
-					node_icon = _dt_common.INT_ICON
-				_dt_common.TYPE_VECTOR2:
-					node_icon = _dt_common.V2_ICON
-				_dt_common.TYPE_VECTOR3:
-					node_icon = _dt_common.V3_ICON
-				_dt_common.TYPE_VECTOR4:
-					node_icon = _dt_common.V4_ICON
-				_dt_common.TYPE_BOOL:
-					node_icon = _dt_common.BOOL_ICON
-				_dt_common.TYPE_RESS:
-					node_icon = _dt_common.RESS_ICON
-				_dt_common.TYPE_QUAT:
-					node_icon = _dt_common.QUAT_ICON
-				_dt_common.TYPE_RECT:
-					node_icon = _dt_common.RECT_ICON
-				_dt_common.TYPE_PLANE:
-					node_icon = _dt_common.PLANE_ICON
-				_dt_common.TYPE_T2:
-					node_icon = _dt_common.T2_ICON
-				_dt_common.TYPE_T3:
-					node_icon = _dt_common.T3_ICON
-				_dt_common.TYPE_AABB:
-					node_icon = _dt_common.AABB_ICON
-				_dt_common.TYPE_BASIS:
-					node_icon = _dt_common.BASIS_ICON
-				_dt_common.TYPE_PROJ:
-					node_icon = _dt_common.PROJ_ICON
+			node_icon = _dt_schema.get_instance().get_icon(param['type'])
 			
+			var allow_default: bool = true
 			
 			if !param.has("size"):
 				param['size'] = 0
@@ -218,10 +226,52 @@ func _signal_select_type(object_node: HBoxContainer):
 				node_size = _dt_common.SINGLE_ICON
 			else:
 				node_size = _dt_common.ARR_ICON
+				allow_default = false
 			
 			nSize.icon = load(node_size)
 			node.text = str("[img]",node_icon,"[/img] ",param['name'])
 			node.fit_content = true
+			
+			if allow_default:
+				var default_node_ress = _dt_schema.get_instance().get_schema(param['type'])
+				var default_node = default_node_ress.instantiate()
+				
+				var default_box = HBoxContainer.new()
+				
+				var margin: MarginContainer = MarginContainer.new()
+				margin.custom_minimum_size = Vector2(24, 0)
+				
+				var default_label: Label = Label.new()
+				default_label.set_text("Default:")
+				default_label.custom_minimum_size = Vector2(85, 0)
+				
+				default_box.add_child(margin)
+				default_box.add_child(default_label)
+				default_box.add_child(default_node)
+				
+				default_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				default_node.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				duplicate.add_child(default_box)
+				
+				default_node.get_child(0).visible = false
+				default_node.set_title("Default value")
+				default_box.set_meta('key', param['name'])
+				default_box.set_meta('node', default_node)
+				
+				if !param.has('default'):
+					param['default'] = ""
+				
+				default_node.set_value(param['default'])
+				_default_box_list.append(default_box)
+				
+				default_node.visible = true
+			
+			var bottom_separator = MarginContainer.new()
+			bottom_separator.custom_minimum_size = Vector2(10, 10)
+			
+			duplicate.add_child(bottom_separator)
+			
+			
 			duplicate.visible = true
 		
 		recheck_param_name.emit()
@@ -314,7 +364,6 @@ func _signal_remove_param(param_name: String):
 		if tables_data[i]['structure'] == selected_object_key:
 			for row_key in tables_data[i]['rows'].keys():
 				if tables_data[i]['rows'][row_key]['columns'].has(param_name):
-					print("Erased key: ",param_name," in item: ", row_key)
 					tables_data[i]['rows'][row_key]['columns'].erase(param_name)
 	
 	_dt_resource.get_instance().save_file()
@@ -347,3 +396,17 @@ func _signal_add_type(new_type: String):
 	add_type_response.emit(true)
 	_dt_resource.get_instance().save_file()
 
+func _on_generate_class(object_node: HBoxContainer):
+	var object_key = object_node.get_meta('item_key')
+	var object = types_data[object_key]
+	
+	var code_content = _dt_class_generator.get_instance().generate(object)
+	
+	var preview_window: ConfirmationDialog = load("res://addons/datatable_godot/ui/nodes/generatedClassPreview/generatedClassPreview.tscn").instantiate()                                          
+	
+	EditorInterface.get_base_control().add_child(preview_window)
+	
+	preview_window.content = code_content
+	preview_window.className = object['name']
+	
+	preview_window.visible = true

@@ -36,6 +36,10 @@ const TYPE_BASIS = 15
 const TYPE_PROJ = 16
 const TYPE_MAX = 17
 
+const SIZE_SINGLE = 0
+const SIZE_ARRAY = 1
+const SIZE_MAX = 2
+
 const INT_ICON = "res://addons/datatable_godot/icons/int.svg"
 const FLOAT_ICON = "res://addons/datatable_godot/icons/float.svg"
 const STR_ICON = "res://addons/datatable_godot/icons/String.svg"

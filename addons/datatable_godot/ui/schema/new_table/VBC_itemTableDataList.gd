@@ -56,7 +56,12 @@ func reload(new_data: Dictionary):
 				var value: Variant = data['value']
 				var key: String = data['name']
 				
-				set_data_on_struct(key, value)
+				var default = structure['params'][key]['default']
+				
+				if structure['params'][key]['size'] == 1:
+					default = null
+				
+				set_data_on_struct(key, value, default)
 		else:
 			reset_data_on_struct()
 			save_data_of_struct()
@@ -78,44 +83,12 @@ func reload_from_struct(struct: Dictionary):
 		var title: String = param['name']
 		var paramSize: int = param['size']
 		var comment: String = param['comment']
+		var default: Variant = null
 		
-		var schema
+		if param.has('default'):
+			default = param['default']
 		
-		match(type):
-			_dt_common.TYPE_STRING:
-				schema = _dt_schema.get_instance().string_schema
-			_dt_common.TYPE_INT:
-				schema = _dt_schema.get_instance().int_schema
-			_dt_common.TYPE_FLOAT:
-				schema = _dt_schema.get_instance().float_schema
-			_dt_common.TYPE_COLOR:
-				schema = _dt_schema.get_instance().color_schema
-			_dt_common.TYPE_VECTOR2:
-				schema = _dt_schema.get_instance().vector2_schema
-			_dt_common.TYPE_VECTOR3:
-				schema = _dt_schema.get_instance().vector3_schema
-			_dt_common.TYPE_VECTOR4:
-				schema = _dt_schema.get_instance().vector4_schema
-			_dt_common.TYPE_BOOL:
-				schema = _dt_schema.get_instance().bool_schema
-			_dt_common.TYPE_RESS:
-				schema = _dt_schema.get_instance().ress_schema
-			_dt_common.TYPE_QUAT:
-				schema = _dt_schema.get_instance().quat_schema
-			_dt_common.TYPE_RECT:
-				schema = _dt_schema.get_instance().rect_schema
-			_dt_common.TYPE_PLANE:
-				schema = _dt_schema.get_instance().plane_schema
-			_dt_common.TYPE_T2:
-				schema = _dt_schema.get_instance().t2_schema
-			_dt_common.TYPE_T3:
-				schema = _dt_schema.get_instance().t3_schema
-			_dt_common.TYPE_AABB:
-				schema = _dt_schema.get_instance().aabb_schema
-			_dt_common.TYPE_BASIS:
-				schema = _dt_schema.get_instance().basis_schema
-			_dt_common.TYPE_PROJ:
-				schema = _dt_schema.get_instance().proj_schema ## Getting the scene with spinbox in it
+		var schema = _dt_schema.get_instance().get_schema(type)
 		
 		if paramSize != 0:
 			var parent = _dt_schema.get_instance().array_schema.instantiate()
@@ -136,6 +109,8 @@ func reload_from_struct(struct: Dictionary):
 		var object: Node = schema.instantiate()
 		
 		add_child(object) ## adding it to the VBox
+		
+		object.set_value(default)
 		
 		add_child(separator)
 		
@@ -164,20 +139,22 @@ func save_data_of_struct():
 		if !data['columns'].has(i):
 			data['columns'][i] = {}
 		
-		print(struct_data['name']," : ",node.get_value())
-		
 		data['columns'][i]['name'] = struct_data['name']
 		data['columns'][i]['type'] = struct_data['type']
 		data['columns'][i]['value'] = node.get_value()
 		data['columns'][i]['size'] = struct_data['size']
 	
 
-func set_data_on_struct(key: String, data: Variant):
+func set_data_on_struct(key: String, data: Variant, default: Variant = null):
 	
 	if node_structure.has(key):
 		var node:Node = node_structure.get(key)
 		
-		node.set_value(data)
+		if data != null:
+			node.set_value(data)
+			return
+		
+		node.set_value(default)
 
 func reset_data_on_struct():
 	

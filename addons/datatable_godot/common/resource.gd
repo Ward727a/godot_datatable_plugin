@@ -113,11 +113,24 @@ func set_type(packedData: PackedDataContainer):
 			
 			var param = type["params"][param_key]
 			
-			table_types[main_key]["params"][param_key] = {"name":param['name'], "type": param['type'], "size": 0, "comment": ""}
+			table_types[main_key]["params"][param_key] = {"name":"", "type": 0, "size": 0, "comment": "", "default": ""}
 			
-			if param.size() == 4:
-				table_types[main_key]["params"][param_key]['comment'] = param['comment']
-				table_types[main_key]["params"][param_key]['size'] = param['size']
+			for i in param:
+				match(i):
+					"name":
+						table_types[main_key]["params"][param_key]["name"] = param['name']
+					"type":
+						table_types[main_key]["params"][param_key]["type"] = param['type']
+					"size":
+						table_types[main_key]["params"][param_key]["size"] = param['size']
+					"comment":
+						table_types[main_key]["params"][param_key]["comment"] = param['comment']
+					"default":
+						table_types[main_key]["params"][param_key]["default"] = param['default']
+					_:
+						push_error("[DataTable] Loading a collection, but found an unknown key: ", i, " by security this key will be kept, but if it's not wanted inform the developper!")
+						table_types[main_key]["params"][param_key][i] = param[i]
+			
 
 func load_file(path: String = ""):
 	

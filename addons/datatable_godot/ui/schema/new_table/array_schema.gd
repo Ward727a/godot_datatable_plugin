@@ -21,58 +21,8 @@ func get_type():
 func set_type(new_type: int):
 	type = new_type
 	
-	match(type):
-		_dt_common.TYPE_STRING:
-			icon = "res://addons/datatable_godot/icons/String.svg"
-			used_schema = _dt_schema.get_instance().string_schema
-		_dt_common.TYPE_INT:
-			icon = "res://addons/datatable_godot/icons/int.svg"
-			used_schema = _dt_schema.get_instance().int_schema
-		_dt_common.TYPE_FLOAT:
-			icon = "res://addons/datatable_godot/icons/float.svg"
-			used_schema = _dt_schema.get_instance().float_schema
-		_dt_common.TYPE_COLOR:
-			icon = "res://addons/datatable_godot/icons/Color.svg"
-			used_schema = _dt_schema.get_instance().color_schema
-		_dt_common.TYPE_VECTOR2:
-			icon = "res://addons/datatable_godot/icons/Vector2.svg"
-			used_schema = _dt_schema.get_instance().vector2_schema
-		_dt_common.TYPE_VECTOR3:
-			icon = "res://addons/datatable_godot/icons/Vector3.svg"
-			used_schema = _dt_schema.get_instance().vector3_schema
-		_dt_common.TYPE_VECTOR4:
-			icon = "res://addons/datatable_godot/icons/Vector4.svg"
-			used_schema = _dt_schema.get_instance().vector4_schema
-		_dt_common.TYPE_BOOL:
-			icon = "res://addons/datatable_godot/icons/bool.png"
-			used_schema = _dt_schema.get_instance().bool_schema
-		_dt_common.TYPE_RESS:
-			icon = "res://addons/datatable_godot/icons/Ressource.png"
-			used_schema = _dt_schema.get_instance().ress_schema
-		_dt_common.TYPE_QUAT:
-			icon = "res://addons/datatable_godot/icons/Quaternion.png"
-			used_schema = _dt_schema.get_instance().quat_schema
-		_dt_common.TYPE_RECT:
-			icon = "res://addons/datatable_godot/icons/Rect2.png"
-			used_schema = _dt_schema.get_instance().rect_schema
-		_dt_common.TYPE_PLANE:
-			icon = "res://addons/datatable_godot/icons/Plane.png"
-			used_schema = _dt_schema.get_instance().plane_schema
-		_dt_common.TYPE_T2:
-			icon = "res://addons/datatable_godot/icons/Transform2D.png"
-			used_schema = _dt_schema.get_instance().t2_schema
-		_dt_common.TYPE_T3:
-			icon = "res://addons/datatable_godot/icons/Transform3D.png"
-			used_schema = _dt_schema.get_instance().t3_schema
-		_dt_common.TYPE_AABB:
-			icon = "res://addons/datatable_godot/icons/AABB.png"
-			used_schema = _dt_schema.get_instance().aabb_schema
-		_dt_common.TYPE_BASIS:
-			icon = "res://addons/datatable_godot/icons/Basis.png"
-			used_schema = _dt_schema.get_instance().basis_schema
-		_dt_common.TYPE_PROJ:
-			icon = "res://addons/datatable_godot/icons/Projection.png"
-			used_schema = _dt_schema.get_instance().proj_schema
+	icon = _dt_schema.get_instance().get_icon(type)
+	used_schema = _dt_schema.get_instance().get_schema(type)
 	
 	input = used_schema.instantiate()
 	

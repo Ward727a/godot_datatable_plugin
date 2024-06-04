@@ -3,11 +3,12 @@ extends HBoxContainer
 
 var input: LineEdit
 var text: RichTextLabel
+
+
 @onready var paramName: String = ""
-
 @onready var icon: String = "[img]res://addons/datatable_godot/icons/String.svg[/img] "
-
 @onready var type: int = -1
+
 func get_type():
 	return type
 func set_type(new_type: int):
@@ -16,7 +17,6 @@ func set_type(new_type: int):
 func set_title(new_name: String):
 	text.set_text(str(icon,new_name))
 	paramName = new_name
-
 func get_title():
 	return paramName
 

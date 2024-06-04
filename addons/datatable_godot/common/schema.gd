@@ -78,6 +78,86 @@ func each() -> Array:
 		proj_schema
 	]
 
+func get_schema(schema_type: int) -> Resource:
+	match(schema_type):
+		self.TYPE_STRING:
+			return string_schema
+		self.TYPE_INT:
+			return int_schema
+		self.TYPE_FLOAT:
+			return float_schema
+		self.TYPE_COLOR:
+			return color_schema
+		self.TYPE_VECTOR2:
+			return vector2_schema
+		self.TYPE_VECTOR3:
+			return vector3_schema
+		self.TYPE_VECTOR4:
+			return vector4_schema
+		self.TYPE_T2:
+			return t2_schema
+		self.TYPE_T3:
+			return t3_schema
+		self.TYPE_BOOL:
+			return bool_schema
+		self.TYPE_RESS:
+			return ress_schema
+		self.TYPE_QUAT:
+			return quat_schema
+		self.TYPE_PLANE:
+			return plane_schema
+		self.TYPE_RECT:
+			return rect_schema
+		self.TYPE_AABB:
+			return aabb_schema
+		self.TYPE_BASIS:
+			return basis_schema
+		self.TYPE_PROJ:
+			return proj_schema
+		_:
+			ASSERT_ERROR(str("No schema for the type: ", schema_type))
+			return null
+
+func get_icon(schema_type: int) -> String:
+	match(schema_type):
+		self.TYPE_STRING:
+			return STR_ICON
+		self.TYPE_INT:
+			return INT_ICON
+		self.TYPE_FLOAT:
+			return FLOAT_ICON
+		self.TYPE_COLOR:
+			return COLOR_ICON
+		self.TYPE_VECTOR2:
+			return V2_ICON
+		self.TYPE_VECTOR3:
+			return V3_ICON
+		self.TYPE_VECTOR4:
+			return V4_ICON
+		self.TYPE_T2:
+			return T2_ICON
+		self.TYPE_T3:
+			return T3_ICON
+		self.TYPE_BOOL:
+			return BOOL_ICON
+		self.TYPE_RESS:
+			return RESS_ICON
+		self.TYPE_QUAT:
+			return QUAT_ICON
+		self.TYPE_PLANE:
+			return PLANE_ICON
+		self.TYPE_RECT:
+			return RECT_ICON
+		self.TYPE_AABB:
+			return AABB_ICON
+		self.TYPE_BASIS:
+			return BASIS_ICON
+		self.TYPE_PROJ:
+			return PROJ_ICON
+		_:
+			ASSERT_ERROR(str("No icon for the type: ", schema_type))
+			return ""
+
 func add_custom(schema_name: String, schema_path: String) -> bool:
 	
 	if custom_schema.has(schema_name):
