@@ -25,15 +25,19 @@ If you got some suggestions (features, types, etc.), found a bug, or want to say
 
 - All data are saved inside a [PackedDataContainer](https://docs.godotengine.org/en/stable/classes/class_packeddatacontainer.html) that allow you to serielizes them with ease!
 
+- Collection system - A feature that allow you to create multiple datatable file for one project
+
+- Setting a default value for each parameters of a structure
+
+- Generate a base class from your structure
+
 ## 👨‍💻Upcoming Features
 
 - The ability to link other table / table item inside another table
 
-- Collection system - A feature that will allow you to create multiple datatable file for one project
-
-- Setting a default value for each parameters of a structure
-
 - Example project
+
+- [And more!](https://github.com/users/Ward727a/projects/2)
 
 - Want something and don't see it here? [Make an issue!](https://github.com/Ward727a/godot_datatable_plugin/issues)🙂
 
@@ -45,7 +49,7 @@ The C# is not actually supported, I will work on it if it's needed, but for now 
 
 #### I created my table, and added elements in it, how can I access it?
 
-You can access it by using the `datatable_` class, please be aware that this class will be renamed to `datatable` in the next version!
+You can access it by using the `Collection` class!
 
 ## ©License
 
