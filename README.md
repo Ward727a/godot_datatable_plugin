@@ -27,13 +27,17 @@ If you got some suggestions (features, types, etc.), found a bug, or want to say
 
 - Collection system - A feature that allow you to create multiple datatable file for one project
 
+- Setting a default value for each parameters of a structure
+
+- Generate a base class from your structure
+
 ## 👨‍💻Upcoming Features
 
 - The ability to link other table / table item inside another table
 
-- Setting a default value for each parameters of a structure
-
 - Example project
+
+- [And more!](https://github.com/users/Ward727a/projects/2)
 
 - Want something and don't see it here? [Make an issue!](https://github.com/Ward727a/godot_datatable_plugin/issues)🙂
 
