@@ -680,6 +680,10 @@ func _get_structure()->Dictionary:
 	assert(false, str("Can't find the structure: ", _struct_name))
 	return {}
 
+func _check_class(Class_to_check: Resource) -> bool:
+	# For now it's empty, need to complete it
+	return true
+
 ## Function to check if the return data is an error or not.[br]
 ## More precisely, it check if the data has the "error" key in it (if it is, it's an error).[br][br]
 ## Return:[br]
@@ -713,12 +717,12 @@ func has_item(key: String)->bool:
 	
 	return rows.has(key)
 
-## Return the data of the item.[br]
+## Return the data of the item as a dictionary object.[br]
 ## Emit: [signal item_getted] & [signal table_getted][br]
 ## [br]
 ## Here is an example of what you could get from it:[br]
 ## [codeblock]{ "a_string": "little string", "float_object": 0.3241, ..., "vector3 object": (0.1, 1, -5) }[/codeblock]
-func get_item(key: String)->Dictionary:
+func get_item_as_dict(key: String)->Dictionary:
 	
 	if !has_item(key):
 		var err = {"error":str("The table ",_table_name," doesn't contain the item '",key,"' key!")}
@@ -735,6 +739,40 @@ func get_item(key: String)->Dictionary:
 	item_getted.emit(key, rows[key])
 	
 	return rows[key]
+
+func get_item(key: String)->Structure:
+	
+	var struct_converted_name: String = _struct_name.replace(" ", "_")
+	
+	var className = str("struct_",struct_converted_name)
+	
+	if struct_converted_name.is_empty():
+		push_error("Can't return the item by the structure class, the structure_name is empty!")
+		return null
+	
+	print(_dt_classDB.class_exist(className))
+	
+	if !_dt_classDB.class_exist(className):
+		push_error(str("Can't return the item by the structure class, the class of the structure (",className,") doesn't exist!\nYou need to create it or generate it first!"))
+		return null
+	
+	var _classResource: Resource = _dt_classDB.class_instantiate(className)
+	
+	if !_classResource:
+		push_error(str("Can't return the item by the structure class, the class created is not valid!"))
+		return null
+	
+	if !_check_class(_classResource):
+		push_error(str("Can't return the item by the structure class, the class created is not valid!"))
+		return null
+	
+	var _item = _classResource.new(get_item_as_dict(key))
+	
+	if !_item:
+		push_error(str("Can't return the item created with the structure class, the item created is not valid, maybe an error with the data provided?"))
+		return null
+	
+	return _item
 
 ## Add an item inside the datatable[br]
 ## Emit: [signal item_added] & [signal table_saved][br]
@@ -899,3 +937,5 @@ func get_items_list()->Array:
 	var rows = _get_table_rows()
 	
 	return rows.keys()
+
+

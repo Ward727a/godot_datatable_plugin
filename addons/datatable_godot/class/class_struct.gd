@@ -4,3 +4,4 @@ extends Object
 ##
 ## @experimental
 class_name Structure
+

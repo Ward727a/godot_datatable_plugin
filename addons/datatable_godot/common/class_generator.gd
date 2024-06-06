@@ -8,11 +8,11 @@ func delete():
 	_INSTANCE = null
 
 static func get_instance() -> _dt_class_generator:
-	
+
 	if !_INSTANCE:
 		_INSTANCE = _dt_class_generator.new()
 		_INSTANCE.load_var()
-	
+
 	return _INSTANCE
 
 var _BASE_TEMPLATE = str(
@@ -24,62 +24,62 @@ var _BASE_TEMPLATE = str(
 # Init
 
 func load_var():
-	
+
 	pass
 
 func generate(structure: Dictionary):
-	
+
 	var content = ""
-	
+
 	var getters = []
 	var setters = []
-	
+
 	var variables = []
-	
+
 	## Separate each data from the structure
 	var name = structure['name'].replace(' ', "_")
 	var params = structure['params']
-	
+
 	## First we add the base_template
 	content += _BASE_TEMPLATE
-	
+
 	## Adding the class_name
 	content += _get_class(name)
-	
+
 	## Adding space
 	content += "\n\n"
-	
+
 	## Adding each var parameters
 	for i in params:
 		var param = params[i]
-		
+
 		variables.append(param['name'].replace(' ', "_"))
-		
+
 		content += _get_var(param)
-		
+
 		setters.append(_get_setter(param))
 		getters.append(_get_getter(param))
-	
+
 	## adding some spaces
-	
+
 	content += "\n\n"
-	
+
 	## adding init function
-	
+
 	content += _get_init(variables)
-	
+
 	## space
-	
+
 	content += "\n"
-	
+
 	for i in setters:
 		content += i
 		content += "\n"
-	
+
 	for i in getters:
 		content += i
 		content += "\n"
-	
+
 	return content
 
 
@@ -89,9 +89,9 @@ func _get_class(name: String):
 		"class_name struct_",name)
 
 func _get_var(var_data: Dictionary):
-	
+
 	var content = "var "
-	
+
 	var name = var_data['name'].replace(' ', "_")
 	var type = var_data['type']
 	var default = ""
@@ -99,38 +99,38 @@ func _get_var(var_data: Dictionary):
 		default = var_data['default']
 	var size = var_data['size']
 	var comment = var_data['comment']
-	
+
 	var type_as_string = ""
-	
+
 	if size == self.SIZE_SINGLE:
 		type_as_string = _get_varType_to_String(type)
 	else:
 		default = "[]"
 		type_as_string = _get_varArray_to_String(type)
-	
+
 	var default_as_string = _convert_hard_to_soft_value(type, default)
-	
+
 	var comment_as_string
-	
+
 	if !comment.is_empty():
 		comment_as_string = " ## "+comment
-	
+
 	# adding name
 	content += str("_",name, ": ")  # |var _name:
-	
+
 	# adding type
-	content += str(type_as_string , " = ") # |var name: String = 
-	
+	content += str(type_as_string , " = ") # |var name: String =
+
 	# adding default_value
 	content += default_as_string
-	
+
 	# adding comment if any
 	if !comment_as_string.is_empty():
 		content = str(comment_as_string, "\n", content)
-	
+
 	# add return to blankline
 	content += "\n"
-	
+
 	return content
 
 func _get_varArray_to_String(type: int):
@@ -173,7 +173,7 @@ func _get_varArray_to_String(type: int):
 			return "Array"
 
 func _get_varType_to_String(type: int):
-	
+
 	match(type):
 		self.TYPE_STRING:
 			return "String"
@@ -213,24 +213,24 @@ func _get_varType_to_String(type: int):
 			return "String"
 
 func _convert_hard_to_soft_value(type: int, value: Variant):
-	
-	
+
+
 	if typeof(value) == 9: # Check if the type of the value is a Vec3 (5 is the default TYPE_VECTOR3 of godot)
 		return str("Vector3(",value.x,",",value.y,",",value.z,")")
-	
+
 	if typeof(value) == 5: # Check if the type of the value is a Vec2 (5 is the default TYPE_VECTOR2 of godot)
 		return str("Vector2(",value.x,",",value.y,")")
-	
+
 	if typeof(value) == 4: # Check if the type of the value is a string (4 is the default TYPE_STRING of godot)
 		if value == "[]":
 			return value
-	
+
 	if type == self.TYPE_STRING:
 		return str("\"", Datatable._convert_complex_string_to_data(type, value), "\"")
-	
+
 	var converted_data = Datatable._convert_complex_string_to_data(type, value)
 	var new_value
-	
+
 	match(type):
 		self.TYPE_COLOR:
 			new_value = str("Color(",converted_data.r,",",converted_data.g,",",converted_data.b,",",converted_data.a,")")
@@ -298,98 +298,106 @@ func _convert_hard_to_soft_value(type: int, value: Variant):
 			new_value = str("null")
 		_:
 			new_value = value
-	
+
 	return str(new_value)
 
 func _get_getter(param: Dictionary):
-	
+
 	var name = param['name'].replace(' ', "_")
 	var type_as_string
-	
+
 	if param['size'] == self.SIZE_SINGLE:
 		type_as_string = _get_varType_to_String(param['type'])
 	else:
 		type_as_string = _get_varArray_to_String(param['type'])
-	
+
 	var getter_description: String = str("## This function can be used to get the ", name, " variable", "\n", "##", "\n", "## This function has been generated!")
-	
+
 	var content = str(getter_description, "\n", "func get_")
-	
+
 	# add name to func
 	content += str(name, "() -> ")
-	
+
 	# add type to func
 	content += str(type_as_string, ":\n")
-	
+
 	# add function content
 	content += str("\treturn _", name, "\n")
-	
+
 	return content
 
 func _get_setter(param: Dictionary):
-	
+
 	var name = param['name'].replace(' ', "_")
 	var type_as_string
-	
+
 	if param['size'] == self.SIZE_SINGLE:
 		type_as_string = _get_varType_to_String(param['type'])
 	else:
 		type_as_string = _get_varArray_to_String(param['type'])
-	
+
 	var getter_description: String = str("## This function can be used to set the ", name, " variable", "\n", "##", "\n", "## This function has been generated!")
-	
+
 	var content = str(getter_description, "\n", "func set_")
-	
+
 	# add name to func
 	content += str(name, "(")
-	
+
+	if param['type'] == TYPE_RESS:
+		type_as_string = _get_varType_to_String(TYPE_STRING)
+
 	# add arg to func
 	content += str("new_value: ", type_as_string, "):\n")
-	
+
+	if param['type'] == TYPE_RESS:
+		
+		content += str("\t_",name," = load(new_value)")
+		
+		return content
 	# add function content
 	content += str("\t_",name," = new_value\n")
-	
+
 	return content
 
 func _get_init(variables: Array):
-	
+
 	var init = ""
-	
+
 	var init_description: String = str(
 		"## This is the constructor of the class"
 	)
-	
+
 	var init_name: String = str(
 		"func _init(data: Dictionary):"
 	)
-	
+
 	var init_content = ""
-	
+
 	var temps_var = ""
 	var finals_var = ""
-	
+
 	# Create temporary variable to use more simply in function
-	
+
 	for i in variables:
 		var temp_var = str(
 			"\tvar temp_", i, " = data['", i, "']"
 			)
 		temps_var += str(temp_var, "\n")
-		
+
 		var final_var = str(
 			"\tset_", i, "(temp_", i, ")"
 		)
-		
+
 		finals_var += str(final_var, "\n")
-	
+
 	# adding temporary variable
-	
+
 	init_content += temps_var
-	
+
 	# adding setter function to assign variable using temp var
-	
+
 	init_content += finals_var
-	
+
 	# adding to init
 	init += str(
 		init_description, "\n",
@@ -397,10 +405,10 @@ func _get_init(variables: Array):
 		temps_var, "\n",
 		finals_var, "\n"
 		)
-	
+
 	if temps_var == "":
 		init += str(
 			"\tpass"
 		)
-	
+
 	return init

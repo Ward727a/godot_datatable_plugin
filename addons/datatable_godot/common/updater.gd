@@ -175,8 +175,8 @@ func _on_success_update(new_version):
 
 	var restart_addon = func():
 		finished_dialog.queue_free()
-		EditorInterface.call_deferred("set_plugin_enabled", "DataTable", true)
-		EditorInterface.set_plugin_enabled("DataTable", false)
+		EditorInterface.call_deferred("set_plugin_enabled", "datatable_godot", true)
+		EditorInterface.set_plugin_enabled("datatable_godot", false)
 
 	finished_dialog.canceled.connect(restart_addon)
 	finished_dialog.confirmed.connect(restart_addon)
