@@ -36,3 +36,4 @@ nv.file_system/
 test/test.tableCollection.res
 /datatable_backup
 /test
+/.vscode

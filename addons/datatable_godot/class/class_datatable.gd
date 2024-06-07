@@ -421,6 +421,7 @@ static func _convert_string_to_basis(value: String) -> Basis:
 
 # due to some unknown problem, the value after the dot (.0000) has some strange number added after it
 # Tried multiple thing on it, but found nothing to fix the problem
+# Found the reason, it's because of the binary representation of the float, so I need to round it to a certain number
 static func _convert_string_to_proj(value: String) -> Projection: 
 	var convert : String = value
 	
@@ -722,7 +723,7 @@ func has_item(key: String)->bool:
 ## [br]
 ## Here is an example of what you could get from it:[br]
 ## [codeblock]{ "a_string": "little string", "float_object": 0.3241, ..., "vector3 object": (0.1, 1, -5) }[/codeblock]
-func get_item_as_dict(key: String)->Dictionary:
+func get_item(key: String)->Dictionary:
 	
 	if !has_item(key):
 		var err = {"error":str("The table ",_table_name," doesn't contain the item '",key,"' key!")}
@@ -740,7 +741,11 @@ func get_item_as_dict(key: String)->Dictionary:
 	
 	return rows[key]
 
-func get_item(key: String)->Structure:
+## Return the data of the item as a dictionary object.[br]
+## Emit: [signal item_getted] & [signal table_getted][br]
+## [br]
+## See [Structure] for more information about the global structure object, and check the generated class for more information about the specific object.
+func get_item_as_object(key: String)->Structure:
 	
 	var struct_converted_name: String = _struct_name.replace(" ", "_")
 	
@@ -749,8 +754,6 @@ func get_item(key: String)->Structure:
 	if struct_converted_name.is_empty():
 		push_error("Can't return the item by the structure class, the structure_name is empty!")
 		return null
-	
-	print(_dt_classDB.class_exist(className))
 	
 	if !_dt_classDB.class_exist(className):
 		push_error(str("Can't return the item by the structure class, the class of the structure (",className,") doesn't exist!\nYou need to create it or generate it first!"))
@@ -766,7 +769,7 @@ func get_item(key: String)->Structure:
 		push_error(str("Can't return the item by the structure class, the class created is not valid!"))
 		return null
 	
-	var _item = _classResource.new(get_item_as_dict(key))
+	var _item = _classResource.new(get_item(key))
 	
 	if !_item:
 		push_error(str("Can't return the item created with the structure class, the item created is not valid, maybe an error with the data provided?"))
@@ -811,6 +814,13 @@ func add_item(item_key: String, item_data: Dictionary, save_data: bool = true)->
 	item_added.emit(item_key, item_data)
 	
 	return true
+
+## Add an item inside the datatable[br]
+## Emit: [signal item_added] & [signal table_saved][br]
+## [br]
+## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+func add_item_as_object(item_key: String, item: Structure, save_data: bool = true)->bool:
+	return add_item(item_key, item._get_dict(_struct_data), save_data)
 
 ## Remove an item inside the datatable[br]
 ## Emit: [signal item_removed] & [signal table_saved][br]
@@ -872,6 +882,13 @@ func set_item(item_key: String, item_data: Dictionary, save_data: bool = true)->
 	
 	return true
 
+## Set an item inside the datatable[br]
+## Emit: [signal item_setted] & [signal table_saved][br]
+## [br]
+## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+func set_item_as_object(item_key: String, item: Structure, save_data: bool = true)->bool:
+	return set_item(item_key, item._get_dict(_struct_data), save_data)
+
 ## This function return you a dictionary that is pre-filled with the needed key for this table
 func get_void_item()->Dictionary:
 	var data = {}
@@ -912,11 +929,37 @@ func get_void_item()->Dictionary:
 	
 	return data
 
+## This function return you a the compatible object for the table
+func get_void_item_as_object()->Structure:
+	var _class = _dt_classDB.class_instantiate("struct_"+_struct_name.replace(" ", "_"))
+
+	if !_class:
+		push_error(str("Can't create the void item as object, the class created is not valid!"))
+		return null
+	
+	if !_check_class(_class):
+		push_error(str("Can't create the void item as object, the class created is not valid!"))
+		return null
+	
+	return _class.new(get_void_item())
+
 ## Function to check if the given item is of the same structure as the table_name[br]
 ## [br]
 ## Return:[br]
 ## - True: The item can be added to the table[br]
-## - False: The item can't be added to the table
+## - False: The item can't be added to the table[br]
+## [br]
+## Args:[br]
+## - item: The item that need to be checked[br]
+## [br]
+## Example:[br]
+## [codeblock]
+## var item = {"name": "sword", "damage": 10, "durability": 100}
+## if datatable.is_item_compatible(item):
+##     print("The item is compatible with the table")
+## else:
+##     print("The item is not compatible with the table")
+## [/codeblock]
 func is_item_compatible(item: Dictionary)->bool:
 	
 	if !_struct_data.has('params'):
@@ -931,11 +974,76 @@ func is_item_compatible(item: Dictionary)->bool:
 	
 	return params.keys() == item.keys()
 
-## return all the KEY of items found in the table
+## Function to check if the given item is of the same structure as the table_name[br]
+## [br]
+## Return:[br]
+## - True: The item can be added to the table[br]
+## - False: The item can't be added to the table[br]
+## [br]
+## Args:[br]
+## - item: The item that need to be checked[br]
+## [br]
+## Example:[br]
+## We have a structure with the key "name", "damage" & "durability" named "items", we generated the class "struct_items" from it[br]
+## [codeblock]
+## var item = struct_items.new({"name": "sword", "damage": 10, "durability": 100})
+## if datatable.is_item_object_compatible(item):
+##     print("The item is compatible with the table")
+## else:
+##     print("The item is not compatible with the table")
+## [/codeblock]
+func is_item_object_compatible(item: Structure)->bool:
+	return is_item_compatible(item._get_dict(_struct_data))
+
+## return all the KEY of items found in the table[br]
+## Example: [br]
+## We have a table with the item "sword", "axe", "bow", and we want to get all the key inside this table[br]
+## [codeblock]
+## var keys = datatable.get_items_list()
+## print(keys) # ["sword", "axe", "bow"] - Will print all the key of the item in the table
+##
+## var swordValue = datatable.get_item("sword") # Get the item "sword" from the table
+## print(swordValue) # Will print the item "sword" value
+## [/codeblock]
 func get_items_list()->Array:
 	
 	var rows = _get_table_rows()
 	
 	return rows.keys()
 
+## Return the name of the rows of the table[br]
+## Example: [br]
+## We have a structure with the key "name", "damage" & "durability"[br]
+## We have a table with the item "sword", "axe", "bow", and we want to get all the key inside this table[br]
+## [codeblock]
+## var keys = datatable.get_keys_list()
+## print(keys) # ["name", "damage", "durability"] - Will print all the key of the structure used in the table
+## [/codeblock]
+func get_keys_list()->Array:
+	
+	var keys = []
 
+	for i in _struct_data['params']:
+		keys.append(i)
+	
+	return keys
+
+## Return all the values linked to the key, the key need to be one of the key of the structure[br]
+## Example: [br]
+## We have a structure with the key "name", "damage" & "durability"[br]
+## We have a table with the item "sword", "axe", "bow", and we want to get all the "name" key value[br]
+## [codeblock]
+## var names = datatable.get_value_of_key("name")
+## print(names) # ["sword", "axe", "bow"] - Will print all the name of all the item in the table
+## [/codeblock]
+func get_value_of_key(key: String):
+	
+	var rows = _get_table_rows()
+
+	var values = []
+
+	for i in rows:
+		if rows[i].has(key):
+			values.append(rows[i][key])
+	
+	return values
