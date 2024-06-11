@@ -5,7 +5,7 @@ var input: SpinBox
 var text: RichTextLabel
 @onready var paramName: String = ""
 
-@onready var icon: String = "[img]res://addons/datatable_godot/icons/Float.svg[/img] "
+@onready var icon: String = "[img]res://addons/datatable_godot/icons/float.svg[/img] "
 
 @onready var type: int = -1
 func get_type():

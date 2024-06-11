@@ -4,7 +4,7 @@ extends HBoxContainer
 var input: SpinBox
 var text: RichTextLabel
 @onready var paramName: String = ""
-@onready var icon: String = "[img]res://addons/datatable_godot/icons/Int.svg[/img] "
+@onready var icon: String = "[img]res://addons/datatable_godot/icons/int.svg[/img] "
 
 @onready var type: int = -1
 func get_type():
