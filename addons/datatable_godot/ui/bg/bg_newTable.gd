@@ -24,6 +24,8 @@ extends Panel
 
 @onready var table_list: VBoxContainer = $VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/table_list
 
+@onready var import_menu: MenuButton = %import_but
+
 ## SCHEMA
 
 @onready var table_schema: HBoxContainer = $VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/table_list/schema_table
@@ -79,6 +81,10 @@ func _ready():
 	select_item.connect(_select_item)
 	delete_item.connect(_delete_item)
 	
+	# connect import menu signals
+	import_menu.csv_selected.connect(_import_csv)
+	import_menu.cr_selected.connect(_import_cr)
+
 	pass # Replace with function body.
 
 func check_data():
@@ -247,6 +253,8 @@ func _select_table(table_node: Node):
 	param_list.save_data_of_struct()
 	param_list._clean(true)
 	
+	import_menu.set_disabled(false)
+
 	reload_items_list()
 
 func _delete_table(table_node: Node):
@@ -265,6 +273,7 @@ func _delete_table(table_node: Node):
 		add_item_but.set_meta('force_disabled',true)
 		add_item_but.disabled = true
 		param_block.visible = false
+		import_menu.set_disabled(true)
 	
 	var data = table_node.get_meta('table_data')
 	
@@ -380,3 +389,82 @@ func scan_item_name(item_name: String):
 	
 	return true
 
+func _import_csv(csv: String):
+
+	var csv_keys = _dt_importer._csv_get_headers(csv)
+	var csv_values = _dt_importer._csv_get_lines(csv)
+
+	if selected_table_data == {}:
+		return
+	
+	var selected_structure = selected_table_data['structure']
+	var structure_keys = type_data[selected_structure]['params'].keys()
+
+	var missing_keys: Array = []
+
+	for i in csv_keys:
+
+		if !structure_keys.has(i.to_lower()):
+			push_error("CSV has the key \"", i, "\" but the structure \"", selected_structure, "\" doesn't have it!")
+
+			missing_keys.append(i)
+
+			continue
+	
+	if missing_keys.size() != 0:
+		var confirm_import_dialog = ConfirmationDialog.new()
+		confirm_import_dialog.set_title("Import CSV - Missing keys")
+		confirm_import_dialog.set_text(str("The CSV has keys that are not in the structure of the table. Do you want to import the CSV anyway?\n\nMissing keys (",missing_keys.size()," keys missing on ",csv_keys.size()," keys found in CSV) :\n", missing_keys, "\n\nThe CSV will be imported without the missing keys if you confirm."))
+
+		confirm_import_dialog.confirmed.connect(_import_csv_missing_keys_confirm.bind(csv, missing_keys))
+		confirm_import_dialog.min_size = Vector2(400, 200)
+
+		confirm_import_dialog.ok_button_text = "Import anyway"
+		confirm_import_dialog.cancel_button_text = "Cancel"
+
+		add_child(confirm_import_dialog)
+		confirm_import_dialog.popup_centered()
+		return
+
+	pass
+
+func _import_cr(cr: Resource):
+
+	pass
+
+
+func _import_csv_missing_keys_confirm(csv: String, missing_keys: Array):
+
+	var csv_keys = _dt_importer._csv_get_headers(csv)
+	var csv_values = _dt_importer._csv_get_lines(csv)
+
+	if selected_table_data == {}:
+		return
+
+	var selected_structure = selected_table_data['structure']
+
+	var index = 0
+
+	for item in csv_values:
+		
+		var columns = {}
+
+		for key in csv_keys:
+
+			key = key.to_lower()
+
+			if missing_keys.has(key):
+				continue
+			
+			columns[key] = {"name": key, "value": item[key], "type": type_data[selected_structure]['params'][key]['type']}
+		
+		selected_table_data['rows'][str("imported_",index)] = {"name": str("csv_imported_",index), "columns": columns}
+		index += 1
+	
+	print("Imported ", csv_values.size(), " lines from CSV")
+
+	selected_table_data['size'] = selected_table_data['rows'].size()
+
+	reload_items_list()
+
+	pass

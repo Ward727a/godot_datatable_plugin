@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://doa4a6glaf5xx"]
+[gd_scene load_steps=70 format=3 uid="uid://doa4a6glaf5xx"]
 
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/datatable_ui.gd" id="1_u3r8m"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/main/b_newTable.gd" id="2_4grge"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/new_table/in_tableTitle.gd" id="9_nq8rd"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/new_table/OB_tableType.gd" id="9_sfsm6"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/new_table/in_itemTableName.gd" id="11_p3d64"]
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/newTable/import_but.gd" id="11_pfsb4"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/inputs/new_table/b_addItemTable.gd" id="13_yo7v8"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/schema_table.gd" id="14_1gj4k"]
 [ext_resource type="Script" path="res://addons/datatable_godot/ui/buttons/newTable/txt_table_name.gd" id="14_igr0e"]
@@ -388,6 +389,18 @@ layout_mode = 2
 [node name="left_top_menu" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/FlowContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="import_but" type="MenuButton" parent="MarginContainer/bg_newTable/VBoxContainer/FlowContainer/left_top_menu"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Import..."
+item_count = 2
+popup/item_0/text = "Import CSV data..."
+popup/item_0/id = 0
+popup/item_1/text = "Import custom resource file..."
+popup/item_1/id = 1
+script = ExtResource("11_pfsb4")
 
 [node name="center_top_menu" type="HBoxContainer" parent="MarginContainer/bg_newTable/VBoxContainer/FlowContainer"]
 layout_mode = 2

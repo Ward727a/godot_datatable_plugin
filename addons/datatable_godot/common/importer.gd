@@ -4,31 +4,6 @@ class_name _dt_importer
 
 static var _temp_simplified_csv = {'md5': "", 'data': [], 'headers': []}
 
-static var _res_private_keys = ["resource_local_to_scene", "resource_path", "resource_name"]
-
-static func _import_resource(path: String, keys: PackedStringArray) -> Dictionary:
-
-	var imported = {}
-
-	if !ResourceLoader.exists(path):
-		push_error("Resource not found: " + path)
-		return imported
-	
-	var res = ResourceLoader.load(path)
-
-	if res == null:
-		push_error("Resource could not be loaded: " + path)
-		return imported
-	
-	for i in res.get_property_list():
-
-		if !keys.has(i['name']):
-			continue
-
-		imported[i['name']] = res.get(i['name'])
-	
-	return imported
-
 static func _remove_invalid_char(str: String) -> String:
 
 	var invalid_chars = ["\n", "\r", "\t"]
@@ -44,8 +19,9 @@ static func _remove_invalid_char(str: String) -> String:
 
 static func _simplify_csv(csv: String) -> Dictionary:
 
-	if _temp_simplified_csv['md5'] == csv.md5_text(): # if the csv is the same as the last one, we return the last simplified version, for performance issues
-		return {'data': _temp_simplified_csv['data'], 'headers': _temp_simplified_csv['headers']}
+	if _temp_simplified_csv && _temp_simplified_csv.has('md5'):
+		if _temp_simplified_csv['md5'] == csv.md5_text(): # if the csv is the same as the last one, we return the last simplified version, for performance issues
+			return {'data': _temp_simplified_csv['data'], 'headers': _temp_simplified_csv['headers']}
 
 	_temp_simplified_csv = {'md5': csv.md5_text(), 'data': [], 'headers': []}
 
@@ -67,7 +43,7 @@ static func _simplify_csv(csv: String) -> Dictionary:
 	var headers = []
 
 	for reg in reg_match:
-		headers.append(_remove_invalid_char(reg.get_string(2)))
+		headers.append(_remove_invalid_char(reg.get_string(2)).to_lower())
 
 	for i in range(1, lines.size()):
 
@@ -100,7 +76,12 @@ static func _simplify_csv(csv: String) -> Dictionary:
 
 	return {'data': simplified, 'headers': headers}
 
-# This function is used to get the keys of a JSON file
+# ############################ #
+# ###### JSON Functions ###### #
+# ############################ #
+# This is still a work in progress!
+# The JSON functions are not yet implemented and it's probably not working!
+
 static func _json_get_keys(json: Dictionary) -> PackedStringArray:
 
 	var keys = []
@@ -110,25 +91,6 @@ static func _json_get_keys(json: Dictionary) -> PackedStringArray:
 	
 	return keys
 
-static func _resource_get_keys(res: Resource) -> PackedStringArray:
-
-	if res == null:
-		push_error("Resource could not be loaded")
-		return []
-
-	return res.get_property_list().map(func(i): 
-		if !_res_private_keys.has(i['name']):
-			return i['name']
-	)
-
-static func _resource_get_value(res: Resource, key: String) -> Variant:
-
-	if res == null:
-		push_error("Resource could not be loaded")
-		return null
-
-	return res.get(key)
-
 static func _json_get_value(json: Dictionary, key: String) -> Variant:
 
 	if !json.has(key):
@@ -136,6 +98,11 @@ static func _json_get_value(json: Dictionary, key: String) -> Variant:
 		return null
 
 	return json[key]
+
+
+# ########################### #
+# ###### CSV Functions ###### #
+# ########################### #
 
 static func _csv_get_lines(csv: String, ignored_keys: PackedStringArray = []) -> Array:
 
@@ -204,3 +171,71 @@ static func _csv_get_value(csv: String, line: int, key: String) -> Variant:
 		return null
 
 	return simplified['data'][line][key]
+
+# ################################ #
+# ###### Resource Functions ###### #
+# ################################ #
+
+static func _resource_get_keys(res: Resource):
+
+	if res == null:
+		push_error("Resource could not be loaded")
+		return []
+
+	var props = []
+	var res_props = res.get_property_list()
+
+	for i in res_props:
+		if i['usage'] >= PROPERTY_USAGE_SCRIPT_VARIABLE && i['usage'] < PROPERTY_USAGE_STORE_IF_NULL: # We only want the properties that are editable
+			props.append(i['name'])
+
+	return props
+
+static func _resource_get_props(res: Resource, ignored_keys: PackedStringArray = []):
+
+	if res == null:
+		push_error("Resource could not be loaded")
+		return []
+	
+	var props = []
+	var res_props = res.get_property_list()
+
+	for i in res_props:
+		if i['usage'] >= PROPERTY_USAGE_SCRIPT_VARIABLE && i['usage'] < PROPERTY_USAGE_STORE_IF_NULL: # We only want the properties that are editable
+			
+			if ignored_keys.has(i['name']):
+				continue
+			
+			props.append(i)
+	
+	return props
+
+static func _resource_get_value(res: Resource, key: String) -> Variant:
+
+	if res == null:
+		push_error("Resource could not be loaded")
+		return null
+
+	if !_resource_get_keys(res).has(key):
+		push_error("Key not found: " + key)
+		return null
+
+	return res.get(key)
+
+static func _resource_get_values(res: Resource, ignored_keys: PackedStringArray = []) -> Dictionary:
+
+	if res == null:
+		push_error("Resource could not be loaded")
+		return {}
+
+	var values = {}
+
+	for i in _resource_get_keys(res):
+
+		if ignored_keys.has(i['name']):
+			continue
+		
+		values[i] = res.get(i)
+	
+	return values
+
