@@ -25,6 +25,7 @@ extends Panel
 @onready var table_list: VBoxContainer = $VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/table_list
 
 @onready var import_menu: MenuButton = %import_but
+@onready var export_menu: MenuButton = %export_but
 
 ## SCHEMA
 
@@ -84,6 +85,10 @@ func _ready():
 	# connect import menu signals
 	import_menu.csv_selected.connect(_import_csv)
 	import_menu.cr_selected.connect(_import_cr)
+
+	# connect export menu signals
+	export_menu.csv_export.connect(_export_csv)
+	# export_menu.cr_export.connect(_export_cr)
 
 	pass # Replace with function body.
 
@@ -254,6 +259,7 @@ func _select_table(table_node: Node):
 	param_list._clean(true)
 	
 	import_menu.set_disabled(false)
+	export_menu.set_disabled(false)
 
 	reload_items_list()
 
@@ -274,6 +280,7 @@ func _delete_table(table_node: Node):
 		add_item_but.disabled = true
 		param_block.visible = false
 		import_menu.set_disabled(true)
+		export_menu.set_disabled(true)
 	
 	var data = table_node.get_meta('table_data')
 	
@@ -426,12 +433,9 @@ func _import_csv(csv: String):
 		confirm_import_dialog.popup_centered()
 		return
 
-	pass
-
-func _import_cr(cr: Resource):
+	_import_csv_missing_keys_confirm(csv, missing_keys)
 
 	pass
-
 
 func _import_csv_missing_keys_confirm(csv: String, missing_keys: Array):
 
@@ -458,7 +462,7 @@ func _import_csv_missing_keys_confirm(csv: String, missing_keys: Array):
 			
 			columns[key] = {"name": key, "value": item[key], "type": type_data[selected_structure]['params'][key]['type']}
 		
-		selected_table_data['rows'][str("imported_",index)] = {"name": str("csv_imported_",index), "columns": columns}
+		selected_table_data['rows'][str("csv_imported_",index)] = {"name": str("csv_imported_",index), "columns": columns}
 		index += 1
 	
 	print("Imported ", csv_values.size(), " lines from CSV")
@@ -468,3 +472,99 @@ func _import_csv_missing_keys_confirm(csv: String, missing_keys: Array):
 	reload_items_list()
 
 	pass
+
+func _export_csv(csv_path: String):
+
+	if selected_table_data == {}:
+		return
+
+	print("Exporting CSV...")
+
+	var csv_string = _dt_exporter._csv_export(selected_table_data, type_data[selected_table_data['structure']])
+
+	var csv_file = FileAccess.open(csv_path, FileAccess.WRITE)
+
+	if !csv_file:
+		push_error("Can't open file (path: ",csv_path,") for writing")
+		return
+	
+	csv_file.store_string(csv_string)
+
+	csv_file.close()
+
+	print("CSV exported to ", csv_path)
+
+	pass
+
+func _import_cr(cr: Resource):
+
+	if selected_table_data == {}:
+		return
+	
+	var selected_structure = type_data[selected_table_data['structure']]
+
+	var cr_keys = _dt_importer._resource_get_keys(cr)
+
+	print("Importing CR...")
+
+	print("CR keys: ", cr_keys)
+
+	var missing_keys = []
+
+	for i in cr_keys:
+		print("key: ", i.to_lower())
+		if !selected_structure['params'].keys().has(i.to_lower()):
+			push_error("CR has the key \"", i, "\" but the structure \"", selected_structure['name'], "\" doesn't have it!")
+			
+			missing_keys.append(i)
+	
+	if missing_keys.size() != 0:
+
+		var confirm_import_dialog = ConfirmationDialog.new()
+		confirm_import_dialog.set_title("Import CR - Missing keys")
+		confirm_import_dialog.set_text(str("The Custom Resource has keys that are not in the structure of the table. Do you want to import the CR anyway?\n\nMissing keys (",missing_keys.size()," keys missing on ",cr_keys.size()," keys found in CR) :\n", missing_keys, "\n\nThe CR will be imported without the missing keys if you confirm."))
+
+		confirm_import_dialog.confirmed.connect(_import_cr_missing_keys_confirm.bind(cr, missing_keys))
+		confirm_import_dialog.min_size = Vector2(400, 200)
+
+		confirm_import_dialog.ok_button_text = "Import anyway"
+		confirm_import_dialog.cancel_button_text = "Cancel"
+
+		add_child(confirm_import_dialog)
+		confirm_import_dialog.popup_centered()
+		return
+
+	pass
+
+func _import_cr_not_compatible_type(cr: Resource, incompatible_keys: Array):
+	
+	pass
+
+func _import_cr_missing_keys_confirm(cr: Resource, missing_keys: Array):
+
+	var cr_keys = _dt_importer._resource_get_keys(cr)
+
+	if selected_table_data == {}:
+		return
+
+	var selected_structure = type_data[selected_table_data['structure']]
+
+	var columns = {}
+
+	for key in cr_keys:
+
+		if missing_keys.has(key):
+			continue
+
+		columns[key] = {"name": key, "value": cr.get(key), "type": selected_structure['params'][key]['type']}
+
+	selected_table_data['rows'][str("cr_imported_",cr.resource_path.get_file())] = {"name": str("cr_imported_",cr.resource_path.get_file()), "columns": columns}
+
+	print("Imported ", cr_keys.size() - missing_keys.size(), " lines from CR")
+
+	selected_table_data['size'] = selected_table_data['rows'].size()
+
+	reload_items_list()
+
+	pass
+
