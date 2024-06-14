@@ -58,3 +58,16 @@ static func class_instantiate(className: String) -> Resource:
 	var script: GDScript = load(classData['path'])
 	
 	return script
+
+static func get_direct_child(className: String) -> Array:
+
+	print(ProjectSettings.get_global_class_list()[0])
+
+	var arr = []
+
+	for i in ProjectSettings.get_global_class_list():
+		if i['base'] == className:
+			arr.append(str(i['class']))
+	
+
+	return arr

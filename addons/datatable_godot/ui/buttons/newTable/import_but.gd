@@ -3,7 +3,7 @@ extends MenuButton
 
 signal csv_selected(content: String)
 
-signal cr_selected(res: Resource)
+signal cr_selected(res: Resource, type_selected_name: String)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -55,8 +55,35 @@ func _on_item_CR_pressed():
 	_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 	_dialog.min_size = Vector2(600, 400)
 	_dialog.filters = ["*.tres ; Resource file", "*.res ; Binary resource file"]
+	var resource_types = _dt_classDB.get_direct_child("Resource")
 
-	_dialog.file_selected.connect(_on_cr_selected)
+	print(resource_types)
+
+	var option_box = HBoxContainer.new()
+	
+
+	var option_label = Label.new()
+	option_label.text = "Resource type: "
+
+	var option_button = OptionButton.new()
+	option_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	var options = []
+
+	for i in resource_types:
+		options.append(i)
+	
+	options.sort()
+
+	for i in options:
+		option_button.add_item(i)
+
+	option_box.add_child(option_label)
+	option_box.add_child(option_button)
+
+	_dialog.get_vbox().add_child(option_box) # add type selection to file dialog
+
+	_dialog.file_selected.connect(_on_cr_selected.bind(option_button))
 
 	get_parent().add_child(_dialog)
 
@@ -78,7 +105,7 @@ func _on_csv_selected(path):
 
 	csv_selected.emit(content)
 
-func _on_cr_selected(path):
+func _on_cr_selected(path, option_button):
 	print("CR selected")
 
 	var res = ResourceLoader.load(path)
@@ -87,6 +114,6 @@ func _on_cr_selected(path):
 		print("Error loading resource")
 		return
 
-	cr_selected.emit(res)
+	cr_selected.emit(res, option_button.get_item_text(option_button.selected))
 
 

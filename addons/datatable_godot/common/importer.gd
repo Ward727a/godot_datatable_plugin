@@ -207,7 +207,11 @@ static func _resource_get_props(res: Resource, ignored_keys: PackedStringArray =
 	var res_props = res.get_property_list()
 
 	for i in res_props:
-		if i['usage'] >= PROPERTY_USAGE_SCRIPT_VARIABLE && i['usage'] < PROPERTY_USAGE_STORE_IF_NULL: # We only want the properties that are editable
+		if i['usage'] == 6: # We only want the properties that are editable
+			
+
+			if i['name'] == "script" || i['name'] == "resource_local_to_scene" || i['name'] == "resource_name" :
+				continue
 			
 			if ignored_keys.has(i['name']):
 				continue

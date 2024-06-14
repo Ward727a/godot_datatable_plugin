@@ -496,43 +496,53 @@ func _export_csv(csv_path: String):
 
 	pass
 
-func _import_cr(cr: Resource):
+func _import_cr(cr: Resource, type_selected_name: String):
 
 	if selected_table_data == {}:
 		return
-	
-	var selected_structure = type_data[selected_table_data['structure']]
-
-	var cr_keys = _dt_importer._resource_get_keys(cr)
 
 	print("Importing CR...")
 
-	print("CR keys: ", cr_keys)
+	var missing_keys = _import_cr_check_missing(cr)
+	var not_sup_keys = _import_cr_check_not_supported_type(cr, missing_keys)
+	var dict_keys = _import_cr_check_has_dict(cr, not_sup_keys)
 
-	var missing_keys = []
+	var available_values = _import_cr_get_values(cr, not_sup_keys)
 
-	for i in cr_keys:
-		print("key: ", i.to_lower())
-		if !selected_structure['params'].keys().has(i.to_lower()):
-			push_error("CR has the key \"", i, "\" but the structure \"", selected_structure['name'], "\" doesn't have it!")
-			
-			missing_keys.append(i)
-	
-	if missing_keys.size() != 0:
-
-		var confirm_import_dialog = ConfirmationDialog.new()
-		confirm_import_dialog.set_title("Import CR - Missing keys")
-		confirm_import_dialog.set_text(str("The Custom Resource has keys that are not in the structure of the table. Do you want to import the CR anyway?\n\nMissing keys (",missing_keys.size()," keys missing on ",cr_keys.size()," keys found in CR) :\n", missing_keys, "\n\nThe CR will be imported without the missing keys if you confirm."))
-
-		confirm_import_dialog.confirmed.connect(_import_cr_missing_keys_confirm.bind(cr, missing_keys))
-		confirm_import_dialog.min_size = Vector2(400, 200)
-
-		confirm_import_dialog.ok_button_text = "Import anyway"
-		confirm_import_dialog.cancel_button_text = "Cancel"
-
-		add_child(confirm_import_dialog)
-		confirm_import_dialog.popup_centered()
+	if dict_keys.size() != 0:
+		push_error("CR has the key(s) \"", dict_keys, "\" that are dictionaries. Dictionaries are not supported yet!")
 		return
+	
+	var customResourceWindow = load("res://addons/datatable_godot/ui/nodes/importer/customResource/customResource.tscn").instantiate()
+
+	add_child(customResourceWindow)
+
+	print("Available values: ", available_values)
+
+	for i in available_values:
+		print("try adding: ", i.name, " - ", i.type)
+		customResourceWindow._add_item(i.name, i.type)
+	
+	customResourceWindow.set_title("Import CR - Select values to import")
+
+	customResourceWindow.popup_centered()
+	
+	# if missing_keys.size() != 0:
+
+	# 	var confirm_import_dialog = ConfirmationDialog.new()
+	# 	confirm_import_dialog.set_title("Import CR - Missing keys")
+	# 	confirm_import_dialog.set_text(str("The Custom Resource has keys that are not in the structure of the table. Do you want to import the CR anyway?\n\nMissing keys (",missing_keys.size()," keys missing on ",cr_keys.size()," keys found in CR) :\n", missing_keys, "\n\nThe CR will be imported without the missing keys if you confirm."))
+
+	# 	confirm_import_dialog.confirmed.connect(_import_cr_missing_keys_confirm.bind(cr, missing_keys))
+	# 	confirm_import_dialog.min_size = Vector2(400, 200)
+
+	# 	confirm_import_dialog.ok_button_text = "Import anyway"
+	# 	confirm_import_dialog.cancel_button_text = "Cancel"
+
+
+	# 	add_child(confirm_import_dialog)
+	# 	confirm_import_dialog.popup_centered()
+	# 	return
 
 	pass
 
@@ -568,3 +578,56 @@ func _import_cr_missing_keys_confirm(cr: Resource, missing_keys: Array):
 
 	pass
 
+func _import_cr_check_missing(cr: Resource) -> Array:
+	
+	var cr_keys = _dt_importer._resource_get_keys(cr)
+	
+	var selected_structure = type_data[selected_table_data['structure']]
+
+	var missing_keys = []
+
+	for i in cr_keys:
+		if !selected_structure['params'].keys().has(i.to_lower()):
+			push_error("CR has the key \"", i, "\" but the structure \"", selected_structure['name'], "\" doesn't have it!")
+			
+			missing_keys.append(i)
+	
+	return missing_keys
+
+func _import_cr_check_not_supported_type(cr: Resource, missing_keys: Array) -> Array:
+	
+	var keys = missing_keys
+	
+	# var props = _dt_importer._resource_get_props(cr, missing_keys)
+
+	# for i in props:
+	# 	pass
+	
+	return keys
+
+func _import_cr_check_has_dict(cr: Resource, ignored_keys: Array) -> Array:
+	
+	var keys = []
+	
+	var props = _dt_importer._resource_get_props(cr, ignored_keys)
+
+	for i in props:
+		if i.type == TYPE_DICTIONARY:
+			keys.append(i.name)
+	
+	return keys
+
+func _import_cr_get_values(cr: Resource, ignored_keys: Array) -> Array:
+	
+	var keys = []
+	
+	var props = _dt_importer._resource_get_props(cr, ignored_keys)
+
+	print("props: ", props)
+
+	for i in props:
+		if ignored_keys.has(i.name):
+			continue
+		keys.append(i)
+	
+	return keys
