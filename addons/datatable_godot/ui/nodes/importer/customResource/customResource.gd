@@ -15,8 +15,21 @@ var var_fix_data = []
 @onready var var_list: VBoxContainer = %var_list
 var var_list_model: Resource
 
+# label amount selected
+@onready var label_selected: Label = %lbl_amount
+
 # confirm button
 @onready var bt_select: Button = %bt_select
+
+var total_amount = 0:
+	set(new_amount):
+		total_amount = new_amount
+		label_selected.text = "Amount selected: " + str(selected_amount) + "/" + str(total_amount)
+
+var selected_amount = 0:
+	set(new_amount):
+		selected_amount = new_amount
+		label_selected.text = "Amount selected: " + str(selected_amount) + "/" + str(total_amount)
 
 func _ready():
 	var_list_model = preload("res://addons/datatable_godot/ui/nodes/importer/customResource/customResourceVarListItem.tscn")
@@ -34,10 +47,13 @@ func _add_item(var_name: String, var_type: int, add_to_var: bool = true):
 	item.var_name = var_name
 	item.var_type = str(var_type)
 
+	item.var_import_changed.connect(_on_item_selected)
+
 	var_list.add_child(item)
 	var_list_data.append(item)
 	if add_to_var:
 		var_fix_data.append({"name": var_name, "type": var_type})
+		total_amount += 1
 	print("_add_item: ", var_name, " - ", var_type)
 	print("\n\tvar_list_data: ", var_list_data)
 
@@ -47,6 +63,7 @@ func clear_items_ui():
 
 func clear_items_data():
 	var_list_data.clear()
+	total_amount = 0
 
 func _get_vars(search_text: String) -> Array:
 	var vars = []
@@ -98,3 +115,13 @@ func _on_close():
 	print("close window")
 
 	queue_free()
+
+func _on_item_selected(var_name: String, var_import: bool):
+	print("var_name: ", var_name, " - var_import: ", var_import)
+
+	if var_import:
+		selected_amount += 1
+	else:
+		selected_amount -= 1
+		if selected_amount < 0:
+			selected_amount = 0

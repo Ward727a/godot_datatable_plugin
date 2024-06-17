@@ -1,6 +1,8 @@
 @tool
 extends HBoxContainer
 
+signal var_import_changed(var_name: String, var_import: bool)
+
 @onready var _varName: Label = %varName
 @onready var _varType: Label = %varType
 @onready var _varImport: CheckBox = %varImport
@@ -21,4 +23,5 @@ func _ready():
 	_varImport.pressed.connect(_on_varImport_pressed)
 
 func _on_varImport_pressed():
-	var_import = _varImport.pressed
+	var_import = _varImport.button_pressed
+	var_import_changed.emit(var_name, var_import)

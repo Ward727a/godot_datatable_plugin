@@ -82,7 +82,8 @@ autowrap_mode = 2
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer3"]
+[node name="lbl_amount" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer3"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Amount selected: 0/10"

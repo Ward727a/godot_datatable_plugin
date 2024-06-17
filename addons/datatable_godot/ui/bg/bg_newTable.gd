@@ -505,9 +505,10 @@ func _import_cr(cr: Resource, type_selected_name: String):
 
 	var missing_keys = _import_cr_check_missing(cr)
 	var not_sup_keys = _import_cr_check_not_supported_type(cr, missing_keys)
+	var all_not_sup_keys = _import_cr_check_not_supported_type(cr)
 	var dict_keys = _import_cr_check_has_dict(cr, not_sup_keys)
 
-	var available_values = _import_cr_get_values(cr, not_sup_keys)
+	var available_values = _import_cr_get_values(cr)
 
 	if dict_keys.size() != 0:
 		push_error("CR has the key(s) \"", dict_keys, "\" that are dictionaries. Dictionaries are not supported yet!")
@@ -594,7 +595,7 @@ func _import_cr_check_missing(cr: Resource) -> Array:
 	
 	return missing_keys
 
-func _import_cr_check_not_supported_type(cr: Resource, missing_keys: Array) -> Array:
+func _import_cr_check_not_supported_type(cr: Resource, missing_keys: Array = []) -> Array:
 	
 	var keys = missing_keys
 	
@@ -617,7 +618,7 @@ func _import_cr_check_has_dict(cr: Resource, ignored_keys: Array) -> Array:
 	
 	return keys
 
-func _import_cr_get_values(cr: Resource, ignored_keys: Array) -> Array:
+func _import_cr_get_values(cr: Resource, ignored_keys: Array = []) -> Array:
 	
 	var keys = []
 	
