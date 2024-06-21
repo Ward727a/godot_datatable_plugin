@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://k8qthmlvngki"]
+
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/dict_item_schema.gd" id="1_3k1re"]
+[ext_resource type="Texture2D" uid="uid://blh822uvyrgg1" path="res://addons/datatable_godot/icons/Remove.svg" id="1_q6252"]
+
+[node name="dict_item_schema" type="HBoxContainer"]
+script = ExtResource("1_3k1re")
+
+[node name="ItemName" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+
+[node name="ItemValue" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ItemDelete" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+text = "  X  "
+icon = ExtResource("1_q6252")
+icon_alignment = 1

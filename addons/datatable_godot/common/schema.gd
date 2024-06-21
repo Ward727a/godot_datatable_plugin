@@ -20,6 +20,8 @@ var rect_schema: Resource
 var aabb_schema: Resource
 var basis_schema: Resource
 var proj_schema: Resource
+var dict_schema: Resource
+var dict_item_schema: Resource
 
 var custom_schema: Dictionary
 
@@ -55,6 +57,8 @@ func load_var():
 	aabb_schema = preload("res://addons/datatable_godot/ui/nodes/schema/aabb_schema.tscn")
 	basis_schema = preload("res://addons/datatable_godot/ui/nodes/schema/basis_schema.tscn")
 	proj_schema = preload("res://addons/datatable_godot/ui/nodes/schema/proj_schema.tscn")
+	dict_schema = preload("res://addons/datatable_godot/ui/nodes/schema/dict_schema.tscn")
+	dict_item_schema = preload("res://addons/datatable_godot/ui/nodes/schema/dict_item_schema.tscn")
 
 func each() -> Array:
 	return [
@@ -114,6 +118,10 @@ func get_schema(schema_type: int) -> Resource:
 			return basis_schema
 		self.TYPE_PROJ:
 			return proj_schema
+		self.TYPE_DICT:
+			return dict_schema
+		self.TYPE_DICT_ITEM:
+			return dict_item_schema
 		_:
 			ASSERT_ERROR(str("No schema for the type: ", schema_type))
 			return null

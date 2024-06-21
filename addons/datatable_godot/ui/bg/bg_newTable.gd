@@ -522,11 +522,17 @@ func _import_cr(cr: Resource, type_selected_name: String):
 
 	for i in available_values:
 		print("try adding: ", i.name, " - ", i.type)
-		customResourceWindow._add_item(i.name, i.type)
+		var valid: bool = true
+		
+		if missing_keys.has(i.name):
+			valid = false
+		customResourceWindow._add_item(i.name, i.type, valid)
 	
 	customResourceWindow.set_title("Import CR - Select values to import")
 
 	customResourceWindow.popup_centered()
+
+	customResourceWindow.vars_selected.connect(_import_ccr_on_selected.bind(cr))
 	
 	# if missing_keys.size() != 0:
 
@@ -632,3 +638,41 @@ func _import_cr_get_values(cr: Resource, ignored_keys: Array = []) -> Array:
 		keys.append(i)
 	
 	return keys
+
+func _import_ccr_on_selected(selected: Array, cr: Resource):
+	print("selected: ", selected)
+
+	for i in selected:
+		print("selected: ", i.name, " - ", i.type)
+
+		# Check if the item is a dictionary
+		if i.type.to_int() == TYPE_DICTIONARY:
+			_import_ccr_dict(i, cr)
+			return
+
+func _import_ccr_dict(selected: Dictionary, cr: Resource):
+	print("selected dictionary: ", selected)
+
+	# We check if the resource has the key
+	if !cr.get_property_list().filter(func(i): return i.name == selected['name']):
+		push_error("The resource doesn't have the key \"", selected['name'], "\"")
+		return
+
+	var object_value = cr.get(selected['name'])
+
+	print("object value: ", object_value)
+
+	# We check if the object is a dictionary
+	if typeof(object_value) != TYPE_DICTIONARY:
+		push_error("The value of the key \"", selected['name'], "\" is not a dictionary")
+		return
+	
+	var dict_keys = object_value.keys()
+
+	# We check if the dictionary has keys
+
+	if dict_keys.size() == 0:
+		push_error("The dictionary is empty")
+		return
+
+	pass

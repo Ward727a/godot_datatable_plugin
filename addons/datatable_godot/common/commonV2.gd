@@ -15,6 +15,13 @@ const txt_color = {
 	VECW = "93dbfa"
 }
 
+const color = {
+	SUCCESS = Color(.45, .95, .5),
+	WARNING = Color(1, .87, .4),
+	ERROR = Color(1, .47, .42),
+	DEFAULT = Color(.87, .87, .87)
+}
+
 # Type for plugin
 
 const TYPE_STRING = 0
@@ -34,7 +41,9 @@ const TYPE_T3 = 13 # Transform3D
 const TYPE_AABB = 14
 const TYPE_BASIS = 15
 const TYPE_PROJ = 16
-const TYPE_MAX = 17
+const TYPE_DICT = 17
+const TYPE_DICT_ITEM = 18 # This is for a dictionary item, not a dictionary itself (mainly used for the editor)
+const TYPE_MAX = 19
 
 const SIZE_SINGLE = 0
 const SIZE_ARRAY = 1
