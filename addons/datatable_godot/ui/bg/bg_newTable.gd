@@ -694,7 +694,7 @@ func _import_ccr_dict(selected: Dictionary, cr: Resource):
 	if selected_table_data == {}:
 		return
 	
-	selected_table_data['rows'][str("cr_imported_",cr.resource_path.get_file())] = {"name": str("cr_imported:",cr.resource_path.get_file()), "columns": {selected['name']: {"type": _dt_common.TYPE_DICT, "name": selected['name'], "value": object_value}}}
+	selected_table_data['rows'][str("cr_imported:",cr.resource_path.get_file())] = {"name": str("cr_imported:",cr.resource_path.get_file()), "columns": {selected['name']: {"type": _dt_common.TYPE_DICT, "name": selected['name'], "value": object_value}}}
 
 	# We add the schema name to the list if it's doesn't exist
 	if !type_data[selected_table_data['structure']]['params'].has(selected['name']):

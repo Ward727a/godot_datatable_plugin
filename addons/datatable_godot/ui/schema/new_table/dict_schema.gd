@@ -1,7 +1,6 @@
 @tool
 extends HBoxContainer
 
-
 var dict_name: String = "":
     set(new_value):
         %ParamName.text = str("[img]res://addons/datatable_godot/icons/dictionary.png[/img] ", new_value)
@@ -14,6 +13,8 @@ var _res_schema_window: Resource = null
 @onready var _param_name: RichTextLabel = %ParamName
 @onready var _param_interact: Button = %ParamInteract
 
+var _parent: Node = EditorInterface.get_base_control()
+
 func _ready():
     _res_schema_window = load("res://addons/datatable_godot/ui/nodes/schema/dict_win_schema.tscn")
     _param_interact.pressed.connect(_on_open_pressed)
@@ -21,6 +22,8 @@ func _ready():
 func _on_open_pressed() -> void:
 
     print("Open editor")
+
+    print(dict_data)
 
     var schema = _res_schema_window.instantiate()
 
@@ -31,7 +34,7 @@ func _on_open_pressed() -> void:
 
     window.min_size = Vector2(800, 500)
 
-    EditorInterface.get_base_control().add_child(window)
+    _parent.add_child(window)
     window.popup_centered()
 
     window.close_requested.connect(schema._on_window_close)
@@ -40,6 +43,8 @@ func _on_open_pressed() -> void:
 
     for i in dict_data.keys():
         schema.dict_add_item({i: dict_data[i]})
+    
+    schema.dict_edit.connect(_on_dict_edit)
 
     pass
 
@@ -49,9 +54,9 @@ func set_title(new_title: String) -> void:
 func set_value(new_value: Variant) -> void:
 
     if typeof(new_value) == TYPE_STRING:
-        var local_dict_data = {}
-        var parsed_data = JSON.parse_string(new_value)
-        var is_success = (parsed_data != null)
+        var local_dict_data:Dictionary = {}
+        var parsed_data:Variant = JSON.parse_string(new_value)
+        var is_success:bool = (parsed_data != null)
         
         if is_success:
             local_dict_data = parsed_data
@@ -71,5 +76,9 @@ func set_value(new_value: Variant) -> void:
     
     dict_data = new_value
 
-func get_value() -> String:
-    return var_to_str(dict_data)
+func get_value() -> Dictionary:
+    return dict_data
+
+func _on_dict_edit(dict: Dictionary) -> void:
+    print(dict)
+    dict_data = dict

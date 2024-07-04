@@ -168,6 +168,51 @@ func get_icon(schema_type: int) -> String:
 			ASSERT_ERROR(str("No icon for the type: ", schema_type))
 			return ""
 
+# Convert the engine type id to the plugin type id
+func gdType_to_plugType(GDType: int):
+	match(GDType):
+		Variant.Type.TYPE_STRING:
+			return self.TYPE_STRING
+		Variant.Type.TYPE_INT:
+			return self.TYPE_INT
+		Variant.Type.TYPE_FLOAT:
+			return self.TYPE_FLOAT
+		Variant.Type.TYPE_COLOR:
+			return self.TYPE_COLOR
+		Variant.Type.TYPE_VECTOR2:
+			return self.TYPE_VECTOR2
+		Variant.Type.TYPE_VECTOR3:
+			return self.TYPE_VECTOR3
+		Variant.Type.TYPE_VECTOR4:
+			return self.TYPE_VECTOR4
+		Variant.Type.TYPE_TRANSFORM2D:
+			return self.TYPE_T2
+		Variant.Type.TYPE_TRANSFORM3D:
+			return self.TYPE_T3
+		Variant.Type.TYPE_BOOL:
+			return self.TYPE_BOOL
+		Variant.Type.TYPE_OBJECT:
+			return self.TYPE_RESS
+		Variant.Type.TYPE_QUATERNION:
+			return self.TYPE_QUAT
+		Variant.Type.TYPE_AABB:
+			return self.TYPE_AABB
+		Variant.Type.TYPE_BASIS:
+			return self.TYPE_BASIS
+		Variant.Type.TYPE_PLANE:
+			return self.TYPE_PLANE
+		Variant.Type.TYPE_RECT2:
+			return self.TYPE_RECT
+		Variant.Type.TYPE_TRANSFORM2D:
+			return self.TYPE_T2
+		Variant.Type.TYPE_TRANSFORM3D:
+			return self.TYPE_T3
+		Variant.Type.TYPE_DICTIONARY:
+			return self.TYPE_DICT
+		_:
+			ASSERT_ERROR(str("No type for the GDType: ", GDType))
+			return self.TYPE_MAX
+
 func add_custom(schema_name: String, schema_path: String) -> bool:
 	
 	if custom_schema.has(schema_name):

@@ -1,6 +1,8 @@
 @tool
 extends HBoxContainer
 
+signal dict_edit(new_value: Dictionary)
+
 @onready var _dict_name_node: RichTextLabel = %ParamName
 @onready var _dict_value_node: VBoxContainer = %ParamValue
 
@@ -78,8 +80,9 @@ func dict_add_item(item: Dictionary) -> void:
 		push_error("Schema not instantiated")
 		return
 
-	schema.name_ = item.keys()[0]
-	schema.type_ = typeof(item.values()[0])
+	schema.name_ = str(item.keys()[0])
+
+	schema.type_ = _dt_schema.get_instance().gdType_to_plugType(typeof(item.values()[0]))
 
 	_item_list.add_child(schema)
 
@@ -91,5 +94,20 @@ func dict_add_item(item: Dictionary) -> void:
 
 	schema.generate_value_node()
 
+	schema.set_value(item[schema.name_])
+
 func _on_window_close() -> void:
+
+	var new_dict: Dictionary = {}
+
+	for key in _items.keys():
+		var item: Dictionary = _items[key]
+
+		var name: String = item["name"]
+		var schema: Control = item["item"]
+
+		new_dict[item.name] = schema.get_value()
+	
+	dict_edit.emit(new_dict)
+
 	print("close window...")

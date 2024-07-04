@@ -26,6 +26,9 @@ func generate_value_node() -> void:
 
 	_item_value_node.add_child(schema)
 
+	if type_ == _dt_common.TYPE_DICT:
+		schema._parent = self
+
 	schema.layout_mode = 1 # We want the schema to have the layout mode "Anchors" (0: Container, 1: Anchors)
 	schema.set_anchors_preset(PRESET_FULL_RECT)
 	schema.get_child(0).visible = false
@@ -33,7 +36,7 @@ func generate_value_node() -> void:
 
 	pass
 
-func get_value() -> String:
+func get_value() -> Variant:
 
 	var schema = _item_value_node.get_child(0)
 
