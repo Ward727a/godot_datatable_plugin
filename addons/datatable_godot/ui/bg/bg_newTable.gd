@@ -512,7 +512,7 @@ func _import_cr(cr: Resource, type_selected_name: String):
 
 	if dict_keys.size() != 0:
 		push_error("CR has the key(s) \"", dict_keys, "\" that are dictionaries. Dictionaries are not supported yet!")
-		return
+		# return
 	
 	var customResourceWindow = load("res://addons/datatable_godot/ui/nodes/importer/customResource/customResource.tscn").instantiate()
 
@@ -674,5 +674,32 @@ func _import_ccr_dict(selected: Dictionary, cr: Resource):
 	if dict_keys.size() == 0:
 		push_error("The dictionary is empty")
 		return
+
+	var dict_schema = _dt_schema.get_instance().get_schema(_dt_common.TYPE_DICT)
+
+	if !dict_schema:
+		push_error("Schema not found")
+		return
+	
+	var schema = dict_schema.instantiate()
+
+	if !schema:
+		push_error("Schema not instantiated")
+		return
+	
+	schema.dict_name = selected['name']
+	schema.dict_data = object_value
+
+	# We add the data to the data of the table
+	if selected_table_data == {}:
+		return
+	
+	selected_table_data['rows'][str("cr_imported_",cr.resource_path.get_file())] = {"name": str("cr_imported:",cr.resource_path.get_file()), "columns": {selected['name']: {"type": _dt_common.TYPE_DICT, "name": selected['name'], "value": object_value}}}
+
+	# We add the schema name to the list if it's doesn't exist
+	if !type_data[selected_table_data['structure']]['params'].has(selected['name']):
+		type_data[selected_table_data['structure']]['params'][selected['name']] = {"type": _dt_common.TYPE_DICT, "name": selected['name'], "size": 0, "comment": "generated type by importing this parameter", "default": "{}"}
+
+	reload_items_list()
 
 	pass

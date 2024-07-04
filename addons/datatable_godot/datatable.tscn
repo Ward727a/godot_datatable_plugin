@@ -231,6 +231,7 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
 [node name="bg_main" type="VBoxContainer" parent="MarginContainer"]
+visible = false
 layout_mode = 2
 
 [node name="FlowContainer" type="FlowContainer" parent="MarginContainer/bg_main"]
@@ -358,18 +359,17 @@ alignment = 2
 
 [node name="version_status" type="RichTextLabel" parent="MarginContainer/bg_main/Panel/VBoxContainer/HBoxContainer/HBoxContainer3"]
 layout_mode = 2
-tooltip_text = "You good to go, you got the last version available!"
+tooltip_text = "The plugin is check for an update..."
 mouse_default_cursor_shape = 2
 theme_override_styles/focus = SubResource("StyleBoxFlat_w7rfg")
 theme_override_styles/normal = SubResource("StyleBoxFlat_w7rfg")
 bbcode_enabled = true
-text = "[img]res://addons/datatable_godot/icons/StatusSuccess.png[/img] [color=lightgreen]Version up-to-date! "
+text = "[img]res://addons/datatable_godot/icons/Reload.png[/img] Checking for update... "
 fit_content = true
 autowrap_mode = 0
 script = ExtResource("7_76wdw")
 
 [node name="bg_newTable" type="Panel" parent="MarginContainer"]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pmvdh")
 script = ExtResource("8_n6v0j")

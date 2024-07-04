@@ -162,6 +162,8 @@ func get_icon(schema_type: int) -> String:
 			return BASIS_ICON
 		self.TYPE_PROJ:
 			return PROJ_ICON
+		self.TYPE_DICT:
+			return DICT_ICON
 		_:
 			ASSERT_ERROR(str("No icon for the type: ", schema_type))
 			return ""

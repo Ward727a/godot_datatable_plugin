@@ -66,6 +66,7 @@ const T3_ICON = "res://addons/datatable_godot/icons/Transform3D.png"
 const AABB_ICON = "res://addons/datatable_godot/icons/AABB.png"
 const BASIS_ICON = "res://addons/datatable_godot/icons/Basis.png"
 const PROJ_ICON = "res://addons/datatable_godot/icons/Projection.png"
+const DICT_ICON = "res://addons/datatable_godot/icons/dictionary.png"
 
 const ARR_ICON = "res://addons/datatable_godot/icons/array_value.png"
 const SINGLE_ICON = "res://addons/datatable_godot/icons/single_value.png"

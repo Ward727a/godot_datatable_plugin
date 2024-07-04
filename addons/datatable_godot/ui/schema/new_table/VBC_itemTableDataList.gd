@@ -90,7 +90,7 @@ func reload_from_struct(struct: Dictionary):
 		
 		var schema = _dt_schema.get_instance().get_schema(type)
 		
-		if paramSize != 0:
+		if paramSize != 0: # detect if the item is an array
 			var parent = _dt_schema.get_instance().array_schema.instantiate()
 			add_child(parent)
 			add_child(separator)
@@ -162,3 +162,13 @@ func reset_data_on_struct():
 		var node: Node = node_structure[i]
 		
 		node.set_value()
+
+func force_add_node(node: Node):
+
+	add_child(node)
+	
+	var separator = MarginContainer.new()
+	separator.add_theme_constant_override("margin_top",5)
+	add_child(separator)
+	
+	node.visible = true

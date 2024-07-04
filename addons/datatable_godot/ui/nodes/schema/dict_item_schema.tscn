@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://blh822uvyrgg1" path="res://addons/datatable_godot/icons/Remove.svg" id="1_q6252"]
 
 [node name="dict_item_schema" type="HBoxContainer"]
+size_flags_horizontal = 3
 script = ExtResource("1_3k1re")
 
 [node name="ItemName" type="RichTextLabel" parent="."]

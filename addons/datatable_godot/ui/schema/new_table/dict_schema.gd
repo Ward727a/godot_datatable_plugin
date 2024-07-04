@@ -1,71 +1,75 @@
 @tool
 extends HBoxContainer
 
-var _dict_name_node: RichTextLabel = %ParamName
-var _dict_value_node: VBoxContainer = %ParamValue
 
 var dict_name: String = "":
-	set(new_value):
-		_dict_name_node.text = new_value
-		dict_name = new_value
+    set(new_value):
+        %ParamName.text = str("[img]res://addons/datatable_godot/icons/dictionary.png[/img] ", new_value)
+        dict_name = new_value
 
-var _items: Dictionary = {}
+var dict_data: Dictionary = {}
 
-var _root_add: Button = %rootAdd
-var _root_type: OptionButton = %rootType
-var _root_name: LineEdit = %rootName
+var _res_schema_window: Resource = null
 
-var _item_list: VBoxContainer = %itemList
+@onready var _param_name: RichTextLabel = %ParamName
+@onready var _param_interact: Button = %ParamInteract
 
 func _ready():
-	_root_add.pressed.connect(_on_add_pressed)
-	_root_name.text_changed.connect(_on_name_changed)
+    _res_schema_window = load("res://addons/datatable_godot/ui/nodes/schema/dict_win_schema.tscn")
+    _param_interact.pressed.connect(_on_open_pressed)
 
-func _on_name_changed(new_name: String) -> void:
+func _on_open_pressed() -> void:
 
-	new_name = new_name.strip_edges()
-	_root_name.remove_theme_color_override("font_color")
+    print("Open editor")
 
-	_root_add.disabled = new_name.is_empty()
+    var schema = _res_schema_window.instantiate()
 
-	if _items.has(new_name):
-		_root_add.disabled = true
-		_root_name.add_color_override("font_color", _dt_common.color.ERROR)
+    var window = ConfirmationDialog.new()
+
+    window.set_title("Edit Dictionary")
+    window.add_child(schema)
+
+    window.min_size = Vector2(800, 500)
+
+    EditorInterface.get_base_control().add_child(window)
+    window.popup_centered()
+
+    window.close_requested.connect(schema._on_window_close)
+
+    schema.dict_name = dict_name
+
+    for i in dict_data.keys():
+        schema.dict_add_item({i: dict_data[i]})
+
+    pass
+
+func set_title(new_title: String) -> void:
+    dict_name = new_title
+
+func set_value(new_value: Variant) -> void:
+
+    if typeof(new_value) == TYPE_STRING:
+        var local_dict_data = {}
+        var parsed_data = JSON.parse_string(new_value)
+        var is_success = (parsed_data != null)
+        
+        if is_success:
+            local_dict_data = parsed_data
+        else:
+            push_error("Invalid JSON data")
+            return
 
 
-func _on_add_pressed() -> void:
+        if local_dict_data == null || typeof(local_dict_data) != TYPE_DICTIONARY:
+            push_error("Invalid dictionary data")
+            return
+        
+        new_value = local_dict_data
 
-	var type = _root_type.get_selected_id()
+    if typeof(new_value) != TYPE_DICTIONARY:
+        return
+    
+    dict_data = new_value
 
-	if type == -1:
-		push_error("Please select a type")
-		return
-	
-	var name = _root_name.text.strip_edges()
-
-	if name.is_empty():
-		push_error("Please enter a name")
-		return
-	
-	var _schema = _dt_schema.get_instance().get_schema(_dt_common.TYPE_DICT_ITEM)
-
-	if !_schema:
-		push_error("Schema not found")
-		return
-	
-	var schema = _schema.instantiate()
-
-	if !schema:
-		push_error("Schema not instantiated")
-		return
-	
-	schema.name_ = name
-	schema.type_ = type
-
-	_item_list.add_child(schema)
-
-	_items[name] = {
-		"item": schema,
-		"name": name,
-		"type": type
-	}
+func get_value() -> String:
+    return var_to_str(dict_data)
