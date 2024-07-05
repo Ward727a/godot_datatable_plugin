@@ -7,7 +7,7 @@ signal vars_deselect(except_name: String)
 signal vars_block(except_name: String)
 signal vars_unblock()
 
-# Variable that store the var inside the given resource
+# Variable that stores the var inside the given resource
 var var_list_data = []
 var var_fix_data = []
 

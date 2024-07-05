@@ -1,6 +1,6 @@
 extends _dt_common
 class_name _dt_importer
-## Class that manage the importation of the CSV, JSON, and resources inside the datatable
+## Class that manages importing the CSV, JSON, and resources inside the datatable.
 
 static var _temp_simplified_csv = {'md5': "", 'data': [], 'headers': []}
 

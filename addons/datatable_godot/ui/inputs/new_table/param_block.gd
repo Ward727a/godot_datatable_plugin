@@ -6,10 +6,6 @@ extends Panel
 @onready var table_size_txt: Label = $MarginContainer/VBoxContainer/table_number_box/box_value
 @onready var table_type_ob: OptionButton = $MarginContainer/VBoxContainer/table_type_box/OB_tableType
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 
 func reload(new_data: Dictionary):
 	

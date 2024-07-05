@@ -2,7 +2,7 @@
 extends _dt_common
 class_name _dt_resource
 
-## Class that manage all the save / load datatable collection file
+## Class that manages all the save / load datatable collection file
 
 const _collection_required_key = ["table", "type"]
 

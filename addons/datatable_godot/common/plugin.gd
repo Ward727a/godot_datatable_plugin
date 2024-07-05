@@ -2,7 +2,7 @@
 extends _dt_common
 class_name _dt_plugin
 
-## Class that manage all the config, and plugin related information for the plugin
+## Class that manages all the config, and plugin related information for the plugin
 
 const LOCAL_PATH: String = "res://addons/datatable_godot/"
 const LOCAL_CONFIG_PATH: String = "res://addons/datatable_godot/plugin.cfg"

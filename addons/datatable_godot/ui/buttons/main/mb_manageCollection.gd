@@ -25,7 +25,7 @@ func _ready():
 	
 	_popup_menu.id_pressed.connect(_item_pressed)
 	
-	pass # Replace with function body.
+	pass
 
 func _item_pressed(id: int):
 	

@@ -1,6 +1,6 @@
 extends _dt_common
 class_name _dt_exporter
-## Class that manage the exportation of the CSV, JSON, and resources inside the datatable
+## Class that manages exporting the CSV, JSON, and resources inside the datatable.
 
 # ########################### #
 # ###### CSV Functions ###### #

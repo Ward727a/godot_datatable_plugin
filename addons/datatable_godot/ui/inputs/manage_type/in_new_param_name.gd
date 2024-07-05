@@ -10,11 +10,6 @@ func _ready():
 	text_submitted.connect(_signal_submit)
 	bg_manageType.edit_param_name_response.connect(_signal_text_valid)
 	bg_manageType.recheck_param_name.connect(_recheck_valid)
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
 	pass
 
 func _signal_text_edited(new_value: String):

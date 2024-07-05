@@ -90,7 +90,7 @@ func _ready():
 	export_menu.csv_export.connect(_export_csv)
 	# export_menu.cr_export.connect(_export_cr)
 
-	pass # Replace with function body.
+	pass
 
 func check_data():
 	if shown:
@@ -690,13 +690,13 @@ func _import_ccr_dict(selected: Dictionary, cr: Resource):
 	schema.dict_name = selected['name']
 	schema.dict_data = object_value
 
-	# We add the data to the data of the table
+	# We add the data to the table
 	if selected_table_data == {}:
 		return
 	
 	selected_table_data['rows'][str("cr_imported:",cr.resource_path.get_file())] = {"name": str("cr_imported:",cr.resource_path.get_file()), "columns": {selected['name']: {"type": _dt_common.TYPE_DICT, "name": selected['name'], "value": object_value}}}
 
-	# We add the schema name to the list if it's doesn't exist
+	# We add the schema name to the list if it doesn't exist
 	if !type_data[selected_table_data['structure']]['params'].has(selected['name']):
 		type_data[selected_table_data['structure']]['params'][selected['name']] = {"type": _dt_common.TYPE_DICT, "name": selected['name'], "size": 0, "comment": "generated type by importing this parameter", "default": "{}"}
 

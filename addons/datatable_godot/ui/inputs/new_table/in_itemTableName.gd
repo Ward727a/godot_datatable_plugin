@@ -14,7 +14,7 @@ func _ready():
 	bg_newTable.delete_item_response.connect(_signal_remove_item_response)
 	bg_newTable.reload_item_list.connect(_signal_reload)
 	
-	pass # Replace with function body.
+	pass
 
 func _signal_text_change(new_value: String):
 	if bg_newTable.scan_item_name(new_value):
