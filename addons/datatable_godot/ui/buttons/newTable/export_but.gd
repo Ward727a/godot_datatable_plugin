@@ -11,11 +11,6 @@ func _ready():
 	# link id_pressed signal to _on_pressed_id function
 	get_popup().id_pressed.connect(_on_item_pressed)
 
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
 	pass
 
 func set_disabled(disabled: bool):
