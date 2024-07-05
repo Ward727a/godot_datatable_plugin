@@ -1,7 +1,7 @@
 @tool
 class_name _dt_common
 ## Class created by DataTable Plugin
-## This class is used for common function that is used in multiple part of the plugin, like [method get_version], [method add_root], etc
+## This class is used for common functions that are used in multiple parts of the plugin, like [method get_version], [method add_root], etc
 
 # Color for text
 

@@ -2,7 +2,7 @@
 extends _dt_common
 class_name _dt_backup
 
-## Class that manage all the backup system
+## Class that manages all the backup systems
 
 static var _INSTANCE: _dt_backup
 

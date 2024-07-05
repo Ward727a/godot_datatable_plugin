@@ -12,7 +12,7 @@ func _ready():
 	text_submitted.connect(_signal_submit)
 	bg_newTable.add_table_response.connect(_signal_add_table_response)
 	
-	pass # Replace with function body.
+	pass
 
 func _signal_text_change(new_value: String):
 	if bg_newTable.scan_table_name(new_value):

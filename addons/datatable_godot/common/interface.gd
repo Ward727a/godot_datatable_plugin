@@ -2,7 +2,7 @@
 extends _dt_common
 class_name _dt_interface
 
-## Class that manage all the interface system of the plugin
+## Class that manages the interface system of the plugin
 
 const check_update_text: String = "[img]res://addons/datatable_godot/icons/Reload.png[/img] Checking for update... "
 const up_to_date_text: String = "[img]res://addons/datatable_godot/icons/StatusSuccess.png[/img] [color=lightgreen]Version up-to-date! "

@@ -4,7 +4,7 @@
 extends _dt_common
 class_name _dt_updater
 
-## Class that manage all the update system of the plugin
+## Class that manages the update system of the plugin
 ##
 ## This code is using some code from Nathanhoad[br]
 ## Under the given license of his plugin (link: https://github.com/nathanhoad/godot_input_helper/tree/main)[br]

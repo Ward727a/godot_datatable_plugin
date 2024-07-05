@@ -2,7 +2,7 @@
 extends _dt_common
 class_name _dt_classDB
 
-# Created this because the default ClassDB doesn't detect custom created class
+# Created this because the default ClassDB doesn't detect custom created classes
 
 static func class_exist(className: String) -> bool:
 	

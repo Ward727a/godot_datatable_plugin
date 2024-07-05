@@ -5,7 +5,7 @@ class_name Datatable
 ##
 ## This class is used for getting the table you created.
 ##
-## You shouldn't create this class yourself, but use the [method Collection.get_table] to get this class[br]
+## You shouldn't create this class yourself, instead use the [method Collection.get_table] to get this class[br]
 ## [br]
 ## Example:
 ## [codeblock]
@@ -13,13 +13,13 @@ class_name Datatable
 ##     
 ##     var collection: Collection = Collection.new("res://datatable.tableCollection.res")
 ##     
-##     if !collection.has_table("myTable"): # Checking if the table exist
+##     if !collection.has_table("myTable"): # Checking if the table exists
 ##         push_error("The table 'myTable' doesn't exist!")
 ##         return
 ##     
 ##     var datatable: Datatable = collection.get_table("myTable") # Getting the table with the name "myTable"
 ##     
-##     if !datatable.has_item("myItem"): # Checking if the item exist inside the table "myTable"
+##     if !datatable.has_item("myItem"): # Checking if the item exists inside the table "myTable"
 ##         push_error("The table 'myTable' doesn't have 'myItem' key!")
 ##         return
 ##     
@@ -57,7 +57,7 @@ signal table_getted
 
 # Enumeration
 
-## This enumeration is only used for the structure type because all the type are not present inside the plugin.
+## This enumeration is only used for the structure type because all the types are not present inside the plugin.
 enum ItemType{
 	TYPE_STRING, ## For [String] type
 	TYPE_INT, ## For [int] type
@@ -75,10 +75,10 @@ enum ItemType{
 	TYPE_T3, ## For [Transform3D] type
 	TYPE_AABB, ## For [AABB] type
 	TYPE_BASIS, ## For [Basis] type
-	TYPE_PROJ ## FOR [Projection] type
+	TYPE_PROJ ## For [Projection] type
 }
 
-## This define if the item return a single value, or an array of value.
+## This defines if the item returns a single value, or an array of values.
 enum ItemSize{
 	SIZE_SINGLE,
 	SIZE_ARRAY
@@ -419,9 +419,9 @@ static func _convert_string_to_basis(value: String) -> Basis:
 		)
 	)
 
-# due to some unknown problem, the value after the dot (.0000) has some strange number added after it
-# Tried multiple thing on it, but found nothing to fix the problem
-# Found the reason, it's because of the binary representation of the float, so I need to round it to a certain number
+# Due to some unknown problem, the value after the dot (.0000) has some strange number added after it.
+# Tried multiple things on it, but found nothing to fix the problem.
+# Found the reason, it's because of the binary representation of the float, so I need to round it to a certain number.
 static func _convert_string_to_proj(value: String) -> Projection: 
 	var convert : String = value
 	
@@ -605,7 +605,7 @@ func _get_table_rows()->Dictionary:
 	
 	return {"error":str("The table ",_table_name," doesn't contains the 'rows' key!")}
 
-# Convert the data that the user get (with less information to be more compact) to the data that the plugin need
+# Convert the data that the user gets (with less information to be more compact) to the data that the plugin needs
 func _convert_comfort_data_to_complex_data(table_data: Dictionary, structure_data: Dictionary)->Dictionary:
 	
 	table_data = table_data.duplicate(true)
@@ -632,8 +632,8 @@ func _convert_comfort_data_to_complex_data(table_data: Dictionary, structure_dat
 				var value = columns[item_key]
 				var size = structure_data[struct_name]['params'][item_key]['size']
 				
-				# We need to do this for color and v4 because the packedDataContainer doesn't support these type
-				# IDK if it's a Godot bug or me that don't know how, but I found this solution
+				# We need to do this for color and v4 because the packedDataContainer doesn't support these types
+				# IDK if it's a Godot bug or me that doesn't know how, but I found this solution.
 				
 				match(size):
 					ItemSize.SIZE_SINGLE:
@@ -686,7 +686,7 @@ func _check_class(Class_to_check: Resource) -> bool:
 	return true
 
 ## Function to check if the return data is an error or not.[br]
-## More precisely, it check if the data has the "error" key in it (if it is, it's an error).[br][br]
+## More precisely, it checks if the data has the "error" key in it (if it is, it's an error).[br][br]
 ## Return:[br]
 ## -  False: if not an error[br]
 ## -  True: if it is an error and print an error message (if not already done)[br][br]
@@ -818,14 +818,14 @@ func add_item(item_key: String, item_data: Dictionary, save_data: bool = true)->
 ## Add an item inside the datatable[br]
 ## Emit: [signal item_added] & [signal table_saved][br]
 ## [br]
-## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+## Be careful: All edits on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
 func add_item_as_object(item_key: String, item: Structure, save_data: bool = true)->bool:
 	return add_item(item_key, item._get_dict(_struct_data), save_data)
 
 ## Remove an item inside the datatable[br]
 ## Emit: [signal item_removed] & [signal table_saved][br]
 ## [br]
-## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+## Be careful: All edits on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
 func remove_item(item_key: String, save_data: bool = true)->bool:
 	
 	var rows = _get_table_rows()
@@ -857,7 +857,7 @@ func remove_item(item_key: String, save_data: bool = true)->bool:
 ## Set an item inside the datatable[br]
 ## Emit: [signal item_setted] & [signal table_saved][br]
 ## [br]
-## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+## Be careful: All edits on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
 func set_item(item_key: String, item_data: Dictionary, save_data: bool = true)->bool:
 	var rows = _get_table_rows()
 	var table = _get_table_datas()
@@ -885,7 +885,7 @@ func set_item(item_key: String, item_data: Dictionary, save_data: bool = true)->
 ## Set an item inside the datatable[br]
 ## Emit: [signal item_setted] & [signal table_saved][br]
 ## [br]
-## Be careful: All edit on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
+## Be careful: All edits on the datatable will be saved inside the "datatable.res" if "save_data" arg is not on "false"!
 func set_item_as_object(item_key: String, item: Structure, save_data: bool = true)->bool:
 	return set_item(item_key, item._get_dict(_struct_data), save_data)
 
@@ -929,7 +929,7 @@ func get_void_item()->Dictionary:
 	
 	return data
 
-## This function return you a the compatible object for the table
+## This function returns a compatible object for the table
 func get_void_item_as_object()->Structure:
 	var _class = _dt_classDB.class_instantiate("struct_"+_struct_name.replace(" ", "_"))
 
@@ -950,7 +950,7 @@ func get_void_item_as_object()->Structure:
 ## - False: The item can't be added to the table[br]
 ## [br]
 ## Args:[br]
-## - item: The item that need to be checked[br]
+## - item: The item that needs to be checked[br]
 ## [br]
 ## Example:[br]
 ## [codeblock]
@@ -995,12 +995,12 @@ func is_item_compatible(item: Dictionary)->bool:
 func is_item_object_compatible(item: Structure)->bool:
 	return is_item_compatible(item._get_dict(_struct_data))
 
-## return all the KEY of items found in the table[br]
+## return the KEY of all items found in the table[br]
 ## Example: [br]
-## We have a table with the item "sword", "axe", "bow", and we want to get all the key inside this table[br]
+## We have a table with the item "sword", "axe", "bow", and we want to get all the keys inside this table[br]
 ## [codeblock]
 ## var keys = datatable.get_items_list()
-## print(keys) # ["sword", "axe", "bow"] - Will print all the key of the item in the table
+## print(keys) # ["sword", "axe", "bow"] - Will print all the keys of the items in the table
 ##
 ## var swordValue = datatable.get_item("sword") # Get the item "sword" from the table
 ## print(swordValue) # Will print the item "sword" value
@@ -1014,10 +1014,10 @@ func get_items_list()->Array:
 ## Return the name of the rows of the table[br]
 ## Example: [br]
 ## We have a structure with the key "name", "damage" & "durability"[br]
-## We have a table with the item "sword", "axe", "bow", and we want to get all the key inside this table[br]
+## We have a table with the item "sword", "axe", "bow", and we want to get all the keys inside this table[br]
 ## [codeblock]
 ## var keys = datatable.get_keys_list()
-## print(keys) # ["name", "damage", "durability"] - Will print all the key of the structure used in the table
+## print(keys) # ["name", "damage", "durability"] - Will print all the keys of the structure used in the table
 ## [/codeblock]
 func get_keys_list()->Array:
 	
@@ -1028,13 +1028,13 @@ func get_keys_list()->Array:
 	
 	return keys
 
-## Return all the values linked to the key, the key need to be one of the key of the structure[br]
+## Return all the values linked to the key, the key needs to be one of the keys of the structure[br]
 ## Example: [br]
 ## We have a structure with the key "name", "damage" & "durability"[br]
-## We have a table with the item "sword", "axe", "bow", and we want to get all the "name" key value[br]
+## We have a table with the item "sword", "axe", "bow", and we want to get all the "name" key values[br]
 ## [codeblock]
 ## var names = datatable.get_value_of_key("name")
-## print(names) # ["sword", "axe", "bow"] - Will print all the name of all the item in the table
+## print(names) # ["sword", "axe", "bow"] - Will print all the names of all the items in the table
 ## [/codeblock]
 func get_value_of_key(key: String):
 	

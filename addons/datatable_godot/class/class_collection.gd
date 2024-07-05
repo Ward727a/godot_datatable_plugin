@@ -3,7 +3,7 @@ class_name Collection
 ##
 ## This class is used for getting a collection of datatable.
 ##
-## To get the collection, you need the path to your collection file (should end by ".tableCollection.res", or just ".res" if you use the old collection system)[br]
+## To get the collection, you need the path to your collection file (should end with ".tableCollection.res", or just ".res" if you use the old collection system)[br]
 ## [br]
 ## Example:
 ## [codeblock]
@@ -11,19 +11,19 @@ class_name Collection
 ##     
 ##     var collection: Collection = Collection.new("res://datatable.tableCollection.res")
 ##     
-##     if !collection.has_table("myTable"): # Checking if the table exist
+##     if !collection.has_table("myTable"): # Checking if the table exists
 ##         push_error("The table 'myTable' doesn't exist!")
 ##         return
 ##     
 ##     var datatable: Datatable = collection.get_table("myTable") # Getting the table with the name "myTable"
 ##     
-##     if !datatable.has_item("myItem"): # Checking if the item exist inside the table "myTable"
+##     if !datatable.has_item("myItem"): # Checking if the item exists inside the table "myTable"
 ##         push_error("The table 'myTable' doesn't have 'myItem' key!")
 ##         return
 ##     
 ##     var item: Dictionary = datatable.get_item("myItem") # Getting the item "myItem" inside "myTable"
 ##     
-##     print(item) # print the result
+##     print(item) # Print the result
 ## [/codeblock]
 ## [b]
 ## You can copy a personalised template code for your own item / table by right clicking on your table / item
@@ -66,7 +66,7 @@ func get_table(table_name: String) -> Datatable:
 	
 	return null
 
-## Check if the table exist inside this collection[br]
+## Check if the table exists inside this collection[br]
 ## For your information: This function is called each time you try to get a table!
 func has_table(table_name: String) -> bool:
 	
@@ -74,7 +74,7 @@ func has_table(table_name: String) -> bool:
 	
 	return data.has(table_name)
 
-## Check if the structure exist inside this collection[br]
+## Check if the structure exists inside this collection[br]
 ## For your information: This function is called each time you try to get a structure!
 func has_struct(struct_name: String) -> bool:
 	

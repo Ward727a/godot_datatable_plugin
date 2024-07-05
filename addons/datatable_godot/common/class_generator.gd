@@ -49,7 +49,7 @@ func generate(structure: Dictionary):
 	## Adding space
 	content += "\n\n"
 
-	## Adding each var parameters
+	## Adding each var parameter
 	for i in params:
 		var param = params[i]
 
@@ -215,7 +215,7 @@ func _get_varType_to_String(type: int):
 func _convert_hard_to_soft_value(type: int, value: Variant):
 
 
-	if typeof(value) == 9: # Check if the type of the value is a Vec3 (5 is the default TYPE_VECTOR3 of godot)
+	if typeof(value) == 9: # Check if the type of the value is a Vec3 (9 is the default TYPE_VECTOR3 of godot)
 		return str("Vector3(",value.x,",",value.y,",",value.z,")")
 
 	if typeof(value) == 5: # Check if the type of the value is a Vec2 (5 is the default TYPE_VECTOR2 of godot)
