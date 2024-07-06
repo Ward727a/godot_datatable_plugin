@@ -217,7 +217,7 @@ func gdType_to_plugType(GDType: int):
 		Variant.Type.TYPE_DICTIONARY:
 			return self.TYPE_DICT
 		_:
-			ASSERT_ERROR(str("No type for the GDType: ", GDType))
+			WARNING(str("No type for the GDType: ", GDType, ". This message can be ignored if you imported a custom resource."))
 			return self.TYPE_INVALID
 
 func add_custom(schema_name: String, schema_path: String) -> bool:
