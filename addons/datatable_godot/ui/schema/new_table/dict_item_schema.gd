@@ -5,6 +5,8 @@ extends HBoxContainer
 @onready var _item_name_node = %ItemName
 @onready var _item_delete_node = %ItemDelete
 
+signal converted_name(old_name: Variant, new_name: String)
+
 var type_: int = -1:
 	set(new_value):
 		if new_value >= _dt_common.TYPE_MAX:
@@ -17,14 +19,12 @@ var name_: Variant = "":
 	set(new_value):
 		name_ = new_value
 
-		if typeof(name_) == TYPE_COLOR:
-			# Convert color to text
-			var color: Color = name_
-			var converted_color: String = str("C/", color.r, ",", color.g, ",", color.b, ",", color.a)
+		var itemName = str(var_to_str(new_value))
 
-			name_ = converted_color
+		if typeof(name_) == TYPE_STRING:
+			itemName = name_
 
-		%ItemName.set_text(str(new_value))
+		%ItemName.set_text(itemName)
 
 var _schema: Resource = null
 

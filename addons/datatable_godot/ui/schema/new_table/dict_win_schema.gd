@@ -80,6 +80,16 @@ func dict_add_item(item: Dictionary) -> void:
 		push_error("Schema not instantiated")
 		return
 
+	schema.converted_name.connect(_on_converted_name.bind(item))
+
+	if typeof(item.keys()[0]) != TYPE_STRING:
+		var old_name = item.keys()[0]
+		var new_name: String = var_to_str(item.keys()[0])
+		var value = item.get(old_name)
+
+		item.erase(old_name)
+		item[new_name] = value
+
 	schema.name_ = item.keys()[0]
 
 	schema.type_ = _dt_schema.get_instance().gdType_to_plugType(typeof(item.values()[0]))
@@ -109,7 +119,19 @@ func _on_window_close() -> void:
 		var schema: Control = item["item"]
 
 		new_dict[item.name] = schema.get_value()
-	
+	print_verbose(new_dict)
 	dict_edit.emit(new_dict)
 
 	print("close window...")
+
+func _on_converted_name(old_name: Variant, new_name: String, item: Dictionary) -> void:
+	
+	print("converted name: ", old_name, " -> ", new_name)
+
+	if item.has(old_name):
+		var value = item[old_name]
+		item.erase(old_name)
+		item[str(new_name)] = value
+
+		print("item: ", item)
+
