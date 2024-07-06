@@ -13,6 +13,7 @@ signal res_reload
 
 var table_datas: Dictionary
 var table_types: Dictionary
+var table_meta: Dictionary
 
 var _loaded_path: String
 var _collection_path: String
@@ -72,6 +73,10 @@ func get_data() -> Dictionary:
 func get_type() -> Dictionary:
 	
 	return table_types
+
+func get_metas() -> Dictionary:
+	
+	return table_meta
 
 func set_data(packedData: PackedDataContainer):
 	
@@ -172,7 +177,19 @@ func set_type(packedData: PackedDataContainer):
 						push_error("[DataTable] Loading a collection, but found an unknown key: ", i, " by security this key will be kept, but if it's not wanted inform the developper!")
 						table_types[main_key]["params"][param_key][i] = param[i]
 
-func load_file(path: String = ""):
+func set_metas(packedData: PackedDataContainer):
+	
+	table_meta.clear()
+
+	if packedData.size() == 2:
+		table_meta = {"version": "1.0.0"}
+		return
+	
+	var meta_data = packedData['meta']
+	
+	table_meta["version"] = meta_data['version']
+
+func force_load(path: String = "") -> Dictionary:
 	
 	var save_path = path
 	
@@ -183,25 +200,58 @@ func load_file(path: String = ""):
 	
 	if !_check_path(save_path):
 		ASSERT_ERROR(str("The file '",save_path,"' doesn't exist!"))
-		return
+		return {}
 	
 	if !_is_valid_resource_file(save_path):
 		ERROR(str("The file '",save_path,"' is not a valid collection file!"))
-		return
+		return {}
+	
+	var packedData = load(save_path)
+	
+	set_data(packedData)
+	set_type(packedData)
+	set_metas(packedData)
+	
+	_loaded_path = save_path
+	
+	var dic = {"table": get_data(), "type": get_type(), "meta": get_metas()}
+
+	return dic
+
+func load_file(path: String = "") -> Dictionary:
+	
+	var save_path = path
+	
+	if path.is_empty():
+		save_path = get_path()
+	else:
+		set_path(path)
+	
+	if !_check_path(save_path):
+		ASSERT_ERROR(str("The file '",save_path,"' doesn't exist!"))
+		return {}
+	
+	if !_is_valid_resource_file(save_path):
+		ERROR(str("The file '",save_path,"' is not a valid collection file!"))
+		return {}
 	
 	if _loaded_path == save_path:
-		var dic = {"table": get_data(), "type": get_type()}
+		var dic = {"table": get_data(), "type": get_type(), "meta": get_metas()}
 		return dic
 	
 	var packedData = load(save_path)
 	
 	set_data(packedData)
 	set_type(packedData)
+	set_metas(packedData)
 	
 	res_loaded.emit(_collection_path)
 	_loaded_path = save_path
 	
-	var dic = {"table": get_data(), "type": get_type()}
+	var dic = {"table": get_data(), "type": get_type(), "meta": get_metas()}
+
+	_dt_compatibility.get_instance().check_compatibility(dic)
+
 	return dic
 
 func save_file():
@@ -210,13 +260,34 @@ func save_file():
 	
 	var packedData: PackedDataContainer = PackedDataContainer.new()
 	
-	var datas = {"table": table_datas, "type": table_types}
+	var datas = {"table": table_datas, "type": table_types, "meta": table_meta}
 
-	
 	packedData.pack(datas)
 	
 	ResourceSaver.save(packedData, _collection_path)
 	res_saved.emit(_collection_path)
+
+func manualy_save_file(path: String, datas: Dictionary) -> bool:
+
+	if path.is_empty():
+		ERROR("Can't save a file with an empty given path")
+		return false
+	
+	if datas == null:
+		ERROR("Can't save a file with a null given datas")
+		return false
+
+	if datas.size() == 0:
+		ERROR("Can't save a file with an empty given datas")
+		return false
+	
+	var packedData: PackedDataContainer = PackedDataContainer.new()
+	
+	packedData.pack(datas)
+	
+	ResourceSaver.save(packedData, path)
+	res_saved.emit(path)
+	return true
 
 func new_file(path: String) -> bool:
 	if path.is_empty():
@@ -227,7 +298,7 @@ func new_file(path: String) -> bool:
 	
 	var packedData: PackedDataContainer = PackedDataContainer.new()
 	
-	packedData.pack({"table": {}, "type": {}})
+	packedData.pack({"table": {}, "type": {}, "meta": {"version": _dt_plugin.get_instance().get_file_version()}})
 	
 	var ret = ResourceSaver.save(packedData, path)
 	

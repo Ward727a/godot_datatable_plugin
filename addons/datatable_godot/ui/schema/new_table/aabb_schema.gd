@@ -55,8 +55,10 @@ func get_value():
 	
 	var vx = Vector3(x_input.get_value(), y_input.get_value(), z_input.get_value())
 	var vy = Vector3(w_input.get_value(), h_input.get_value(), d_input.get_value())
+
+	var aabb = AABB(vx, vy)
 	
-	return str("AB/", vx.x, ",", vx.y, ",", vx.z, ",", vy.x, ",", vy.y, ",", vy.z)
+	return var_to_str(aabb)
 
 
 
@@ -69,19 +71,13 @@ func set_value(new_value: Variant = null):
 	
 	if typeof(new_value) == TYPE_STRING && new_value != null:
 		
-		var convert:String = new_value
+		var converted:Variant = str_to_var(new_value)
+
+		if typeof(converted) == TYPE_AABB:
+			data = converted
 		
-		if convert.begins_with("AB/"):
-			convert = convert.replace("AB/", "")
-		else:
-			return
-		
-		var converter = convert.split(",")
-		
-		var vx = Vector3(float(converter[0]), float(converter[1]), float(converter[2]))
-		var vy = Vector3(float(converter[3]), float(converter[4]), float(converter[5]))
-		
-		data = AABB(vx, vy)
+		push_error("[DataTable] Invalid AABB data: " + new_value)
+		return
 	
 	if typeof(data) == TYPE_AABB && data != null:
 		

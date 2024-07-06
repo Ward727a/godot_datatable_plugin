@@ -49,8 +49,17 @@ func get_dev_stop_update() -> String:
 func get_dev_stop_backup() -> String:
 	return _config.get_value("dev", "stop_backup", "false")
 
+func get_dev_stop_convert() -> String:
+	return _config.get_value("dev", "stop_convert", "false")
+
 func get_dev_reset_instance() -> String:
 	return _config.get_value("dev", "reset_instance", "false")
+
+func get_dev_force_convert() -> String:
+	return _config.get_value("dev", "force_convert", "false")
+
+func get_dev_convert_watchdog_limit() -> String:
+	return _config.get_value("dev", "convert_watchdog_limit", "10000")
 
 func get_file_version() -> String:
 	return _config.get_value("file", "version")

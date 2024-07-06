@@ -532,7 +532,7 @@ func _import_cr(cr: Resource, type_selected_name: String):
 
 	customResourceWindow.popup_centered()
 
-	customResourceWindow.vars_selected.connect(_import_ccr_on_selected.bind(cr))
+	customResourceWindow.vars_selected.connect(_import_cr_on_selected.bind(cr))
 	
 	# if missing_keys.size() != 0:
 
@@ -639,7 +639,7 @@ func _import_cr_get_values(cr: Resource, ignored_keys: Array = []) -> Array:
 	
 	return keys
 
-func _import_ccr_on_selected(selected: Array, cr: Resource):
+func _import_cr_on_selected(selected: Array, cr: Resource):
 	print("selected: ", selected)
 
 	for i in selected:
@@ -647,10 +647,10 @@ func _import_ccr_on_selected(selected: Array, cr: Resource):
 
 		# Check if the item is a dictionary
 		if i.type.to_int() == TYPE_DICTIONARY:
-			_import_ccr_dict(i, cr)
+			_import_cr_dict(i, cr)
 			return
 
-func _import_ccr_dict(selected: Dictionary, cr: Resource):
+func _import_cr_dict(selected: Dictionary, cr: Resource):
 	print("selected dictionary: ", selected)
 
 	# We check if the resource has the key
@@ -692,8 +692,8 @@ func _import_ccr_dict(selected: Dictionary, cr: Resource):
 	if selected_table_data == {}:
 		return
 
-	# We check and converted all the keys that are non-string to string keys
-	object_value = _import_ccr_nonString_to_string_keys(object_value)
+	# We check and convert all the keys that are non-string to string keys
+	object_value = _import_cr_nonString_to_string_keys(object_value)
 
 	print("object value: ", object_value)
 	
@@ -707,7 +707,7 @@ func _import_ccr_dict(selected: Dictionary, cr: Resource):
 
 	pass
 
-func _import_ccr_nonString_to_string_keys(object: Dictionary, watch_dog: int = 0) -> Dictionary:
+func _import_cr_nonString_to_string_keys(object: Dictionary, watch_dog: int = 0) -> Dictionary:
 
 	var watch_dog_limit = 10000
 
@@ -727,11 +727,11 @@ func _import_ccr_nonString_to_string_keys(object: Dictionary, watch_dog: int = 0
 		
 		# We check if the value is a dictionary
 		if typeof(new_dict[i]) == TYPE_DICTIONARY:
-			new_dict[i] = _import_ccr_nonString_to_string_keys(object[i], watch_dog + 1)
+			new_dict[i] = _import_cr_nonString_to_string_keys(object[i], watch_dog + 1)
 		
 		# We check if the watch dog limit is reached
 		if watch_dog > watch_dog_limit:
-			push_error("[DataTable] (_import_ccr_nonString_to_string_keys) Watch dog limit reached")
+			push_error("[DataTable] (_import_cr_nonString_to_string_keys) Watch dog limit reached")
 			return {}
 		
 		watch_dog += 1

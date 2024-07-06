@@ -43,16 +43,16 @@ func get_path():
 func get_max():
 	return _max
 
-func make(path: String):
+func manual_backup(path: String, backup_name: String) -> bool:
 	
 	if _dt_plugin.get_instance().get_dev_stop_backup() == "true":
 		WARNING("Can't make backup as the dev config 'stop_backup' is on true!")
-		return
+		return false
 	
 	if !_check_path(path):
 		ASSERT_ERROR("Error in the path, can't make a backup!")
 		DEBUG(str("Path: ", path))
-		return
+		return false
 	
 	var data = load(path)
 	
@@ -61,22 +61,61 @@ func make(path: String):
 	if file_name.is_empty():
 		DEBUG(str("packedData: ", data, " file_name: ", file_name, " path: ",path))
 		ASSERT_ERROR("File name is empty, cancelling backup")
-		return
+		return false
 	
-	var index = _get_index(path)
-	
-	var backup_file_path = str(_folder, "/", file_name, _suffix, index, _dt_plugin.get_instance().get_file_ext())
+	backup_name = backup_name.replace("%name%", file_name)
+
+	var backup_file_path = str(_folder, "/", backup_name, _dt_plugin.get_instance().get_file_ext())
 	
 	if !_has_dir():
-		return
+		return false
 	
 	var err = ResourceSaver.save(data, backup_file_path)
 	
 	if err != OK:
 		DEBUG(str("packedData: ", data, " file_name: ", file_name, " file_path: ", backup_file_path, " path: ",path))
 		ASSERT_ERROR("Couldn't create backup file!")
+		return false
+	else:
+		print_rich("[color=lightgreen][DataTable] Manual backup created for '",file_name,"' collection, path: ",backup_file_path)
+		return true
+
+func make(path: String) -> bool:
+	
+	if _dt_plugin.get_instance().get_dev_stop_backup() == "true":
+		WARNING("Can't make backup as the dev config 'stop_backup' is on true!")
+		return false
+	
+	if !_check_path(path):
+		ASSERT_ERROR("Error in the path, can't make a backup!")
+		DEBUG(str("Path: ", path))
+		return false
+	
+	var data = load(path)
+	
+	var file_name = _get_file_name(path)
+	
+	if file_name.is_empty():
+		DEBUG(str("packedData: ", data, " file_name: ", file_name, " path: ",path))
+		ASSERT_ERROR("File name is empty, cancelling backup")
+		return false
+	
+	var index = _get_index(path)
+	
+	var backup_file_path = str(_folder, "/", file_name, _suffix, index, _dt_plugin.get_instance().get_file_ext())
+	
+	if !_has_dir():
+		return false
+	
+	var err = ResourceSaver.save(data, backup_file_path)
+	
+	if err != OK:
+		DEBUG(str("packedData: ", data, " file_name: ", file_name, " file_path: ", backup_file_path, " path: ",path))
+		ASSERT_ERROR("Couldn't create backup file!")
+		return false
 	else:
 		print_rich("[color=lightgreen][DataTable] Created a backup for '",file_name,"' collection, path: ",backup_file_path)
+		return true
 
 func link(timer: Timer, path: String):
 	
