@@ -95,7 +95,48 @@ func set_data(packedData: PackedDataContainer):
 				
 				var column_data = row_data['columns'][column_key] # name, value, type
 				
-				table_datas[main_key]['rows'][row_key]['columns'][column_key] = {"name": column_data['name'], "value": column_data['value'], "type": column_data['type'], "size": column_data['size']}
+				table_datas[main_key]['rows'][row_key]['columns'][column_key] = {}
+
+				for i in column_data:
+					match(i):
+						"name":
+							table_datas[main_key]['rows'][row_key]['columns'][column_key]['name'] = column_data['name']
+						"value":
+							# We check if it's a dictionary, if it's the case we need to convert it from a packedDataContainer to a dictionary
+							if column_data['value'] is PackedDataContainerRef:
+								var packDataRef = column_data['value']
+								var packDataValue = packedData_to_dict(packDataRef)
+								table_datas[main_key]['rows'][row_key]['columns'][column_key]['value'] = packDataValue
+							else:
+								table_datas[main_key]['rows'][row_key]['columns'][column_key]['value'] = column_data['value']
+						"type":
+							table_datas[main_key]['rows'][row_key]['columns'][column_key]['type'] = column_data['type']
+						"size":
+							table_datas[main_key]['rows'][row_key]['columns'][column_key]['size'] = column_data['size']
+						_:
+							push_error("[DataTable] Loading a collection, but found an unknown key: ", i, " by security this key will be kept, but if it's not wanted inform the developper!")
+							table_datas[main_key]['rows'][row_key]['columns'][column_key][i] = column_data[i]
+
+func packedData_to_dict(packedData: Variant, _watch_dog: int = 0) -> Dictionary:
+	
+	var watch_dog = _watch_dog
+
+	var dic = {}
+
+	for packed_key in packedData:
+
+		if watch_dog > 1000:
+			push_error("[DataTable] The watch dog has been triggered, the loop has been stopped to avoid an infinite loop!")
+			break
+
+		watch_dog += 1
+
+		dic[packed_key] = packedData[packed_key]
+
+		if dic[packed_key] is PackedDataContainerRef:
+			dic[packed_key] = packedData_to_dict(dic[packed_key], watch_dog)
+
+	return dic
 
 func set_type(packedData: PackedDataContainer):
 	
@@ -130,7 +171,6 @@ func set_type(packedData: PackedDataContainer):
 					_:
 						push_error("[DataTable] Loading a collection, but found an unknown key: ", i, " by security this key will be kept, but if it's not wanted inform the developper!")
 						table_types[main_key]["params"][param_key][i] = param[i]
-			
 
 func load_file(path: String = ""):
 	
@@ -171,6 +211,7 @@ func save_file():
 	var packedData: PackedDataContainer = PackedDataContainer.new()
 	
 	var datas = {"table": table_datas, "type": table_types}
+
 	
 	packedData.pack(datas)
 	

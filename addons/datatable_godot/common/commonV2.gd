@@ -24,6 +24,7 @@ const color = {
 
 # Type for plugin
 
+const TYPE_INVALID = -1 # This type is used mainly for the dictionary editor for now (V2.3.0)
 const TYPE_STRING = 0
 const TYPE_INT = 1
 const TYPE_FLOAT = 2
@@ -49,6 +50,7 @@ const SIZE_SINGLE = 0
 const SIZE_ARRAY = 1
 const SIZE_MAX = 2
 
+const INVALID_ICON = "res://addons/datatable_godot/icons/invalid_type.png"
 const INT_ICON = "res://addons/datatable_godot/icons/int.svg"
 const FLOAT_ICON = "res://addons/datatable_godot/icons/float.svg"
 const STR_ICON = "res://addons/datatable_godot/icons/String.svg"

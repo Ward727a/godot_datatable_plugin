@@ -2,6 +2,7 @@
 extends _dt_common
 class_name _dt_schema
 
+var invalid_schema: Resource
 var string_schema: Resource
 var int_schema: Resource
 var float_schema: Resource
@@ -39,6 +40,7 @@ static func get_instance() -> _dt_schema:
 	return _INSTANCE
 
 func load_var():
+	invalid_schema = preload("res://addons/datatable_godot/ui/nodes/schema/invalid_schema.tscn")
 	string_schema = preload("res://addons/datatable_godot/ui/nodes/schema/string_schema.tscn")
 	int_schema = preload("res://addons/datatable_godot/ui/nodes/schema/int_schema.tscn")
 	float_schema = preload("res://addons/datatable_godot/ui/nodes/schema/float_schema.tscn")
@@ -62,6 +64,7 @@ func load_var():
 
 func each() -> Array:
 	return [
+		invalid_schema,
 		string_schema,
 		int_schema,
 		float_schema,
@@ -84,6 +87,8 @@ func each() -> Array:
 
 func get_schema(schema_type: int) -> Resource:
 	match(schema_type):
+		self.TYPE_INVALID:
+			return invalid_schema
 		self.TYPE_STRING:
 			return string_schema
 		self.TYPE_INT:
@@ -128,6 +133,8 @@ func get_schema(schema_type: int) -> Resource:
 
 func get_icon(schema_type: int) -> String:
 	match(schema_type):
+		self.TYPE_INVALID:
+			return INVALID_ICON
 		self.TYPE_STRING:
 			return STR_ICON
 		self.TYPE_INT:
@@ -211,7 +218,7 @@ func gdType_to_plugType(GDType: int):
 			return self.TYPE_DICT
 		_:
 			ASSERT_ERROR(str("No type for the GDType: ", GDType))
-			return self.TYPE_MAX
+			return self.TYPE_INVALID
 
 func add_custom(schema_name: String, schema_path: String) -> bool:
 	

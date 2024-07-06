@@ -8,15 +8,23 @@ extends HBoxContainer
 var type_: int = -1:
 	set(new_value):
 		if new_value >= _dt_common.TYPE_MAX:
-			push_error("Invalid type, must be less than " + str(_dt_common.TYPE_MAX))
-			new_value = 0
+			push_error("[DataTable] Invalid type, must be less than " + str(_dt_common.TYPE_MAX))
+			new_value = -1
 		type_ = new_value
 		_schema = _dt_schema.get_instance().get_schema(type_)
 
-var name_: String = "":
+var name_: Variant = "":
 	set(new_value):
 		name_ = new_value
-		%ItemName.set_text(new_value)
+
+		if typeof(name_) == TYPE_COLOR:
+			# Convert color to text
+			var color: Color = name_
+			var converted_color: String = str("C/", color.r, ",", color.g, ",", color.b, ",", color.a)
+
+			name_ = converted_color
+
+		%ItemName.set_text(str(new_value))
 
 var _schema: Resource = null
 

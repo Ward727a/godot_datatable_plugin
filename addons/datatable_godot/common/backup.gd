@@ -82,7 +82,7 @@ func link(timer: Timer, path: String):
 	
 	DEBUG("Link timer to backup system")
 	
-	if timer.timeout.get_connections().has(make):
+	if timer.timeout.is_connected(make):
 		DEBUG("Disconnect already connected func")
 		timer.timeout.disconnect(make)
 	

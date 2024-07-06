@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4lssdribnyiw"]
+
+[ext_resource type="Script" path="res://addons/datatable_godot/ui/schema/new_table/invalid_schema.gd" id="1_rdj4u"]
+
+[node name="InvalidSchema" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rdj4u")
+
+[node name="paramName" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+
+[node name="paramValue" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "This type is supported by Godot but not by the plugin at the moment, so you can only see a preview of it, without editing it!"
+mouse_default_cursor_shape = 8
+text = "This type is supported by Godot but not by the plugin at the moment"

@@ -80,7 +80,7 @@ func dict_add_item(item: Dictionary) -> void:
 		push_error("Schema not instantiated")
 		return
 
-	schema.name_ = str(item.keys()[0])
+	schema.name_ = item.keys()[0]
 
 	schema.type_ = _dt_schema.get_instance().gdType_to_plugType(typeof(item.values()[0]))
 
@@ -94,7 +94,9 @@ func dict_add_item(item: Dictionary) -> void:
 
 	schema.generate_value_node()
 
-	schema.set_value(item[schema.name_])
+	var item_value = item.get(schema.name_)
+
+	schema.set_value(item_value)
 
 func _on_window_close() -> void:
 
@@ -103,7 +105,7 @@ func _on_window_close() -> void:
 	for key in _items.keys():
 		var item: Dictionary = _items[key]
 
-		var name: String = item["name"]
+		var name: Variant = item["name"]
 		var schema: Control = item["item"]
 
 		new_dict[item.name] = schema.get_value()
