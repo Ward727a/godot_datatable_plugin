@@ -660,8 +660,6 @@ func _import_ccr_dict(selected: Dictionary, cr: Resource):
 
 	var object_value = cr.get(selected['name'])
 
-	print("object value: ", object_value)
-
 	# We check if the object is a dictionary
 	if typeof(object_value) != TYPE_DICTIONARY:
 		push_error("The value of the key \"", selected['name'], "\" is not a dictionary")
@@ -693,6 +691,11 @@ func _import_ccr_dict(selected: Dictionary, cr: Resource):
 	# We add the data to the table
 	if selected_table_data == {}:
 		return
+
+	# We check and converted all the keys that are non-string to string keys
+	object_value = _import_ccr_nonString_to_string_keys(object_value)
+
+	print("object value: ", object_value)
 	
 	selected_table_data['rows'][str("cr_imported:",cr.resource_path.get_file())] = {"name": str("cr_imported:",cr.resource_path.get_file()), "columns": {selected['name']: {"type": _dt_common.TYPE_DICT, "name": selected['name'], "value": object_value}}}
 
@@ -703,3 +706,34 @@ func _import_ccr_dict(selected: Dictionary, cr: Resource):
 	reload_items_list()
 
 	pass
+
+func _import_ccr_nonString_to_string_keys(object: Dictionary, watch_dog: int = 0) -> Dictionary:
+
+	var watch_dog_limit = 10000
+
+	var new_dict = {}
+
+	for i in object.keys():
+
+		if typeof(i) != TYPE_STRING && typeof(i) != TYPE_INT:
+			var new_key = var_to_str(i)
+			var value = object[i]
+
+			new_dict[new_key] = value
+
+			i = new_key
+		else:
+			new_dict[i] = object[i]
+		
+		# We check if the value is a dictionary
+		if typeof(new_dict[i]) == TYPE_DICTIONARY:
+			new_dict[i] = _import_ccr_nonString_to_string_keys(object[i], watch_dog + 1)
+		
+		# We check if the watch dog limit is reached
+		if watch_dog > watch_dog_limit:
+			push_error("[DataTable] (_import_ccr_nonString_to_string_keys) Watch dog limit reached")
+			return {}
+		
+		watch_dog += 1
+	
+	return new_dict

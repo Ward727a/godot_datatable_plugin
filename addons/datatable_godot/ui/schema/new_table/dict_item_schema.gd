@@ -5,7 +5,6 @@ extends HBoxContainer
 @onready var _item_name_node = %ItemName
 @onready var _item_delete_node = %ItemDelete
 
-signal converted_name(old_name: Variant, new_name: String)
 
 var type_: int = -1:
 	set(new_value):
