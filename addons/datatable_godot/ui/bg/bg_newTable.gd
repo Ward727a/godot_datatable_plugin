@@ -103,6 +103,7 @@ func check_data():
 		reload_table_list()
 		reload_items_list()
 		param_list._clean(true)
+
 		
 		reload_table_type_options_ask.emit(type_data)
 
@@ -335,6 +336,7 @@ func _select_item(item_node: Node):
 	selected_item_node = item_node
 	selected_item_data = selected_item_node.get_meta("item_data")
 	
+
 	param_list.reload(selected_item_data)
 	
 	selected_item_node.select(true)
@@ -518,10 +520,8 @@ func _import_cr(cr: Resource, type_selected_name: String):
 
 	add_child(customResourceWindow)
 
-	print("Available values: ", available_values)
 
 	for i in available_values:
-		print("try adding: ", i.name, " - ", i.type)
 		var valid: bool = true
 		
 		if missing_keys.has(i.name):
@@ -630,7 +630,6 @@ func _import_cr_get_values(cr: Resource, ignored_keys: Array = []) -> Array:
 	
 	var props = _dt_importer._resource_get_props(cr, ignored_keys)
 
-	print("props: ", props)
 
 	for i in props:
 		if ignored_keys.has(i.name):
@@ -640,10 +639,8 @@ func _import_cr_get_values(cr: Resource, ignored_keys: Array = []) -> Array:
 	return keys
 
 func _import_cr_on_selected(selected: Array, cr: Resource):
-	print("selected: ", selected)
 
 	for i in selected:
-		print("selected: ", i.name, " - ", i.type)
 
 		# Check if the item is a dictionary
 		if i.type.to_int() == TYPE_DICTIONARY:
@@ -651,7 +648,6 @@ func _import_cr_on_selected(selected: Array, cr: Resource):
 			return
 
 func _import_cr_dict(selected: Dictionary, cr: Resource):
-	print("selected dictionary: ", selected)
 
 	# We check if the resource has the key
 	if !cr.get_property_list().filter(func(i): return i.name == selected['name']):
@@ -695,7 +691,6 @@ func _import_cr_dict(selected: Dictionary, cr: Resource):
 	# We check and convert all the keys that are non-string to string keys
 	object_value = _import_cr_nonString_to_string_keys(object_value)
 
-	print("object value: ", object_value)
 	
 	selected_table_data['rows'][str("cr_imported:",cr.resource_path.get_file())] = {"name": str("cr_imported:",cr.resource_path.get_file()), "columns": {selected['name']: {"type": _dt_common.TYPE_DICT, "name": selected['name'], "value": object_value}}}
 

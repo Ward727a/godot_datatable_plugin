@@ -117,8 +117,16 @@ func check_compatibility(_data: Dictionary) -> void:
 			ERROR("The data doesn't have the key 'table', the conversion can't continue!")
 			ERROR("---------------------------------")
 			return
-		
+
+		if !data_to_convert.has('type'):
+			ERROR("The data doesn't have the key 'type', the conversion can't continue!")
+			ERROR("---------------------------------")
+			return
+
 		var tables = data_to_convert['table']
+
+		WARNING(str(">> Starting the conversion of the tables..."))
+		WARNING(str(">> Number of tables to convert: ", tables.size()))
 
 		for key in tables:
 
@@ -241,9 +249,100 @@ func check_compatibility(_data: Dictionary) -> void:
 
 					DEBUG(str(">> Column converted successfully!"))
 				
+				rows[row_key] = row
+
 				DEBUG(str(">> Row converted successfully!"))
 			
+			table['rows'] = rows
+			
 			DEBUG(str(">> Table converted successfully!"))
+		
+			tables[key] = table
+
+		data_to_convert['table'] = tables
+
+		WARNING(str(">> Conversion of the tables finished successfully!"))
+
+		WARNING("---------------------------------")
+		WARNING(">> Starting the conversion of the type...")
+
+		var types = data_to_convert['type']
+
+		for key in types:
+
+			var type = types[key]
+
+			for param_key in type['params']:
+
+				var param = type['params'][param_key]
+
+				if !param.has("default"):
+					param['default'] = null
+				
+				var default = param['default']
+
+				if param['size'] == 1:
+					default = null
+				
+				if check_need_reformat_v230(default):
+					match param['type']:
+						self.TYPE_BASIS:
+							DEBUG(str(">> Converting basis to the new format"))
+							var new_default = convert_basis_to_v230(default)
+							default = new_default
+						self.TYPE_PROJ:
+							DEBUG(str(">> Converting projection to the new format"))
+							var new_default = convert_projection_to_v230(default)
+							default = new_default
+						self.TYPE_AABB:
+							DEBUG(str(">> Converting aabb to the new format"))
+							var new_default = convert_aabb_to_v230(default)
+							default = new_default
+						self.TYPE_PLANE:
+							DEBUG(str(">> Converting plane to the new format"))
+							var new_default = convert_plane_to_v230(default)
+							default = new_default
+						self.TYPE_QUAT:
+							DEBUG(str(">> Converting quaternion to the new format"))
+							var new_default = convert_quaternion_to_v230(default)
+							default = new_default
+						self.TYPE_RECT:
+							DEBUG(str(">> Converting rect to the new format"))
+							var new_default = convert_rect_to_v230(default)
+							default = new_default
+						self.TYPE_T2:
+							DEBUG(str(">> Converting transform2d to the new format"))
+							var new_default = convert_transform2d_to_v230(default)
+							default = new_default
+						self.TYPE_T3:
+							DEBUG(str(">> Converting transform3d to the new format"))
+							var new_default = convert_transform3d_to_v230(default)
+							default = new_default
+						self.TYPE_VECTOR4:
+							DEBUG(str(">> Converting vector4 to the new format"))
+							var new_default = convert_v4_to_v230(default)
+							default = new_default
+						self.TYPE_COLOR:
+							DEBUG(str(">> Converting color to the new format"))
+							var new_default = convert_color_to_v230(default)
+							default = new_default
+						_:
+							ERROR(str(">> The process has detected that the default value need to be converted, but the type is not recognized!"))
+							ERROR(str(">> The conversion can't continue!"))
+							ERROR(str(">> Please, contact the developer to fix this issue! (type of the object: ", param['type'], ")"))
+							ERROR("---------------------------------")
+							return
+
+					DEBUG(str(">> Default value converted successfully!"))
+
+				param['default'] = default
+
+				type['params'][param_key] = param
+			
+			types[key] = type
+		
+
+		data_to_convert['type'] = types
 
 		WARNING(">> Conversion process finished successfully!")
 		WARNING("---------------------------------")
@@ -263,7 +362,7 @@ func check_compatibility(_data: Dictionary) -> void:
 			ERROR("The data couldn't be saved to the file, the process will stop!")
 			ERROR("---------------------------------")
 			return
-		
+
 		WARNING("The data has been saved successfully!")
 		WARNING("---------------------------------")
 
@@ -283,6 +382,7 @@ func check_compatibility(_data: Dictionary) -> void:
 		SUCCESS("The data has been converted and saved successfully!")
 		SUCCESS("You can now use the DataTable as usual!")
 		SUCCESS("---------------------------------")
+		
 
 
 # All conversion from the old format to the new format that appears in the DataTable 2.3.0

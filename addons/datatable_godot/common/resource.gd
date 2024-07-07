@@ -176,6 +176,7 @@ func set_type(packedData: PackedDataContainer):
 					_:
 						push_error("[DataTable] Loading a collection, but found an unknown key: ", i, " by security this key will be kept, but if it's not wanted inform the developper!")
 						table_types[main_key]["params"][param_key][i] = param[i]
+	
 
 func set_metas(packedData: PackedDataContainer):
 	
@@ -206,11 +207,12 @@ func force_load(path: String = "") -> Dictionary:
 		ERROR(str("The file '",save_path,"' is not a valid collection file!"))
 		return {}
 	
-	var packedData = load(save_path)
+	var packedData = ResourceLoader.load(save_path, "", ResourceLoader.CACHE_MODE_IGNORE)
 	
 	set_data(packedData)
 	set_type(packedData)
 	set_metas(packedData)
+
 	
 	_loaded_path = save_path
 	
@@ -237,6 +239,7 @@ func load_file(path: String = "") -> Dictionary:
 	
 	if _loaded_path == save_path:
 		var dic = {"table": get_data(), "type": get_type(), "meta": get_metas()}
+
 		return dic
 	
 	var packedData = load(save_path)
@@ -285,7 +288,12 @@ func manualy_save_file(path: String, datas: Dictionary) -> bool:
 	
 	packedData.pack(datas)
 	
-	ResourceSaver.save(packedData, path)
+	var statut = ResourceSaver.save(packedData, path)
+
+	if statut != OK:
+		ERROR("Can't save collection due to an error when trying to save it!")
+		ERROR(str("statut: ", statut))
+		return false
 	res_saved.emit(path)
 	return true
 

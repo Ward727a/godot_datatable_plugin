@@ -36,30 +36,34 @@ func _ready():
 	pass # Replace with function body.
 
 
-func get_value():
-	return str("V4/",x_input.get_value(), ",",y_input.get_value(),",",z_input.get_value(),",",w_input.get_value())
+func get_value() -> String:
 
+	var x: float = x_input.get_value()
+	var y: float = y_input.get_value()
+	var z: float = z_input.get_value()
+	var w: float = w_input.get_value()
+
+	var vector4_object: Vector4 = Vector4(x,y,z,w)
+
+	return var_to_str(vector4_object)
 
 func set_value(new_value: Variant = null):
 	
 	if typeof(new_value) == TYPE_STRING:
 		
-		var convert:String = new_value
-		
-		if convert.begins_with("V4/"):
-			convert = convert.replace("V4/", "")
-		else:
+		var converted: Variant = str_to_var(new_value)
+
+		if typeof(converted) != TYPE_VECTOR4:
+			push_error("Vector4 schema: Invalid value: " + new_value)
 			return
 		
-		var converter = convert.split(",")
-		
-		new_value = Vector4(float(converter[0]),float(converter[1]),float(converter[2]),float(converter[3]))
+		new_value = converted
 	
 	if typeof(new_value) == TYPE_VECTOR4 && new_value != null:
-		x_input.set_value( (round((new_value.x)*10000))/10000)
-		y_input.set_value( (round((new_value.y)*10000))/10000)
-		z_input.set_value( (round((new_value.z)*10000))/10000)
-		w_input.set_value( (round((new_value.w)*10000))/10000)
+		x_input.set_value((round((new_value.x)*10000))/10000)
+		y_input.set_value((round((new_value.y)*10000))/10000)
+		z_input.set_value((round((new_value.z)*10000))/10000)
+		w_input.set_value((round((new_value.w)*10000))/10000)
 		return
 	x_input.set_value(0)
 	y_input.set_value(0)

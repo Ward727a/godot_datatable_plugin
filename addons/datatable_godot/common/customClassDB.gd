@@ -61,7 +61,6 @@ static func class_instantiate(className: String) -> Resource:
 
 static func get_direct_child(className: String) -> Array:
 
-	print(ProjectSettings.get_global_class_list()[0])
 
 	var arr = []
 

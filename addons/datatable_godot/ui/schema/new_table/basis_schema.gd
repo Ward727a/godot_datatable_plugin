@@ -63,17 +63,15 @@ func _ready():
 	pass # Replace with function body.
 
 
-func get_value():
+func get_value() -> String:
 	
 	var vx = Vector3(xx_input.get_value(), xy_input.get_value(), xz_input.get_value())
 	var vy = Vector3(yx_input.get_value(), yy_input.get_value(), yz_input.get_value())
 	var vz = Vector3(zx_input.get_value(), zy_input.get_value(), zz_input.get_value())
 	
-	return str("BS/",
-	vx.x, ",", vx.y, ",", vx.z, ",",
-	vy.x, ",", vy.y, ",", vy.z, ",",
-	vz.x, ",", vz.y, ",", vz.z
-	)
+	var basis_object = Basis(vx, vy, vz)
+
+	return var_to_str(basis_object)
 
 
 
@@ -86,20 +84,13 @@ func set_value(new_value: Variant = null):
 	
 	if typeof(new_value) == TYPE_STRING && new_value != null:
 		
-		var convert:String = new_value
-		
-		if convert.begins_with("BS/"):
-			convert = convert.replace("BS/", "")
-		else:
+		var converted: Variant = str_to_var(new_value)
+
+		if typeof(converted) != TYPE_BASIS:
+			push_error("[DataTable] Invalid Basis data: " + new_value)
 			return
 		
-		var converter = convert.split(",")
-		
-		var vx = Vector3(float(converter[0]), float(converter[1]), float(converter[2]))
-		var vy = Vector3(float(converter[3]), float(converter[4]), float(converter[5]))
-		var vz = Vector3(float(converter[6]), float(converter[7]), float(converter[8]))
-		
-		data = Basis(vx, vy, vz)
+		data = converted
 	
 	if typeof(data) == TYPE_BASIS && data != null:
 	

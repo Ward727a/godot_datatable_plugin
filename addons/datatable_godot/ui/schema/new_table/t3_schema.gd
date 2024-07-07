@@ -70,19 +70,16 @@ func _ready():
 	pass # Replace with function body.
 
 
-func get_value():
+func get_value() -> String:
 	
 	var vx = Vector3(xx_input.get_value(), xy_input.get_value(), xz_input.get_value())
 	var vy = Vector3(yx_input.get_value(), yy_input.get_value(), yz_input.get_value())
 	var vz = Vector3(zx_input.get_value(), zy_input.get_value(), zz_input.get_value())
 	var vo = Vector3(xo_input.get_value(), yo_input.get_value(), zo_input.get_value())
 	
-	return str("T3/",
-	vx.x, ",", vx.y, ",", vx.z, ",",
-	vy.x, ",", vy.y, ",", vy.z, ",",
-	vz.x, ",", vz.y, ",", vz.z, ",",
-	vo.x, ",", vo.y, ",", vo.z
-	)
+	var transform_object: Transform3D = Transform3D(vx, vy, vz, vo)
+
+	return var_to_str(transform_object)
 
 
 
@@ -95,21 +92,13 @@ func set_value(new_value: Variant = null):
 	
 	if typeof(new_value) == TYPE_STRING && new_value != null:
 		
-		var convert:String = new_value
-		
-		if convert.begins_with("T3/"):
-			convert = convert.replace("T3/", "")
-		else:
+		var converted: Variant = str_to_var(new_value)
+
+		if typeof(converted) != TYPE_TRANSFORM3D:
+			push_error("Transform3D schema: Invalid value: " + new_value)
 			return
 		
-		var converter = convert.split(",")
-		
-		var vx = Vector3(float(converter[0]), float(converter[1]), float(converter[2]))
-		var vy = Vector3(float(converter[3]), float(converter[4]), float(converter[5]))
-		var vz = Vector3(float(converter[6]), float(converter[7]), float(converter[8]))
-		var vo = Vector3(float(converter[9]), float(converter[10]), float(converter[11]))
-		
-		data = Transform3D(vx, vy, vz, vo)
+		data = converted
 	
 	if typeof(data) == TYPE_TRANSFORM3D && data != null:
 	

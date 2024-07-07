@@ -16,6 +16,7 @@ mono_crash.*.json
 
 # datatable resource file
 datatable.res
+datatable - Copie.res
 
 # project file
 icon.svg

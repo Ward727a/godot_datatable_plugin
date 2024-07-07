@@ -36,30 +36,35 @@ func _ready():
 	pass # Replace with function body.
 
 
-func get_value():
-	return str("QT/",x_input.get_value(), ",",y_input.get_value(),",",z_input.get_value(),",",d_input.get_value())
+func get_value() -> String:
+
+	var x: float = x_input.get_value()
+	var y: float = y_input.get_value()
+	var z: float = z_input.get_value()
+	var d: float = d_input.get_value()
+
+	var quaternion_object: Quaternion = Quaternion(x,y,z,d)
+
+	return var_to_str(quaternion_object)
 
 
 func set_value(new_value: Variant = null):
 	
 	if typeof(new_value) == TYPE_STRING:
 		
-		var convert:String = new_value
-		
-		if convert.begins_with("QT/"):
-			convert = convert.replace("QT/", "")
-		else:
+		var converted: Variant = str_to_var(new_value)
+
+		if typeof(converted) != TYPE_QUATERNION:
+			push_error("Quaternion schema: Invalid value: " + new_value)
 			return
 		
-		var converter = convert.split(",")
-		
-		new_value = Quaternion(float(converter[0]),float(converter[1]),float(converter[2]),float(converter[3]))
+		new_value = converted
 	
 	if typeof(new_value) == TYPE_QUATERNION && new_value != null:
-		x_input.set_value( (round((new_value.x)*10000))/10000)
-		y_input.set_value( (round((new_value.y)*10000))/10000)
-		z_input.set_value( (round((new_value.z)*10000))/10000)
-		d_input.set_value( (round((new_value.w)*10000))/10000)
+		x_input.set_value((round((new_value.x)*10000))/10000)
+		y_input.set_value((round((new_value.y)*10000))/10000)
+		z_input.set_value((round((new_value.z)*10000))/10000)
+		d_input.set_value((round((new_value.w)*10000))/10000)
 		return
 	x_input.set_value(0)
 	y_input.set_value(0)

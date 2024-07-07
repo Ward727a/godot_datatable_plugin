@@ -30,27 +30,25 @@ func _ready():
 	pass # Replace with function body.
 
 
-func get_value():
+func get_value() -> String:
 	
 	var color: Color = input.get_pick_color()
-	
-	return str("C/",color.r,",",color.g,",",color.b,",",color.a)
 
+	return var_to_str(color)
+	
 
 func set_value(new_value: Variant = null):
 	
 	if typeof(new_value) == TYPE_STRING && new_value != null:
 		
-		var convert: String = new_value
-		
-		if convert.begins_with("C/"):
-			convert = convert.replace("C/", "")
-		else:
+		var converted: Variant = str_to_var(new_value)
+
+		if typeof(converted) != TYPE_COLOR:
+			push_error("Invalid color value: " + new_value)
 			return
 		
-		var converter = convert.split(",")
-		
-		new_value = Color(converter[0].to_float(),converter[1].to_float(),converter[2].to_float(),converter[3].to_float())
+		input.set_pick_color(converted)
+		return
 	
 	if typeof(new_value) == TYPE_COLOR && new_value != null: 
 		input.set_pick_color(new_value)

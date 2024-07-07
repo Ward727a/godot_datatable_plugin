@@ -81,20 +81,16 @@ func _ready():
 	pass # Replace with function body.
 
 
-func get_value():
+func get_value() -> String:
 	
 	var vx = Vector4(xx_input.get_value(), xy_input.get_value(), xz_input.get_value(), xw_input.get_value())
 	var vy = Vector4(yx_input.get_value(), yy_input.get_value(), yz_input.get_value(), yw_input.get_value())
 	var vz = Vector4(zx_input.get_value(), zy_input.get_value(), zz_input.get_value(), zw_input.get_value())
 	var vw = Vector4(wx_input.get_value(), wy_input.get_value(), wz_input.get_value(), ww_input.get_value())
 	
+	var proj_object = Projection(vx, vy, vz, vw)
 	
-	return str("PJ/",
-	snapped(vx.x, 0.0001), ",", snapped(vx.y, 0.0001), ",", snapped(vx.z, 0.0001), ",", snapped(vx.w, 0.0001), ",",
-	snapped(vy.x, 0.0001), ",", snapped(vy.y, 0.0001), ",", snapped(vy.z, 0.0001), ",", snapped(vy.w, 0.0001), ",",
-	snapped(vz.x, 0.0001), ",", snapped(vz.y, 0.0001), ",", snapped(vz.z, 0.0001), ",", snapped(vz.w, 0.0001), ",",
-	snapped(vw.x, 0.0001), ",", snapped(vw.y, 0.0001), ",", snapped(vw.z, 0.0001), ",", snapped(vw.w, 0.0001)
-	)
+	return var_to_str(proj_object)
 
 
 
@@ -107,21 +103,13 @@ func set_value(new_value: Variant = null):
 	
 	if typeof(new_value) == TYPE_STRING && new_value != null:
 		
-		var convert:String = new_value
-		
-		if convert.begins_with("PJ/"):
-			convert = convert.replace("PJ/", "")
-		else:
+		var converted: Variant = str_to_var(new_value)
+
+		if typeof(converted) != TYPE_PROJECTION:
+			push_error("[DataTable] Invalid Projection data: " + new_value)
 			return
 		
-		var converter = convert.split(",")
-		
-		var vx = Vector4(float(converter[0]), float(converter[1]), float(converter[2]), float(converter[3]))
-		var vy = Vector4(float(converter[4]), float(converter[5]), float(converter[6]), float(converter[7]))
-		var vz = Vector4(float(converter[8]), float(converter[9]), float(converter[10]), float(converter[11]))
-		var vw = Vector4(float(converter[12]), float(converter[13]), float(converter[14]), float(converter[15]))
-		
-		data = Projection(vx, vy, vz, vw)
+		data = converted
 	
 	if typeof(data) == TYPE_PROJECTION && data != null:
 	

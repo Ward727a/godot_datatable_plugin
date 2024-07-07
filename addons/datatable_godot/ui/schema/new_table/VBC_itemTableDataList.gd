@@ -56,6 +56,9 @@ func reload(new_data: Dictionary):
 				var value: Variant = data['value']
 				var key: String = data['name']
 				
+				if !structure['params'][key].has('default'):
+					structure['params'][key]['default'] = null
+
 				var default = structure['params'][key]['default']
 				
 				if structure['params'][key]['size'] == 1:

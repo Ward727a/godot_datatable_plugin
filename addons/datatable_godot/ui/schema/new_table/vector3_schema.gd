@@ -42,17 +42,18 @@ func set_value(new_value: Variant = null):
 	
 	if typeof(new_value) == TYPE_STRING && new_value != null:
 		
-		new_value = new_value.replace("(", "").replace(")", "")
+		var converted: Variant = str_to_var(new_value)
+
+		if typeof(converted) != TYPE_VECTOR3:
+			push_error("Vector3 schema: Invalid value: " + new_value)
+			return
 		
-		var v3_string: PackedStringArray = new_value.split(",")
-		
-		if v3_string.size() == 3:
-			new_value = Vector3(float(v3_string[0]), float(v3_string[1]), float(v3_string[2]))
+		new_value = converted
 	
 	if typeof(new_value) == TYPE_VECTOR3 && new_value != null:
-		x_input.set_value( (round((new_value.x)*10000))/10000)
-		y_input.set_value( (round((new_value.y)*10000))/10000)
-		z_input.set_value( (round((new_value.z)*10000))/10000)
+		x_input.set_value((round((new_value.x)*10000))/10000)
+		y_input.set_value((round((new_value.y)*10000))/10000)
+		z_input.set_value((round((new_value.z)*10000))/10000)
 		return
 	x_input.set_value(0)
 	y_input.set_value(0)

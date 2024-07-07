@@ -185,7 +185,6 @@ static func _resource_get_keys(res: Resource):
 	var props = []
 	var res_props = res.get_property_list()
 
-	print("res_props: " + str(res_props))
 
 	for i in res_props:
 		if i['usage'] == 6: # We only want the properties that are editable

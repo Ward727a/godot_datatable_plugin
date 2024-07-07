@@ -23,7 +23,6 @@ func get_type():
 func set_type(new_type: int):
 	type = new_type
 
-
 func set_title(new_name: String):
 	text.set_text(str(icon,new_name))
 	paramName = new_name
@@ -47,11 +46,10 @@ func _ready():
 	h_input = v1.get_child(1).get_child(1)
 	d_input = v1.get_child(2).get_child(1)
 	
-	
 	pass # Replace with function body.
 
 
-func get_value():
+func get_value() -> String:
 	
 	var vx = Vector3(x_input.get_value(), y_input.get_value(), z_input.get_value())
 	var vy = Vector3(w_input.get_value(), h_input.get_value(), d_input.get_value())
@@ -73,18 +71,19 @@ func set_value(new_value: Variant = null):
 		
 		var converted:Variant = str_to_var(new_value)
 
-		if typeof(converted) == TYPE_AABB:
-			data = converted
+		if typeof(converted) != TYPE_AABB:
+			push_error("[DataTable] Invalid AABB data: " + new_value)
+			push_error("[DataTable] Converted value: " + str(converted))
+			push_error("[DataTable] Type: " + str(typeof(converted)))
+			return
 		
-		push_error("[DataTable] Invalid AABB data: " + new_value)
-		return
+		data = converted
 	
 	if typeof(data) == TYPE_AABB && data != null:
 		
 		x_input.set_value((round((data.position.x)*10000))/10000)
 		y_input.set_value((round((data.position.y)*10000))/10000)
 		z_input.set_value((round((data.position.z)*10000))/10000)
-		
 		w_input.set_value((round((data.size.x)*10000))/10000)
 		h_input.set_value((round((data.size.y)*10000))/10000)
 		d_input.set_value((round((data.size.z)*10000))/10000)

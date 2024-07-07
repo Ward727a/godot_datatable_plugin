@@ -37,31 +37,32 @@ func _ready():
 	pass # Replace with function body.
 
 
-func get_value():
-	return str("RECT/",x_input.get_value(),",", y_input.get_value(),",", w_input.get_value(),",", h_input.get_value())
+func get_value() -> String:
 
+	var vy: Vector2 = Vector2(w_input.get_value(), h_input.get_value())
+	var vx: Vector2 = Vector2(x_input.get_value(), y_input.get_value())
 
+	var rect_object: Rect2 = Rect2(vx, vy)
+
+	return var_to_str(rect_object)
 
 func set_value(new_value: Variant = null):
 	
 	if typeof(new_value) == TYPE_STRING:
 		
-		var convert:String = new_value
-		
-		if convert.begins_with("RECT/"):
-			convert = convert.replace("RECT/", "")
-		else:
+		var converted: Variant = str_to_var(new_value)
+
+		if typeof(converted) != TYPE_RECT2:
+			push_error("Rect2 schema: Invalid value: " + new_value)
 			return
 		
-		var converter = convert.split(",")
-		
-		new_value = Rect2(float(converter[0]),float(converter[1]),float(converter[2]),float(converter[3]))
+		new_value = converted
 	
 	if typeof(new_value) == TYPE_RECT2 && new_value != null:
-		x_input.set_value( (round((new_value.position.x)*10000))/10000)
-		y_input.set_value( (round((new_value.position.y)*10000))/10000)
-		w_input.set_value( (round((new_value.size.x)*10000))/10000)
-		h_input.set_value( (round((new_value.size.y)*10000))/10000)
+		x_input.set_value((round((new_value.position.x)*10000))/10000)
+		y_input.set_value((round((new_value.position.y)*10000))/10000)
+		w_input.set_value((round((new_value.size.x)*10000))/10000)
+		h_input.set_value((round((new_value.size.y)*10000))/10000)
 		return
 	x_input.set_value(0)
 	y_input.set_value(0)

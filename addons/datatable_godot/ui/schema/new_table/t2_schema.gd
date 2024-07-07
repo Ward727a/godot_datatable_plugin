@@ -50,16 +50,15 @@ func _ready():
 	
 	pass # Replace with function body.
 
-
 func get_value():
 	
-	var vx = Vector2(xx_input.get_value(), xy_input.get_value())
-	var vy = Vector2(yx_input.get_value(), yy_input.get_value())
-	var vo = Vector2(xo_input.get_value(), yo_input.get_value())
-	
-	return str("T2/", vx.x, ",", vx.y, ",", vy.x, ",", vy.y, ",", vo.x, ",", vo.y)
+	var vx: Vector2 = Vector2(xx_input.get_value(), xy_input.get_value())
+	var vy: Vector2 = Vector2(yx_input.get_value(), yy_input.get_value())
+	var vo: Vector2 = Vector2(xo_input.get_value(), yo_input.get_value())
 
+	var transform_object: Transform2D = Transform2D(vx, vy, vo)
 
+	return var_to_str(transform_object)
 
 func set_value(new_value: Variant = null):
 	
@@ -70,20 +69,13 @@ func set_value(new_value: Variant = null):
 	
 	if typeof(new_value) == TYPE_STRING && new_value != null:
 		
-		var convert:String = new_value
-		
-		if convert.begins_with("T2/"):
-			convert = convert.replace("T2/", "")
-		else:
+		var converted: Variant = str_to_var(new_value)
+
+		if typeof(converted) != TYPE_TRANSFORM2D:
+			push_error("Transform2D schema: Invalid value: " + new_value)
 			return
 		
-		var converter = convert.split(",")
-		
-		var vx = Vector2(float(converter[0]), float(converter[1]))
-		var vy = Vector2(float(converter[2]),float(converter[3]))
-		var vo = Vector2(float(converter[4]),float(converter[5]))
-		
-		data = Transform2D(vx, vy, vo)
+		data = converted
 	
 	if typeof(data) == TYPE_TRANSFORM2D && data != null:
 		
