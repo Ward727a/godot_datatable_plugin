@@ -4,7 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://blh822uvyrgg1" path="res://addons/datatable_godot/icons/Remove.svg" id="1_q6252"]
 
 [node name="dict_item_schema" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_3k1re")
 
 [node name="ItemName" type="RichTextLabel" parent="."]
@@ -14,7 +20,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
 
-[node name="ItemValue" type="Control" parent="."]
+[node name="ItemValue" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

@@ -1,7 +1,7 @@
 @tool
 extends VBoxContainer
 
-@onready var COMMON: Node = $"../../../../../../../../../../../../signals"
+# @onready var COMMON: Node = $"../../../../../../../../../../../../signals"
 
 var data = {}
 
@@ -53,21 +53,16 @@ func remove_item(item_name: int):
 	
 	node.queue_free()
 	
-	COMMON.presave_data.emit()
+	# COMMON.presave_data.emit()
 	
 
-func get_items_value()->String:
+func get_items_value()->Array:
 	
-	var arr: String = " ARR/ "
+	var arr: Array = []
 	
 	for i in data:
 		if data[i].has('value'):
-			if typeof(data[i]['value']) == TYPE_STRING:
-				data[i]['value'] = data[i]['value'].replace(';', '')
-			
-			arr += str(data[i]['value'])
-			if (data.size()-1) > i:
-				arr += ";"
+			arr.append(data[i]['value'])
 	
 	
 	return arr

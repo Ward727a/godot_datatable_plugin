@@ -220,6 +220,70 @@ func gdType_to_plugType(GDType: int):
 			WARNING(str("No type for the GDType: ", GDType, ". This message can be ignored if you imported a custom resource."))
 			return self.TYPE_INVALID
 
+func gdSize_to_plugSize(GDSize: int):
+	var array_gdsize = [
+		Variant.Type.TYPE_PACKED_INT32_ARRAY,
+		Variant.Type.TYPE_PACKED_INT64_ARRAY,
+		Variant.Type.TYPE_PACKED_FLOAT32_ARRAY,
+		Variant.Type.TYPE_PACKED_FLOAT64_ARRAY,
+		Variant.Type.TYPE_PACKED_STRING_ARRAY,
+		Variant.Type.TYPE_PACKED_VECTOR2_ARRAY,
+		Variant.Type.TYPE_PACKED_VECTOR3_ARRAY,
+		Variant.Type.TYPE_PACKED_COLOR_ARRAY,
+		Variant.Type.TYPE_ARRAY
+	]
+
+	if array_gdsize.has(GDSize):
+		return self.SIZE_ARRAY
+	else:
+		return self.SIZE_SINGLE
+
+func gdArray_to_plugType(GDArray: int):
+	match(GDArray):
+		Variant.Type.TYPE_PACKED_INT32_ARRAY:
+			return self.TYPE_INT
+		Variant.Type.TYPE_PACKED_INT64_ARRAY:
+			return self.TYPE_INT
+		Variant.Type.TYPE_PACKED_FLOAT32_ARRAY:
+			return self.TYPE_FLOAT
+		Variant.Type.TYPE_PACKED_FLOAT64_ARRAY:
+			return self.TYPE_FLOAT
+		Variant.Type.TYPE_PACKED_STRING_ARRAY:
+			return self.TYPE_STRING
+		Variant.Type.TYPE_PACKED_VECTOR2_ARRAY:
+			return self.TYPE_VECTOR2
+		Variant.Type.TYPE_PACKED_VECTOR3_ARRAY:
+			return self.TYPE_VECTOR3
+		Variant.Type.TYPE_PACKED_COLOR_ARRAY:
+			return self.TYPE_COLOR
+
+# func gdArray_to_plugArray(GDArray: String) -> String:
+
+# 	var is_packed: bool = false
+# 	var array: String = ""
+
+# 	if GDArray.contains("Packed"):
+# 		is_packed = true
+	
+# 	if is_packed:
+# 		var temp = GDArray.split("Array(")[1].split(",")
+
+# 		array = "["
+
+# 		for i in temp.size():
+# 			array += str(temp[i].strip())
+# 			if i < temp.size() - 1:
+# 				array += ", "
+		
+# 		array += "]"
+
+# 	else:
+# 		array = GDArray
+	
+# 	return array
+
+# [W.I.P] Add a custom schema
+
 func add_custom(schema_name: String, schema_path: String) -> bool:
 	
 	if custom_schema.has(schema_name):

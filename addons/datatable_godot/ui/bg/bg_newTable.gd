@@ -512,14 +512,13 @@ func _import_cr(cr: Resource, type_selected_name: String):
 
 	var available_values = _import_cr_get_values(cr)
 
-	if dict_keys.size() != 0:
-		push_error("CR has the key(s) \"", dict_keys, "\" that are dictionaries. Dictionaries are not supported yet!")
-		# return
+	# if dict_keys.size() != 0:
+	# 	push_error("CR has the key(s) \"", dict_keys, "\" that are dictionaries. Dictionaries are not supported yet!")
+	# 	return
 	
 	var customResourceWindow = load("res://addons/datatable_godot/ui/nodes/importer/customResource/customResource.tscn").instantiate()
 
 	add_child(customResourceWindow)
-
 
 	for i in available_values:
 		var valid: bool = true
@@ -630,7 +629,6 @@ func _import_cr_get_values(cr: Resource, ignored_keys: Array = []) -> Array:
 	
 	var props = _dt_importer._resource_get_props(cr, ignored_keys)
 
-
 	for i in props:
 		if ignored_keys.has(i.name):
 			continue
@@ -690,7 +688,6 @@ func _import_cr_dict(selected: Dictionary, cr: Resource):
 
 	# We check and convert all the keys that are non-string to string keys
 	object_value = _import_cr_nonString_to_string_keys(object_value)
-
 	
 	selected_table_data['rows'][str("cr_imported:",cr.resource_path.get_file())] = {"name": str("cr_imported:",cr.resource_path.get_file()), "columns": {selected['name']: {"type": _dt_common.TYPE_DICT, "name": selected['name'], "value": object_value}}}
 

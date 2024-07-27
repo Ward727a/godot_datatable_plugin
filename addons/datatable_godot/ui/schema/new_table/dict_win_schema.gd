@@ -81,15 +81,31 @@ func dict_add_item(item: Dictionary) -> void:
 		return
 
 	schema.name_ = item.keys()[0]
+	schema.raw_value_ = item.values()[0]
 
-	schema.type_ = _dt_schema.get_instance().gdType_to_plugType(typeof(item.values()[0]))
+	print("raw value: ", item.values()[0])
+	print("raw type: ", type_string(typeof(item.values()[0])))
+
+	var gdtype = typeof(item.values()[0])
+	schema.type_ = _dt_schema.get_instance().gdType_to_plugType(gdtype)
+
+	if schema.type_ == _dt_common.TYPE_STRING:
+		var newgdtype = typeof(str_to_var(item.values()[0]))
+		var newtype_ = _dt_schema.get_instance().gdType_to_plugType(newgdtype)
+		if typeof(str_to_var(item.values()[0])) != 0:
+			gdtype = newgdtype
+			schema.type_ = newtype_
+
+	schema.size_ = _dt_schema.get_instance().gdSize_to_plugSize(gdtype)
+	schema.gdtype_ = gdtype
 
 	_item_list.add_child(schema)
 
 	_items[schema.name_] = {
 		"item": schema,
 		"name": schema.name_,
-		"type": schema.type_
+		"type": schema.type_,
+		"size": schema.size_
 	}
 
 	schema.generate_value_node()

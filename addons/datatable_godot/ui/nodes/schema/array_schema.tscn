@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://blh822uvyrgg1" path="res://addons/datatable_godot/icons/Remove.svg" id="4_gqklv"]
 
 [node name="array_schema" type="VBoxContainer"]
-visible = false
 size_flags_horizontal = 3
 script = ExtResource("1_hlcei")
 metadata/array = true
