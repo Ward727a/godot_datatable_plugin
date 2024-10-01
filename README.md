@@ -3,7 +3,8 @@
 As of today (01/10/2024 - dd/mm/yyyy) this project is in stand-by.
 
 No new update will be made until futher notice, as my time is fully dedicated in my project "RPG Creator".
-Link to the discord of the new project if you want to follow me there: discord.gg/4yfq4NNzs4
+
+Link to the discord of the new project if you want to follow me there: [discord.gg/4yfq4NNzs4](https://discord.gg/4yfq4NNzs4)
 
 You're totally free to fork it if you want.
 
