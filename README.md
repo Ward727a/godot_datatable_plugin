@@ -1,3 +1,12 @@
+
+# Project in stand-by
+As of today (01/10/2024 - dd/mm/yyyy) this project is in stand-by.
+
+No new update will be made until futher notice.
+
+You're totally free to fork it if you want.
+
+===========================
 # 💾Godot DataTable Plugin
 
 A plugin that give you the ability to create a datatable directly inside the editor.
